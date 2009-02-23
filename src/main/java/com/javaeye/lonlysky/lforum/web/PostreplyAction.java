@@ -27,6 +27,7 @@ import com.javaeye.lonlysky.lforum.entity.forum.Users;
 import com.javaeye.lonlysky.lforum.service.AdminGroupManager;
 import com.javaeye.lonlysky.lforum.service.AttachmentManager;
 import com.javaeye.lonlysky.lforum.service.EditorManager;
+import com.javaeye.lonlysky.lforum.service.EmailManager;
 import com.javaeye.lonlysky.lforum.service.ForumManager;
 import com.javaeye.lonlysky.lforum.service.ModeratorManager;
 import com.javaeye.lonlysky.lforum.service.PaymentLogManager;
@@ -230,6 +231,9 @@ public class PostreplyAction extends ForumBaseAction {
 
 	@Autowired
 	private UserCreditManager userCreditManager;
+
+	@Autowired
+	private EmailManager emailManager;
 
 	@Override
 	public String execute() throws Exception {
@@ -827,6 +831,8 @@ public class PostreplyAction extends ForumBaseAction {
 			//发送邮件通知
 			if (LForumRequest.getParamValue("emailnotify").equals("on")) {
 				// 邮件发送通知
+				sendNotifyEmail(userManager.getUserInfo(topic.getUsersByPosterid().getUid()).getEmail().trim(),
+						postinfo, config.getForumurl() + "showtopic.action?page=end&topicid=" + topicid + "#" + pid);
 			}
 		}
 		return SUCCESS;
@@ -845,6 +851,32 @@ public class PostreplyAction extends ForumBaseAction {
 			userCreditManager.updateUserCreditsByPosts(userid);
 		}
 
+	}
+
+	/**
+	 * 发送邮件通知
+	 * @param email 接收人邮箱
+	 * @param postinfo 帖子信息
+	 * @param jumpurl 跳转链接
+	 */
+	public void sendNotifyEmail(String email, Posts postinfo, String jumpurl) {
+		StringBuilder sb_body = new StringBuilder("# 回复: <a href=\"" + jumpurl + "\" target=\"_blank\">"
+				+ topic.getTitle() + "</a>");
+		//发送人邮箱
+		String cur_email = userManager.getUserInfo(userid).getEmail().trim();
+		sb_body.append("\r\n");
+		sb_body.append("\r\n");
+		sb_body.append(postinfo.getMessage());
+		sb_body.append("\r\n<hr/>");
+		sb_body.append("作 者:" + postinfo.getPoster());
+		sb_body.append("\r\n");
+		sb_body.append("Email:<a href=\"mailto:" + cur_email + "\" target=\"_blank\">" + cur_email + "</a>");
+		sb_body.append("\r\n");
+		sb_body.append("URL:<a href=\"" + jumpurl + "\" target=\"_blank\">" + jumpurl + "</a>");
+		sb_body.append("\r\n");
+		sb_body.append("时 间:" + postinfo.getPostdatetime());
+		emailManager.sendEmailNotify(email, "[" + config.getForumtitle() + "回复通知]" + topic.getTitle(), sb_body
+				.toString());
 	}
 
 	public Topics getTopic() {

@@ -670,7 +670,7 @@ public class PosttopicAction extends ForumBaseAction {
 			String negativeopinion = LForumRequest.getParamValue("negativeopinion");
 			String terminaltime = LForumRequest.getParamValue("terminaltime");
 
-			if (type == "debate") {
+			if (type.equals("debate")) {
 				if (usergroupinfo.getAllowdebate() != 1) {
 					reqcfg.addErrLine("您当前的身份 \"" + usergroupinfo.getGrouptitle() + "\" 没有发起辩论的权限");
 					return SUCCESS;

@@ -903,4 +903,24 @@ public class ForumUtils {
 			}
 		}
 	}
+
+	/**
+	 * 是否是过滤的用户名
+	 * @param str
+	 * @param stringarray
+	 * @return
+	 */
+	public static boolean isBanUsername(String str, String stringarray) {
+		if (stringarray == null || stringarray.equals(""))
+			return false;
+
+		stringarray = stringarray.replace("*", "[\\s\\S]\\*").replace("?", "[\\?]");
+		for (String strarray : stringarray.split("\n")) {
+			Pattern pattern = Pattern.compile("^" + strarray + "$");
+			if (pattern.matcher(str).find() && (!strarray.trim().equals(""))) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

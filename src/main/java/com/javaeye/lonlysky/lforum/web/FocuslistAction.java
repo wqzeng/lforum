@@ -236,6 +236,7 @@ public class FocuslistAction extends ForumBaseAction {
 			onlineuserlist = onlineUserManager.getOnlineUserList(countMap);
 			onlineusercount = countMap.get(OnlineUserManager.TOTALUSER);
 			totalonlineguest = countMap.get(OnlineUserManager.GUESTUSER);
+			totalonlineuser = countMap.get(OnlineUserManager.USER);
 			totalonlineinvisibleuser = countMap.get(OnlineUserManager.INVISIBLEUSER);
 			onlineiconlist = cachesManager.getOnlineGroupIconList();
 		}

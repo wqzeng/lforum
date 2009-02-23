@@ -876,4 +876,16 @@ public class Utils {
 		return true;
 
 	}
+
+	/**
+	 * 获取置顶邮件的服务器地址
+	 * @param strEmail
+	 * @return
+	 */
+	public static String getEmailHostName(String strEmail) {
+		if (strEmail.indexOf("@") < 0) {
+			return "";
+		}
+		return strEmail.substring(strEmail.lastIndexOf("@")).toLowerCase();
+	}
 }

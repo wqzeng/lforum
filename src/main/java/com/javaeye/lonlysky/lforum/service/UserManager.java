@@ -305,7 +305,8 @@ public class UserManager {
 	 * @return 如果有则返回用户id, 否则返回-1
 	 */
 	public int findUserByEmail(String email) {
-		int uid = Utils.null2Int(userDAO.findUnique("select uid from Users where email=?", email));
+		int uid = Utils.null2Int(userDAO.createQuery("select uid from Users where email=?", email).setMaxResults(1)
+				.uniqueResult());
 		if (logger.isDebugEnabled()) {
 			logger.debug("获取Email为{}的用户ID返回：{}", email, uid);
 		}
@@ -658,7 +659,7 @@ public class UserManager {
 		}
 		if (user.getNewpmcount() >= 0) {
 			user.setNewpmcount(user.getNewpmcount() - subval);
-		}else {
+		} else {
 			user.setNewpmcount(0);
 		}
 		if (logger.isDebugEnabled()) {
@@ -746,5 +747,10 @@ public class UserManager {
 		tmpUserInfo.setExtcredits7(tmpUserInfo.getExtcredits7() + values[6]);
 		tmpUserInfo.setExtcredits8(tmpUserInfo.getExtcredits8() + values[7]);
 		updateUserInfo(tmpUserInfo);
+	}
+
+	public int getUserIdByAuthStr(String authstr) {
+		return Utils.null2Int(userDAO.findUnique("select uid from Users where day(userfields.authtime)-day('"
+				+ Utils.getNowTime() + "')<=3 and userfields.authstr=?", authstr));
 	}
 }

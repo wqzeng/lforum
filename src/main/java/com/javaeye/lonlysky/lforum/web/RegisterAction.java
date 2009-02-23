@@ -22,6 +22,7 @@ import com.javaeye.lonlysky.lforum.entity.forum.UserExtcreditsInfo;
 import com.javaeye.lonlysky.lforum.entity.forum.Userfields;
 import com.javaeye.lonlysky.lforum.entity.forum.Usergroups;
 import com.javaeye.lonlysky.lforum.entity.forum.Users;
+import com.javaeye.lonlysky.lforum.service.EmailManager;
 import com.javaeye.lonlysky.lforum.service.MessageManager;
 import com.javaeye.lonlysky.lforum.service.ScoresetManager;
 import com.javaeye.lonlysky.lforum.service.StatisticManager;
@@ -65,6 +66,9 @@ public class RegisterAction extends ForumBaseAction {
 	@Autowired
 	private UserCreditManager userCreditManager;
 
+	@Autowired
+	private EmailManager emailManager;
+
 	@Override
 	public String execute() throws Exception {
 		pagetitle = "用户注册";
@@ -92,7 +96,7 @@ public class RegisterAction extends ForumBaseAction {
 		if (config.getRegctrl() > 0) {
 			Users userinfo = userManager.getUserByIp(LForumRequest.getIp());
 			if (userinfo != null) {
-				int interval = Utils.null2Int(Utils.howLong("h", userinfo.getJoindate(), Utils.getNowTime()), 0);
+				int interval = Utils.strDateDiffHours(userinfo.getJoindate(), config.getRegctrl());
 				if (interval < config.getRegctrl()) {
 					reqcfg.addErrLine("抱歉, 系统设置了IP注册间隔限制, 您必须在 " + (config.getRegctrl() - interval) + " 小时后才可以注册");
 					return SUCCESS;
@@ -105,7 +109,7 @@ public class RegisterAction extends ForumBaseAction {
 			if (Utils.inIPArray(LForumRequest.getIp(), regctrl)) {
 				Users userinfo = userManager.getUserByIp(LForumRequest.getIp());
 				if (userinfo != null) {
-					int interval = Utils.null2Int(Utils.howLong("h", userinfo.getJoindate(), Utils.getNowTime()), 0);
+					int interval = Utils.strDateDiffHours(userinfo.getJoindate(), 72);
 					if (interval < 72) {
 						reqcfg.addErrLine("抱歉, 系统设置了特殊IP注册限制, 您必须在 " + (72 - interval) + " 小时后才可以注册");
 						return SUCCESS;
@@ -254,6 +258,7 @@ public class RegisterAction extends ForumBaseAction {
 				usergroups.setGroupid(8);
 				userinfo.setUsergroups(usergroups);
 
+				emailManager.sendRegMessage(email, userinfo.getUserfields().getAuthstr());
 				// 此处发送激活邮件
 
 			}
@@ -369,7 +374,7 @@ public class RegisterAction extends ForumBaseAction {
 			return;
 		}
 		// 如果用户名属于禁止名单, 或者与负责发送新用户注册欢迎信件的用户名称相同...
-		if (username.equals(GlobalsKeys.SYSTEM_USERNAME)) {
+		if (username.equals(GlobalsKeys.SYSTEM_USERNAME) || ForumUtils.isBanUsername(username, config.getCensoruser())) {
 			reqcfg.addErrLine("用户名 \"" + username + "\" 不允许在本论坛使用");
 			return;
 		}
@@ -409,6 +414,24 @@ public class RegisterAction extends ForumBaseAction {
 			return;
 		}
 
+		String emailhost = Utils.getEmailHostName(email);
+		// 允许名单规则优先于禁止名单规则
+		if (!config.getAccessemail().trim().equals("")) {
+			// 如果email后缀 不属于 允许名单
+			if (!Utils.inArray(emailhost, config.getAccessemail().replace("\r\n", "\n"), "\n")) {
+				reqcfg.addErrLine("Email: \"" + email + "\" 不在本论坛允许范围之类, 本论坛只允许用户使用这些Email地址注册: "
+						+ config.getAccessemail().replace("\n", ",").replace("\r", ""));
+				return;
+			}
+		}
+		if (!config.getCensoremail().trim().equals("")) {
+			// 如果email后缀 属于 禁止名单
+			if (Utils.inArray(email, config.getCensoremail().replace("\r\n", "\n"), "\n")) {
+				reqcfg.addErrLine("Email: \"" + email + "\" 不允许在本论坛使用, 本论坛不允许用户使用的Email地址包括: "
+						+ config.getCensoremail().replace("\n", ",").replace("\r", ""));
+				return;
+			}
+		}
 		/*
 		 * 实名认证
 		 */

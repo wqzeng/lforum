@@ -99,23 +99,23 @@ public class UsercpprofileAction extends ForumBaseAction {
 					return SUCCESS;
 				}
 
-				//				String emailhost = Utils.GetEmailHostName(email);
-				//				// 允许名单规则优先于禁止名单规则
-				//				if (config.Accessemail.trim() != "") {
-				//					// 如果email后缀 不属于 允许名单
-				//					if (!Utils.InArray(emailhost, config.Accessemail.Replace("\r\n", "\n"), "\n")) {
-				//						reqcfg.addErrLine("Email: \"" + email + "\" 不在本论坛允许范围之类, 本论坛只允许用户使用这些Email地址注册: "
-				//								+ config.Accessemail.Replace("\n", ",&nbsp;"));
-				//						return;
-				//					}
-				//				} else if (config.Censoremail.trim() != "") {
-				//					// 如果email后缀 属于 禁止名单
-				//					if (Utils.InArray(emailhost, config.Censoremail.Replace("\r\n", "\n"), "\n")) {
-				//						reqcfg.addErrLine("Email: \"" + email + "\" 不允许在本论坛使用, 本论坛不允许用户使用的Email地址包括: "
-				//								+ config.Censoremail.Replace("\n", ",&nbsp;"));
-				//						return;
-				//					}
-				//				}
+				String emailhost = Utils.getEmailHostName(email);
+				// 允许名单规则优先于禁止名单规则
+				if (!config.getAccessemail().trim().equals("")) {
+					// 如果email后缀 不属于 允许名单
+					if (!Utils.inArray(emailhost, config.getAccessemail().replace("\r\n", "\n"), "\n")) {
+						reqcfg.addErrLine("Email: \"" + email + "\" 不在本论坛允许范围之类, 本论坛只允许用户使用这些Email地址注册: "
+								+ config.getAccessemail().replace("\n", ",&nbsp;"));
+						return SUCCESS;
+					}
+				} else if (!config.getCensoremail().trim().equals("")) {
+					// 如果email后缀 属于 禁止名单
+					if (Utils.inArray(emailhost, config.getCensoremail().replace("\r\n", "\n"), "\n")) {
+						reqcfg.addErrLine("Email: \"" + email + "\" 不允许在本论坛使用, 本论坛不允许用户使用的Email地址包括: "
+								+ config.getCensoremail().replace("\n", ",&nbsp;"));
+						return SUCCESS;
+					}
+				}
 				if (LForumRequest.getParamValue("bio").length() > 500) {
 					//如果自我介绍超过500...
 					reqcfg.addErrLine("自我介绍不得超过500个字符");

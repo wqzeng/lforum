@@ -15,6 +15,7 @@ import com.javaeye.lonlysky.lforum.entity.forum.CreditsOperationType;
 import com.javaeye.lonlysky.lforum.entity.forum.Pms;
 import com.javaeye.lonlysky.lforum.entity.forum.Users;
 import com.javaeye.lonlysky.lforum.service.AdminGroupManager;
+import com.javaeye.lonlysky.lforum.service.EmailManager;
 import com.javaeye.lonlysky.lforum.service.MessageManager;
 import com.javaeye.lonlysky.lforum.service.UserCreditManager;
 
@@ -62,6 +63,9 @@ public class UsercppostpmAction extends ForumBaseAction {
 
 	@Autowired
 	private AdminGroupManager adminGroupManager;
+
+	@Autowired
+	private EmailManager emailManager;
 
 	@Override
 	public String execute() throws Exception {
@@ -314,6 +318,32 @@ public class UsercppostpmAction extends ForumBaseAction {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * 发送邮件通知
+	 * @param email 接收人邮箱
+	 * @param pm 短消息对象
+	 */
+	public void sendNotifyEmail(String email, Pms pm) {
+		String jumpurl = config.getForumurl() + "usercpshowpm.action?pmid=" + pm.getPmid();
+		StringBuilder sb_body = new StringBuilder("# 论坛短消息: <a href=\"" + jumpurl + "\" target=\"_blank\">"
+				+ pm.getSubject() + "</a>");
+		//发送人邮箱
+		String cur_email = userManager.getUserInfo(userid).getEmail().trim();
+		sb_body.append("\r\n");
+		sb_body.append("\r\n");
+		sb_body.append(pm.getMessage());
+		sb_body.append("\r\n<hr/>");
+		sb_body.append("作 者:" + pm.getMsgfrom());
+		sb_body.append("\r\n");
+		sb_body.append("Email:<a href=\"mailto:" + cur_email + "\" target=\"_blank\">" + cur_email + "</a>");
+		sb_body.append("\r\n");
+		sb_body.append("URL:<a href=\"" + jumpurl + "\" target=\"_blank\">" + jumpurl + "</a>");
+		sb_body.append("\r\n");
+		sb_body.append("时 间:" + pm.getPostdatetime());
+		emailManager.sendEmailNotify(email, "[" + config.getForumtitle() + "短消息通知]" + pm.getSubject(), sb_body
+				.toString());
 	}
 
 	public String getMsgto() {

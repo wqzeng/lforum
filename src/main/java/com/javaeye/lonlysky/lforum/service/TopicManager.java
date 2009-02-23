@@ -155,7 +155,6 @@ public class TopicManager {
 	 * 创建新主题
 	 * @param topics 主题信息
 	 */
-	@Transactional(readOnly = true)
 	public void createTopic(Topics topics) {
 		Postid postid = new Postid();
 		postid.setPid(0);

@@ -169,7 +169,7 @@ public class AdminForumManager {
 	 * @param isaschildnode 是否作为子论坛移动
 	 * @return
 	 */
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	public void moveForumsPos(int currentfid, int targetfid, boolean isaschildnode) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("移动板块,当前板块：{},目标板块：{},是否作为子论坛：" + isaschildnode, currentfid, targetfid);
@@ -342,7 +342,7 @@ public class AdminForumManager {
 	/**
 	 * 设置版块列表中论坛路径(pathlist)字段
 	 */
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	public void setForumsPathList() {
 		List<Forums> forumList = forumManager.getForumList();
 		for (Forums forum : forumList) {
@@ -523,7 +523,7 @@ public class AdminForumManager {
 	 * @param displayorder 显示顺序
 	 * @param inherited 是否使用继承机制
 	 */
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	public void insertForumsModerators(int fid, String moderators, int displayorder, int inherited) {
 		moderators = moderators == null ? "" : moderators;
 		int count = displayorder;
@@ -620,7 +620,7 @@ public class AdminForumManager {
 	 * @param fid 要删除的论坛版块的fid
 	 * @return
 	 */
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	public boolean deleteForumsByFid(int fid) {
 		if (isExistSubForum(fid)) {
 			return false;
@@ -683,7 +683,7 @@ public class AdminForumManager {
 	 * @param targetfid 目标论坛版块
 	 * @return
 	 */
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	public boolean combinationForums(int sourcefid, int targetfid) {
 		if (isExistSubForum(sourcefid)) {
 			return false;

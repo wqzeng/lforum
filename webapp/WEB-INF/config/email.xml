@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<EmailConfigInfo>
+  <Smtp>smtp.163.com</Smtp>
+  <Port>25</Port>
+  <Sysemail>huangking124@163.com</Sysemail>
+  <Username>huangking124</Username>
+  <Password>19870206520</Password>
+  <Emailcontent>尊敬的用户:
+
+您好!
+
+    您已在本论坛注册成功, 论坛地址为:FORUMURL
+
+    感谢您使用FORUMTITLE的服务, 如果您需要了解更多FORUMTITLE相关的信息, 请登录我们的网站: WEBURL
+    
+    希望您继续支持我们
+    
+    
+WEBTITLE</Emailcontent>
+</EmailConfigInfo>

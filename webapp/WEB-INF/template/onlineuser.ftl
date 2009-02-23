@@ -54,7 +54,7 @@
 					  </#if>
 				</td>
 				<td>${onlineuserinfo.lastupdatetime}</td>
-				<td>${onlineuserinfo.actionname?default("未知")}&nbsp;</td>
+				<td>${onlineuserinfo.actionname?default("")}&nbsp;</td>
 				<td><#if onlineuserinfo.forums?exists><a href="showforum.action?forumid=${onlineuserinfo.forums.fid}">${onlineuserinfo.forumname}</a></#if>&nbsp;</td>
 				<td><#if onlineuserinfo.topics?exists><a href="showtopic.action?topicid=${onlineuserinfo.topics.tid}">${onlineuserinfo.title}</a></#if>&nbsp;</td>
 			</tr>

@@ -5,7 +5,7 @@
 -->
 <#macro button id text buttonImgUrl="../images/submit.gif" type="submit" method="" enabled="false">
 <span>
-<button type="${type}" disabled="${enabled}" class="ManagerButton" id="${id}" name="${id}" value="${id}"
+<button type="${type}" <#if enabled=="true">disabled="true"</#if> class="ManagerButton" id="${id}" name="${id}" value="${id}"
 	onclick="this.disabled=true;document.getElementById('success').style.display = 'block';HideOverSels('success');doPost('${method}');"><img
 	src="${buttonImgUrl}" />${text}</button>
 </span>

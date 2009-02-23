@@ -59,10 +59,8 @@ public class EmailUtil {
 	 * @param hasSure
 	 *            是否有附件
 	 */
-	private static void sendMail(String server, String port, String user, String pwd, String[] mailTo, int mailType,
-			String subject, String[] enclosure, String content, boolean hasSure) {
-		String domain = server.substring(server.indexOf(".") + 1);
-		String sender = user + "@" + domain;
+	private static void sendMail(String server, String from, String port, String user, String pwd, String[] mailTo,
+			int mailType, String subject, String[] enclosure, String content, boolean hasSure) {
 		try {
 			Properties props = new Properties();
 			props.put("mail.smtp.auth", "true");
@@ -71,7 +69,7 @@ public class EmailUtil {
 			props.put("mail.smtp.prot", port);
 			Session session = Session.getDefaultInstance(props, null);
 			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress(sender));
+			msg.setFrom(new InternetAddress(from));
 			RecipientType type;
 			switch (mailType) { // 设置邮件类型
 			case 0:
@@ -113,7 +111,7 @@ public class EmailUtil {
 
 			// 分别使用两种方式登录邮箱,邮箱为用户名和独立用户名
 			try {
-				transport.connect(server, sender, pwd); // 登录邮箱
+				transport.connect(server, server, pwd); // 登录邮箱
 			} catch (MessagingException e) {
 				try {
 					transport.connect(server, user, pwd); // 登录邮箱
@@ -157,9 +155,9 @@ public class EmailUtil {
 	 * @param content
 	 *            内容
 	 */
-	public static void sendMail(String server, String port, String user, String pwd, String[] mailTo, int mailType,
-			String subject, String content) {
-		sendMail(server, port, user, pwd, mailTo, mailType, subject, null, content, false);
+	public static void sendMail(String server, String from, String port, String user, String pwd, String[] mailTo,
+			int mailType, String subject, String content) {
+		sendMail(server, from, port, user, pwd, mailTo, mailType, subject, null, content, false);
 	}
 
 	/**
@@ -184,9 +182,9 @@ public class EmailUtil {
 	 * @param content
 	 *            内容
 	 */
-	public static void sendMail(String server, String port, String user, String pwd, String[] mailTo, int mailType,
-			String subject, String[] enclosure, String content) {
-		sendMail(server, port, user, pwd, mailTo, mailType, subject, enclosure, content, true);
+	public static void sendMail(String server, String from, String port, String user, String pwd, String[] mailTo,
+			int mailType, String subject, String[] enclosure, String content) {
+		sendMail(server, from, port, user, pwd, mailTo, mailType, subject, enclosure, content, true);
 	}
 
 }

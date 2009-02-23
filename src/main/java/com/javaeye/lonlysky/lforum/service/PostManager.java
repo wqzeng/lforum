@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Property;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +93,6 @@ public class PostManager {
 	 * @param post 帖子信息类
 	 * @throws ParseException 
 	 */
-	@Transactional(readOnly = true)
 	public void createPost(Posts post) throws ParseException {
 		// 保存帖子信息
 		Postid postid = new Postid();
@@ -126,7 +124,7 @@ public class PostManager {
 									+ fids + ",') > 0)", Utils.getNowTime(), post.getTopics().getTid(),
 							post.getTopics().getTitle(), post.getPostdatetime(), post.getPoster(),
 							post.getUsers().getUid()).executeUpdate();
-			
+
 			// 更新主题信息
 			Topics topics = post.getTopics();
 			if (post.getLayer() <= 0) {
@@ -1040,15 +1038,14 @@ public class PostManager {
 	 * @param postpramsInfo 参数列表
 	 * @return 帖子列表
 	 */
+	@Transactional(readOnly = true)
 	public List<Posts> getLastPostList(PostpramsInfo postpramsInfo) {
 		Page<Posts> page = new Page<Posts>(postpramsInfo.getPagesize());
-		page.setOrder("desc");
-		page.setOrderBy("pid");
-		page = postDAO.findByCriteria(page, Property.forName("topics.tid").eq(postpramsInfo.getTid()), Property
-				.forName("invisible").eq(0));
+		page.setPageNo(postpramsInfo.getPageindex());
+		page = postDAO.find(page, "from Posts where topics.tid=? and invisible=0 order by pid desc", postpramsInfo
+				.getTid());
 		List<Posts> postList = page.getResult();
 		for (Posts posts : postList) {
-			postDAO.getSession().evict(posts);
 			//　ubb转为html代码在页面显示
 			postpramsInfo.setSmileyoff(posts.getSmileyoff());
 			postpramsInfo.setBbcodeoff(posts.getBbcodeoff());
