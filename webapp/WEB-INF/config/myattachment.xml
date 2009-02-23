@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_07" class="java.beans.XMLDecoder"> 
+ <object class="com.javaeye.lonlysky.lforum.entity.global.MyAttachTypeConfig"> 
+  <void property="attachmentTypes"> 
+   <array class="com.javaeye.lonlysky.lforum.entity.global.AttachmentType" length="4"> 
+    <void index="0"> 
+     <object class="com.javaeye.lonlysky.lforum.entity.global.AttachmentType"> 
+      <void property="extName"> 
+       <string>jpg,gif</string> 
+      </void> 
+      <void property="typeId"> 
+       <int>1</int> 
+      </void> 
+      <void property="typeName"> 
+       <string>1类</string> 
+      </void> 
+     </object> 
+    </void> 
+    <void index="1"> 
+     <object class="com.javaeye.lonlysky.lforum.entity.global.AttachmentType"> 
+      <void property="extName"> 
+       <string>torrent</string> 
+      </void> 
+      <void property="typeId"> 
+       <int>2</int> 
+      </void> 
+      <void property="typeName"> 
+       <string>3类</string> 
+      </void> 
+     </object> 
+    </void> 
+    <void index="2"> 
+     <object class="com.javaeye.lonlysky.lforum.entity.global.AttachmentType"> 
+      <void property="extName"> 
+       <string>rar,jpg</string> 
+      </void> 
+      <void property="typeId"> 
+       <int>3</int> 
+      </void> 
+      <void property="typeName"> 
+       <string>2类</string> 
+      </void> 
+     </object> 
+    </void> 
+    <void index="3"> 
+     <object class="com.javaeye.lonlysky.lforum.entity.global.AttachmentType"> 
+      <void property="extName"> 
+       <string>rar,jpg</string> 
+      </void> 
+      <void property="typeId"> 
+       <int>4</int> 
+      </void> 
+      <void property="typeName"> 
+       <string>4类</string> 
+      </void> 
+     </object> 
+    </void> 
+   </array> 
+  </void> 
+ </object> 
+</java> 

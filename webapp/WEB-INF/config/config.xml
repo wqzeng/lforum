@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.6.0_07" class="java.beans.XMLDecoder">
+	<object class="com.javaeye.lonlysky.lforum.entity.global.Config">
+		<!-- Email允许地址 -->
+		<void property="accessemail">
+			<string></string>
+		</void>
+		<!-- 管理员后台IP访问列表 -->
+		<void property="adminipaccess">
+			<string></string>
+		</void>
+		<!-- 是否允许切换编辑器模式 -->
+		<void property="allowswitcheditor">
+			<int>1</int>
+		</void>
+		<!-- 禁止下载附件时间段 -->
+		<void property="attachbanperiods">
+			<string></string>
+		</void>
+		<!-- 帖子中显示图片附件 -->
+		<void property="attachimgpost">
+			<int>1</int>
+		</void>
+		<!-- 下载附件来路检查 -->
+		<void property="attachrefcheck">
+			<int>0</int>
+		</void>
+		<!-- 是否是高质量图片 取值范围0-100 -->
+		<void property="attachimgquality">
+			<int>80</int>
+		</void>
+		<!-- 附件图片最大高度 -->
+		<void property="attachimgmaxheight">
+			<int>0</int>
+		</void>
+		<!-- 附件图片最大宽度 -->
+		<void property="attachimgmaxwidth">
+			<int>0</int>
+		</void>
+		<!-- 是否将管理操作的理由短消息通知作者 -->
+		<void property="reasonpm">
+			<int>0</int>
+		</void>
+		<!--
+		附件保存方式 0=按年/月/日存入不同目录 1=按年/月/日/论坛存入不同目录 2=按论坛存入不同目录 3=按文件类型存入不同目录
+	-->
+		<void property="attachsave">
+			<int>1</int>
+		</void>
+		<!-- 新手见习期限(单位:分钟) -->
+		<void property="newbiespan">
+			<int>0</int>
+		</void>
+		<!-- 隐藏无权访问的论坛 -->
+		<void property="hideprivate">
+			<int>0</int>
+		</void>
+		<!-- Email禁止地址 -->
+		<void property="censoremail">
+			<string></string>
+		</void>
+		<!-- 用户信息保留关键字 -->
+		<void property="censoruser">
+			<string>admin&#13;
+管理员&#13;
+版主&#13;
+lonlysky&#13;
+???</string>
+		</void>
+		<!-- 关闭提示信息 -->
+		<void property="closedreason">
+			<string>抱歉!论坛暂时关闭,稍后才能访问.</string>
+		</void>
+		<!-- 是否关闭 -->
+		<void property="closed">
+			<int>0</int>
+		</void>
+		<!-- 身份验证Cookie域 -->
+		<void property="cookiedomain">
+			<string></string>
+		</void>
+		<!-- 数据库类型 -->
+		<void property="datatype">
+			<string>sqlserver05</string>
+		</void>
+		<!-- 默认的编辑器模式 0=ubb代码编辑器 1=可视化编辑器 -->
+		<void property="defaulteditormode">
+			<int>1</int>
+		</void>
+		<!-- 新用户广告强力屏蔽(0:不开启 1:开启) -->
+		<void property="disablepostad">
+			<int>1</int>
+		</void>
+		<!-- 用户发帖N帖内进行新用户广告强力屏蔽功能检查,默认5帖 -->
+		<void property="disablepostadpostcount">
+			<int>5</int>
+		</void>
+		<!-- 用户注册N分钟内进行新用户广告强力屏蔽功能检查,默认60分钟 -->
+		<void property="disablepostadregminute">
+			<int>60</int>
+		</void>
+		<void property="disablepostadregular">
+			<string>
+				((\d{4}|\d{4}-)?(\d(?:\s*)){7})|((\d{3}|\d{3}-)?\d{8})|(1(?:\s*)[35](?:\s*)[0123456789](?:\s*)(\d(?:\s*)){8})
+				[qQ](.+?)(\d(?:\s*)){7}</string>
+		</void>
+		<!-- 评分记录现实的最大数量 -->
+		<void property="displayratecount">
+			<int>30</int>
+		</void>
+		<!-- 编辑帖子附加编辑记录 -->
+		<void property="editedby">
+			<int>1</int>
+		</void>
+		<!-- 是否启用Tag功能 -->
+		<void property="enabletag">
+			<int>1</int>
+		</void>
+		<!-- 显示论坛跳转菜单 -->
+		<void property="forumjump">
+			<int>1</int>
+		</void>
+		<!-- 论坛名称 -->
+		<void property="forumtitle">
+			<string>LForum</string>
+		</void>
+		<!-- 论坛URL -->
+		<void property="forumurl">
+			<string>http://localhost:8080/LForum/</string>
+		</void>
+		<!-- 我的话题全文搜索 0=只搜索用户是主题发表者的主题 1=搜索用户是主题发表者或回复者的主题 -->
+		<void property="fullmytopics">
+			<int>1</int>
+		</void>
+		<!-- 是否开启商场 (0:不开启 1:开启 2:开启高级模式) -->
+		<void property="enablemall">
+			<int>0</int>
+		</void>
+		<void property="gpp">
+			<int>16</int>
+		</void>
+		<!-- 首页热门标签数量 -->
+		<void property="hottagcount">
+			<int>10</int>
+		</void>
+		<!-- 热门话题最低贴数 -->
+		<void property="hottopic">
+			<int>15</int>
+		</void>
+		<!-- 以使用html标题的用户组 -->
+		<void property="htmltitleusergroup">
+			<string></string>
+		</void>
+		<!-- ICP备案 -->
+		<void property="icp">
+			<string></string>
+		</void>
+		<!-- 是否执行安装 -->
+		<void property="install">
+			<int>0</int>
+		</void>
+		<!-- 是否使用html标题 -->
+		<void property="htmltitle">
+			<int>0</int>
+		</void>
+		<!-- 版块是否指定模板 (0:为未指定) -->
+		<void property="specifytemplate">
+			<int>0</int>
+		</void>
+		<!-- 是否分栏显示 -->
+		<void property="isframeshow">
+			<int>1</int>
+		</void>
+		<!-- IP访问列表 -->
+		<void property="ipaccess">
+			<string></string>
+		</void>
+		<!-- IP禁止访问列表 -->
+		<void property="ipdenyaccess">
+			<string>192.168.0.40</string>
+		</void>
+		<!-- IP 注册间隔限制(小时) -->
+		<void property="regctrl">
+			<int>0</int>
+		</void>
+		<!-- 特殊 IP 注册限制 -->
+		<void property="ipregctrl">
+			<string></string>
+		</void>
+		<!-- 外部连接URL -->
+		<void property="linktext">
+			<string>&lt;a href=&quot;http://lonlysky.javaeye.com&quot; title=&quot;Lonlysky&apos;s BLog&quot; target=&quot;_blank&quot;&gt;官方博客&lt;/a&gt;</string> 
+  </void> 
+  <!-- 最大允许的上传附件数 -->
+  <void property="maxattachments"> 
+   <int>10</int> 
+  </void> 
+  <!-- 头像最大高度(像素) -->
+  <void property="maxavatarheight"> 
+   <int>120</int> 
+  </void> 
+  <!-- 头像最大尺寸(字节) -->
+  <void property="maxavatarsize"> 
+   <int>51200</int> 
+  </void> 
+  <!-- 头像最大宽度(像素) -->
+  <void property="maxavatarwidth"> 
+   <int>120</int> 
+  </void> 
+  <!-- 收藏夹容量 -->
+  <void property="maxfavorites"> 
+   <int>100</int> 
+  </void> 
+  <!-- 管理记录保留时间(月) -->
+  <void property="maxmodworksmonths"> 
+   <int>3</int> 
+  </void> 
+  <!-- 最多显示在线人数 -->
+  <void property="maxonlinelist"> 
+   <int>300</int> 
+  </void> 
+  <!-- 最大在线人数 -->
+  <void property="maxonlines"> 
+   <int>10</int> 
+  </void> 
+  <!-- 投票最大选项数 -->
+  <void property="maxpolloptions"> 
+   <int>10</int> 
+  </void> 
+  <!-- 帖子最大字数(字节) -->
+  <void property="maxpostsize"> 
+   <int>20000</int> 
+  </void> 
+  <!-- 最大签名高度(行) -->
+  <void property="maxsigrows"> 
+   <int>5</int> 
+  </void> 
+  <!-- 版主显示方式 0=平面显示 1=下拉菜单 -->
+  <void property="moddisplay"> 
+   <int>0</int> 
+  </void> 
+  <!-- 60 秒最大搜索次数 -->
+  <void property="maxspm"> 
+   <int>5</int> 
+  </void> 
+  <!-- 首页是否显示论坛的下级子论坛 -->
+  <void property="subforumsindex"> 
+   <int>0</int> 
+  </void>
+  <!-- 允许查看会员列表 -->
+  <void property="memliststatus"> 
+   <int>1</int> 
+  </void> 
+  <!-- 帖子最小字数(字节) -->
+  <void property="minpostsize"> 
+   <int>5</int> 
+  </void> 
+  <!-- 编辑帖子时间限制(分钟) -->
+  <void property="edittimelimit"> 
+   <int>0</int> 
+  </void> 
+  <!-- 删贴不减积分时间期限(天) -->
+  <void property="Losslessdel"> 
+   <int>0</int> 
+  </void> 
+  <!-- 评分时间限制(小时) -->
+  <void property="karmaratelimit"> 
+   <int>0</int> 
+  </void> 
+  <!-- 是否在主题查看页面显示管理操作 -->
+  <void property="moderactions"> 
+   <int>1</int> 
+  </void> 
+  <!-- 论坛管理工作统计 -->
+  <void property="modworkstatus"> 
+   <int>1</int> 
+  </void> 
+  <!-- 我的附件保留时间 -->
+  <void property="myattachmentsavetime"> 
+   <int>30</int> 
+  </void> 
+  <!-- 允许重复评分 -->
+  <void property="dupkarmarate"> 
+   <int>0</int> 
+  </void> 
+  <!-- 我的帖子保留时间 -->
+  <void property="mypostsavetime"> 
+   <int>30</int> 
+  </void> 
+  <!-- 我的主题保留时间 -->
+  <void property="mytopicsavetime"> 
+   <int>30</int> 
+  </void> 
+  <!-- 用户在线时间更新时长(分钟): -->
+  <void property="oltimespan"> 
+   <int>1</int> 
+  </void> 
+  <!-- 是否开启主题统计队列功能 -->
+  <void property="topicqueuestats"> 
+   <int>0</int> 
+  </void> 
+  <!-- 主题统计队列长度(浏览量) -->
+  <void property="topicqueuestatscount"> 
+   <int>0</int> 
+  </void> 
+  <!-- 多久无动作视为离线 -->
+  <void property="onlinetimeout"> 
+   <int>-10</int> 
+  </void> 
+  <!-- 用户密码Key -->
+  <void property="passwordkey"> 
+   <string>RV8JX664X8</string> 
+  </void> 
+  <!-- 图片管理用户组 -->
+  <void property="photomangegroups"> 
+   <string></string> 
+  </void> 
+  <!-- 禁止发帖时间段 -->
+  <void property="postbanperiods"> 
+   <string></string> 
+  </void> 
+  <!-- 发帖灌水预防(秒) -->
+  <void property="postinterval"> 
+   <int>15</int> 
+  </void> 
+  <!-- 发帖审核时间段 -->
+  <void property="postmodperiods"> 
+   <string></string> 
+  </void> 
+  <!-- 每页帖子数 -->
+  <void property="ppp"> 
+   <int>10</int> 
+  </void> 
+  <!-- 页面访问量更新频率(页面数) -->
+  <void property="pvfrequence"> 
+   <int>60</int> 
+  </void> 
+  <!-- 评分阀值 -->
+  <void property="ratevalveset"> 
+   <string>1,50,200,600,800</string> 
+  </void> 
+  <void property="recommenddebates"> 
+   <string>1000,11,12</string> 
+  </void> 
+  <!-- 举报报告用户组 -->
+  <void property="reportusergroup"> 
+   <string>1</string> 
+  </void> 
+  <!-- RSS TTL(分钟) -->
+  <void property="rssttl"> 
+   <int>60</int> 
+  </void> 
+  <!-- Sitemap是否开启 -->
+  <void property="sitemapstatus"> 
+   <int>1</int> 
+  </void> 
+  <!-- 缓存游客查看主题页面的权重, 为0则不缓存, 范围0 - 100 -->
+  <void property="topiccachemark"> 
+   <int>0</int> 
+  </void> 
+	<!-- 缓存游客页面的失效时间, 为0则不缓存, 大于0则缓存该值的时间(单位:分钟) -->
+   <void property="guestcachepagetimeout"> 
+   <int>0</int> 
+  </void> 
+  <!-- 许可协议内容 -->
+  <void property="rulestxt"> 
+   <string> 1 遵守国家法律法规 2 遵守所有与网络服务有关的网络协议、规定和程序 3 不得为任何非法目的而使用网络服务系统 </string> 
+  </void> 
+  <!-- 禁止全文搜索时间段 -->
+  <void property="searchbanperiods"> 
+   <string></string> 
+  </void> 
+  <!-- 搜索时间限制(秒) -->
+  <void property="searchctrl"> 
+   <int>30</int> 
+  </void> 
+  <!-- 使用验证码的页面列表,用","分隔 例如:register.action,login.action -->
+  <void property="seccodestatus"> 
+   <string>register.action</string> 
+  </void> 
+  <!-- 是否启用用户登录安全提问 -->
+   <void property="secques"> 
+   <int>1</int> 
+  </void> 
+  <!-- Meta Description -->
+  <void property="seodescription"> 
+   <string>LForum For Java,Struts,Hibernate,Spring,论坛</string> 
+  </void> 
+  <!-- 其他头部信息 -->
+  <void property="seohead"> 
+   <string></string> 
+  </void> 
+  <!-- Meta Keywords -->
+  <void property="seokeywords"> 
+   <string>Java,Struts,Hibernate,Spring,论坛</string> 
+  </void> 
+  <!-- 标题附加字 SEO -->
+  <void property="seotitle"> 
+   <string>Java|Struts|Hibernate|Spring|论坛</string> 
+  </void> 
+  <!-- Sitemap TTL(小时) -->
+  <void property="sitemapttl"> 
+   <int>12</int> 
+  </void> 
+  <!-- 禁止浏览器缓冲 -->
+  <void property="nocacheheaders"> 
+   <int>0</int> 
+  </void> 
+  <!-- 启用RSS -->
+  <void property="rssstatus"> 
+   <int>1</int> 
+  </void> 
+  <!-- 显示可点击表情 -->
+  <void property="smileyinsert"> 
+   <int>1</int> 
+  </void> 
+  <!-- 帖子中最大允许的表情符数量 -->
+  <void property="smiliesmax"> 
+   <int>5</int> 
+  </void> 
+  <!-- 启用 Archiver -->
+  <void property="archiverstatus"> 
+   <int>1</int> 
+  </void> 
+  <!-- 星星升级阀值 -->
+  <void property="starthreshold"> 
+   <int>2</int> 
+  </void> 
+  <!-- 统计代码 -->
+  <void property="statcode"> 
+   <string></string> 
+  </void> 
+  <!-- 统计缓存时间(分钟) -->
+  <void property="statscachelife"> 
+   <int>120</int> 
+  </void> 
+  <!-- 是否开启浏览统计 -->
+  <void property="statstatus"> 
+   <int>1</int> 
+  </void> 
+  <!-- 显示风格下拉菜单 -->
+  <void property="stylejump"> 
+   <int>1</int> 
+  </void> 
+  <!-- 默认论坛风格 -->
+  <void property="templateid"> 
+   <int>1</int> 
+  </void> 
+  <!-- 每页主题数 -->
+  <void property="tpp"> 
+   <int>20</int> 
+  </void> 
+  <!-- 衡量并显示用户头衔 -->
+  <void property="userstatusby"> 
+   <int>1</int> 
+  </void> 
+  <!-- 设置前台"查看新帖"的分钟数 -->
+  <void property="viewnewtopicminute"> 
+   <int>120</int> 
+  </void> 
+  <!--  禁止访问时间段 -->
+  <void property="visitbanperiods"> 
+   <string></string> 
+  </void> 
+  <!-- 显示最近访问论坛数量 -->
+  <void property="visitedforums"> 
+   <int>20</int> 
+  </void> 
+  <!-- 图片附件如果直接显示, 地址是否直接使用图片真实路径 -->
+  <void property="showattachmentpath"> 
+   <int>0</int> 
+  </void> 
+  <!-- 图片附件添加文字水印的字体 -->
+  <void property="watermarkfontname"> 
+   <string>宋体</string> 
+  </void> 
+  <!-- 图片附件添加文字水印的大小(像素) -->
+  <void property="watermarkfontsize"> 
+   <int>12</int> 
+  </void> 
+  <!-- 使用的水印图片的名称 -->
+  <void property="watermarkpic"> 
+   <string>watermark.gif</string> 
+  </void> 
+  <!-- 图片附件添加水印 0=不使用 1=左上 2=中上 3=右上 4=左中 ... 9=右下 -->
+  <void property="watermarkstatus"> 
+   <int>9</int> 
+  </void> 
+  <!--
+		图片附件添加文字水印的内容 {1}表示论坛标题 {2}表示论坛地址 {3}表示当前日期 {4}表示当前时间, 例如: {3}
+		{4}上传于{1} {2}
+	-->
+  <void property="watermarktext"> 
+   <string>{3} {4}上传于{1} {2}</string> 
+  </void> 
+  <!-- 图片水印透明度 取值范围1-10 (10为不透明) -->
+  <void property="watermarktransparency"> 
+   <int>5</int> 
+  </void>   
+  <void property="watermarktype"> 
+   <int>1</int> 
+  </void> 
+  <void property="webpath"> 
+   <string>E:\项目\LForum项目\工程\LForum\webapp\</string> 
+  </void> 
+  <!-- 网站名称 -->
+  <void property="webtitle"> 
+   <string>LForum</string> 
+  </void> 
+  <!-- 网站URL -->
+  <void property="weburl"> 
+   <string></string> 
+  </void>   
+  <!-- 欢迎短消息内容 -->
+  <void property="welcomemsgtxt"> 
+   <string> 尊敬的用户, 您已经注册成为本论坛的会员, 请您在发表言论时, 遵守当地法律法规.如果您有什么疑问可以联系管理员. </string> 
+  </void> 
+  <!-- 是否发送欢迎短消息内容 -->
+  <void property="welcomems"> 
+   <int>1</int> 
+  </void>
+  <!-- 在线列表是否隐藏游客: 1 是 0 否 -->
+  <void property="whosonlinecontract"> 
+   <int>1</int> 
+  </void> 
+  <!-- 显示在线用户 0=不显示 1=仅在首页显示 2=仅在分论坛显示 3=在首页和分论坛显示 -->
+  <void property="whosonlinestatus"> 
+   <int>1</int> 
+  </void>   
+  <!-- 是否允许新用户注册 -->
+  <void property="regstatus"> 
+   <int>1</int> 
+  </void> 
+  <!-- 注册时候是否显示高级选项-->
+  <void property="regadvance"> 
+   <int>1</int> 
+  </void> 
+  <!-- 注册时是否启用实名制-->
+  <void property="realnamesystem"> 
+   <int>0</int> 
+  </void> 
+  <!-- 允许同一 Email 注册不同用户 -->
+  <void property="doublee"> 
+   <int>0</int> 
+  </void> 
+  <!-- 新用户注册验证 -->
+  <void property="regverify"> 
+   <int>0</int> 
+  </void>   
+  <!-- 是否显示签名 -->
+  <void property="showsignatures"> 
+   <int>1</int> 
+  </void> 
+  <!-- 是否在帖子中显示图片 -->
+  <void property="showimages"> 
+   <int>1</int> 
+  </void>
+  <!-- 是否显示注册许可协议 -->
+  <void property="rules"> 
+   <int>0</int> 
+  </void> 
+  <!-- 快速发帖 -->
+  <void property="fastpost"> 
+   <int>3</int> 
+  </void> 
+  <!-- 是否显示头像 -->
+   <void property="showavatars"> 
+   <int>1</int> 
+  </void> 
+ </object> 
+</java> 

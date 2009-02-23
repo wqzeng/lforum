@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConfigInfo>
+	<!-- 是否执行安装 -->
+	<IsInstall>0</IsInstall>
+	
+	<!-- 数据库类型 -->
+	<DataType>sqlserver05</DataType>
+
+	<!-- 论坛名称 -->
+	<Forumtitle>LForum</Forumtitle>
+	
+	<!-- 论坛URL -->
+	<Forumurl>http://localhost:8080/LForum 
+	</Forumurl>
+	
+	<!-- 网站名称 -->
+	<Webtitle>LForum</Webtitle>
+	
+	<!-- 网站URL -->
+	<Weburl />
+	
+	<!-- ICP备案 -->
+	<Icp />
+	
+	<!-- 是否关闭 -->
+	<Closed>0</Closed>
+	
+	<!-- 关闭提示信息 -->
+	<Closedreason>抱歉!论坛暂时关闭,稍后才能访问.</Closedreason>
+	
+	<!-- 是否分栏显示 -->
+	<Isframeshow>0</Isframeshow>
+	
+	<!-- 外部连接URL -->
+	<Linktext>
+		<![CDATA[<a href="http://lonlysky.javaeye.com" title="Lonlysky's BLog" target="_blank">LForum</a>]]>
+	</Linktext>
+	
+	<!-- 统计代码 -->
+	<Statcode />
+	
+	<!-- 用户密码Key -->
+	<Passwordkey>RV8JX664X8</Passwordkey>
+	
+	<!-- 是否允许新用户注册 -->
+	<Regstatus>1</Regstatus>
+	
+	<!-- 注册时候是否显示高级选项-->
+	<Regadvance>0</Regadvance>
+	
+	<!-- 注册时是否启用实名制-->
+	<Realnamesystem>0</Realnamesystem>
+	
+	<!-- 用户信息保留关键字 -->
+	<Censoruser>admin 管理员 版主 lonlysky ???</Censoruser>
+	
+	<!-- 允许同一 Email 注册不同用户 -->
+	<Doublee>1</Doublee>
+	
+	<!-- 新用户注册验证 -->
+	<Regverify>0</Regverify>
+	
+	<!-- Email允许地址 -->
+	<Accessemail />
+	
+	<!-- Email禁止地址 -->
+	<Censoremail />
+	
+	<!-- 隐藏无权访问的论坛 -->
+	<Hideprivate>0</Hideprivate>
+	
+	<!-- IP 注册间隔限制(小时) -->
+	<Regctrl>0</Regctrl>
+	
+	<!-- 特殊 IP 注册限制 -->
+	<Ipregctrl />
+	
+	<!-- IP禁止访问列表 -->
+	<Ipdenyaccess />
+	
+	<!-- IP访问列表 -->
+	<Ipaccess />
+	
+	<!-- 管理员后台IP访问列表 -->
+	<Adminipaccess />
+	
+	<!-- 新手见习期限(单位:分钟) -->
+	<Newbiespan>0</Newbiespan>
+	
+	<!-- 发送欢迎短消息 -->
+	<Welcomemsg>1</Welcomemsg>
+	
+	<!-- 欢迎短消息内容 -->
+	<Welcomemsgtxt>
+		<![CDATA[尊敬的用户, 您已经注册成为本论坛的会员, 请您在发表言论时, 遵守当地法律法规.如果您有什么疑问可以联系管理员.]]>
+	</Welcomemsgtxt>
+		
+	<!-- 是否显示注册许可协议 -->
+	<Rules>1</Rules>
+	
+	<!-- 许可协议内容 -->
+	<Rulestxt>
+		<![CDATA[1 遵守国家法律法规 2 遵守所有与网络服务有关的网络协议、规定和程序 3 不得为任何非法目的而使用网络服务系统]]>
+	</Rulestxt>
+	
+	<!-- 是否启用用户登录安全提问 -->
+	<Secques>0</Secques>
+	
+	<!-- 默认论坛风格 -->
+	<Templateid>1</Templateid>
+	
+	<!-- 热门话题最低贴数 -->
+	<Hottopic>15</Hottopic>
+	
+	<!-- 星星升级阀值 -->
+	<Starthreshold>2</Starthreshold>
+	
+	<!-- 显示最近访问论坛数量 -->
+	<Visitedforums>20</Visitedforums>
+	
+	<!-- 最大签名高度(行) -->
+	<Maxsigrows>5</Maxsigrows>
+	
+	<!-- 版主显示方式 0=平面显示 1=下拉菜单 -->
+	<Moddisplay>0</Moddisplay>
+	
+	<!-- 首页是否显示论坛的下级子论坛 -->
+	<Subforumsindex>0</Subforumsindex>
+	
+	<!-- 显示风格下拉菜单 -->
+	<Stylejump>1</Stylejump>
+	
+	<!-- 快速发帖 -->
+	<Fastpost>3</Fastpost>
+	
+	<!-- 是否显示签名 -->
+	<Showsignatures>1</Showsignatures>
+	
+	<!-- 是否显示头像 -->
+	<Showavatars>1</Showavatars>
+	
+	<!-- 是否在帖子中显示图片 -->
+	<Showimages>1</Showimages>
+	
+	<!-- 帖子中最大允许的表情符数量 -->
+	<Smiliesmax>5</Smiliesmax>
+	
+	<!-- 启用 Archiver -->
+	<Archiverstatus>1</Archiverstatus>
+	
+	<!-- 标题附加字 SEO -->
+	<Seotitle>Java|Struts|Hibernate|Spring|论坛 
+	</Seotitle>
+	
+	<!-- Meta Keywords -->
+	<Seokeywords>Java,Struts,Hibernate,Spring,论坛 
+	</Seokeywords>
+	
+	<!-- Meta Description -->
+	<Seodescription>LForum For Java,Struts,Hibernate,Spring,论坛 
+	</Seodescription>
+	
+	<!-- 其他头部信息 -->
+	<Seohead />
+	
+	<!-- 启用RSS -->
+	<Rssstatus>1</Rssstatus>
+	
+	<!-- RSS TTL(分钟) -->
+	<Rssttl>60</Rssttl>
+	
+	<!-- Sitemap是否开启 -->
+	<Sitemapstatus>1</Sitemapstatus>
+	
+	<!-- Sitemap TTL(小时) -->
+	<Sitemapttl>12</Sitemapttl>
+	
+	<!-- 禁止浏览器缓冲 -->
+	<Nocacheheaders>0</Nocacheheaders>
+	
+	<!-- 我的话题全文搜索 0=只搜索用户是主题发表者的主题 1=搜索用户是主题发表者或回复者的主题 -->
+	<Fullmytopics>1</Fullmytopics>
+	
+	<!-- 显示在线用户 0=不显示 1=仅在首页显示 2=仅在分论坛显示 3=在首页和分论坛显示 -->
+	<Whosonlinestatus>1</Whosonlinestatus>
+	
+	<!-- 最多显示在线人数 -->
+	<Maxonlinelist>300</Maxonlinelist>
+	
+	<!-- 衡量并显示用户头衔 -->
+	<Userstatusby>1</Userstatusby>
+	
+	<!-- 显示论坛跳转菜单 -->
+	<Forumjump>1</Forumjump>
+	
+	<!-- 论坛管理工作统计 -->
+	<Modworkstatus>1</Modworkstatus>
+	
+	<!-- 管理记录保留时间(月) -->
+	<Maxmodworksmonths>3</Maxmodworksmonths>
+	
+	<!-- 使用验证码的页面列表,用","分隔 例如:register.action,login.action -->
+	<Seccodestatus />
+	
+	<!-- 缓存游客页面的失效时间, 为0则不缓存, 大于0则缓存该值的时间(单位:分钟) -->
+	<Guestcachepagetimeout>0</Guestcachepagetimeout>
+	
+	<!-- 缓存游客查看主题页面的权重, 为0则不缓存, 范围0 - 100 -->
+	<Topiccachemark>0</Topiccachemark>
+	
+	<!-- 最大在线人数 -->
+	<Maxonlines>5000</Maxonlines>
+	
+	<!-- 发帖灌水预防(秒) -->
+	<Postinterval>15</Postinterval>
+	
+	<!-- 搜索时间限制(秒) -->
+	<Searchctrl>30</Searchctrl>
+	
+	<!-- 60 秒最大搜索次数 -->
+	<Maxspm>5</Maxspm>
+	
+	<!--  禁止访问时间段 -->
+	<Visitbanperiods />
+	
+	<!-- 禁止发帖时间段 -->
+	<Postbanperiods />
+	
+	<!-- 发帖审核时间段 -->
+	<Postmodperiods />
+	
+	<!-- 禁止下载附件时间段 -->
+	<Attachbanperiods />
+	
+	<!-- 禁止全文搜索时间段 -->
+	<Searchbanperiods />
+	
+	<!-- 允许查看会员列表 -->
+	<Memliststatus>1</Memliststatus>
+	
+	<!-- 允许重复评分 -->
+	<Dupkarmarate>0</Dupkarmarate>
+	
+	<!-- 帖子最小字数(字节) -->
+	<Minpostsize>5</Minpostsize>
+	
+	<!-- 帖子最大字数(字节) -->
+	<Maxpostsize>20000</Maxpostsize>
+	
+	<!-- 每页主题数 -->
+	<Tpp>20</Tpp>
+	
+	<!-- 每页帖子数 -->
+	<Ppp>10</Ppp>
+	
+	<!-- 收藏夹容量 -->
+	<Maxfavorites>100</Maxfavorites>
+	
+	<!-- 头像最大尺寸(字节) -->
+	<Maxavatarsize>51200</Maxavatarsize>
+	
+	<!-- 头像最大宽度(像素) -->
+	<Maxavatarwidth>120</Maxavatarwidth>
+	
+	<!-- 头像最大高度(像素) -->
+	<Maxavatarheight>120</Maxavatarheight>
+	
+	<!-- 投票最大选项数 -->
+	<Maxpolloptions>10</Maxpolloptions>
+	
+	<!-- 最大允许的上传附件数 -->
+	<Maxattachments>10</Maxattachments>
+	
+	<!-- 帖子中显示图片附件 -->
+	<Attachimgpost>1</Attachimgpost>
+	
+	<!-- 下载附件来路检查 -->
+	<Attachrefcheck>0</Attachrefcheck>
+	<!--
+		附件保存方式 0=按年/月/日存入不同目录 1=按年/月/日/论坛存入不同目录 2=按论坛存入不同目录 3=按文件类型存入不同目录
+	-->
+	<Attachsave>1</Attachsave>
+	
+	<!-- 图片附件添加水印 0=不使用 1=左上 2=中上 3=右上 4=左中 ... 9=右下 -->
+	<Watermarkstatus>9</Watermarkstatus>
+	
+	<!-- 图片附件添加何种水印 0=文字 1=图片 -->
+	<Watermarktype>1</Watermarktype>
+	
+	<!-- 图片水印透明度 取值范围1-10 (10为不透明) -->
+	<Watermarktransparency>5</Watermarktransparency>
+	<!--
+		图片附件添加文字水印的内容 {1}表示论坛标题 {2}表示论坛地址 {3}表示当前日期 {4}表示当前时间, 例如: {3}
+		{4}上传于{1} {2}
+	-->
+	<Watermarktext>{3} {4}上传于{1} {2}</Watermarktext>
+	
+	<!-- 使用的水印图片的名称 -->
+	<Watermarkpic>watermark.gif</Watermarkpic>
+	
+	<!-- 图片附件添加文字水印的字体 -->
+	<Watermarkfontname>Tahoma</Watermarkfontname>
+	
+	<!-- 图片附件添加文字水印的大小(像素) -->
+	<Watermarkfontsize>12</Watermarkfontsize>
+	
+	<!-- 图片附件如果直接显示, 地址是否直接使用图片真实路径 -->
+	<Showattachmentpath>0</Showattachmentpath>
+	
+	<!-- 是否是高质量图片 取值范围0-100 -->
+	<Attachimgquality>80</Attachimgquality>
+	
+	<!-- 附件图片最大高度 -->
+	<Attachimgmaxheight>0</Attachimgmaxheight>
+	
+	<!-- 附件图片最大宽度 -->
+	<Attachimgmaxwidth>0</Attachimgmaxwidth>
+	
+	<!-- 是否将管理操作的理由短消息通知作者 -->
+	<Reasonpm>0</Reasonpm>
+	
+	<!-- 是否在主题查看页面显示管理操作 -->
+	<Moderactions>1</Moderactions>
+	
+	<!-- 评分时间限制(小时) -->
+	<Karmaratelimit>0</Karmaratelimit>
+	
+	<!-- 删贴不减积分时间期限(天) -->
+	<Losslessdel>0</Losslessdel>
+	
+	<!-- 编辑帖子时间限制(分钟) -->
+	<Edittimelimit>0</Edittimelimit>
+	
+	<!-- 编辑帖子附加编辑记录 -->
+	<Editedby>1</Editedby>
+	
+	<!-- 默认的编辑器模式 0=ubb代码编辑器 1=可视化编辑器 -->
+	<Defaulteditormode>1</Defaulteditormode>
+	
+	<!-- 是否允许切换编辑器模式 -->
+	<Allowswitcheditor>1</Allowswitcheditor>
+	
+	<!-- 显示可点击表情 -->
+	<Smileyinsert>1</Smileyinsert>
+	
+	<!-- 身份验证Cookie域 -->
+	<CookieDomain />
+	
+	<!-- 多久无动作视为离线 -->
+	<Onlinetimeout>-10</Onlinetimeout>
+	
+	<!-- 是否开启主题统计队列功能 -->
+	<TopicQueueStats>0</TopicQueueStats>
+	
+	<!-- 主题统计队列长度(浏览量) -->
+	<TopicQueueStatsCount>0</TopicQueueStatsCount>
+	
+	<!-- 评分记录现实的最大数量 -->
+	<DisplayRateCount>30</DisplayRateCount>
+	
+	<!-- 举报报告用户组 -->
+	<Reportusergroup>1</Reportusergroup>
+	
+	<!-- 图片管理用户组 -->
+	<Photomangegroups />
+	
+	<!-- 评分阀值 -->
+	<Ratevalveset>1,50,200,600,800</Ratevalveset>
+	
+	<!-- 设置前台"查看新帖"的分钟数 -->
+	<Viewnewtopicminute>120</Viewnewtopicminute>
+	
+	<!-- 是否使用html标题 -->
+	<Htmltitle>0</Htmltitle>
+	
+	<!-- 以使用html标题的用户组 -->
+	<Htmltitleusergroup />
+	
+	<!-- 版块是否指定模板 (0:为未指定) -->
+	<Specifytemplate>0</Specifytemplate>
+	
+	<!-- 我的主题保留时间 -->
+	<Mytopicsavetime>30</Mytopicsavetime>
+	
+	<!-- 我的帖子保留时间 -->
+	<Mypostsavetime>30</Mypostsavetime>
+	
+	<!-- 我的附件保留时间 -->
+	<Myattachmentsavetime>30</Myattachmentsavetime>
+	
+	<!-- 是否启用Tag功能 -->
+	<Enabletag>1</Enabletag>
+	
+	<!-- 是否开启商场 (0:不开启 1:开启 2:开启高级模式) -->
+	<Enablemall>0</Enablemall>
+	
+	<!-- 统计缓存时间(分钟) -->
+	<Statscachelife>120</Statscachelife>
+	
+	<!-- 是否开启浏览统计 -->
+	<Statstatus>1</Statstatus>
+	
+	<!-- 页面访问量更新频率(页面数) -->
+	<Pvfrequence>60</Pvfrequence>
+	
+	<!-- 用户在线时间更新时长(分钟): -->
+	<Oltimespan>1</Oltimespan>
+	<Recommenddebates>1000,11,12</Recommenddebates>
+	
+	<!-- 每页商品数 -->
+	<Gpp>16</Gpp>
+	
+	<!-- 首页热门标签数量 -->
+	<Hottagcount>10</Hottagcount>
+	
+	<!-- 新用户广告强力屏蔽(0:不开启 1:开启) -->
+	<Disablepostad>1</Disablepostad>
+	
+	<!-- 用户注册N分钟内进行新用户广告强力屏蔽功能检查,默认60分钟 -->
+	<Disablepostadregminute>60</Disablepostadregminute>
+	
+	<!-- 用户发帖N帖内进行新用户广告强力屏蔽功能检查,默认5帖 -->
+	<Disablepostadpostcount>5</Disablepostadpostcount>
+	<Disablepostadregular>
+		((\d{4}|\d{4}-)?(\d(?:\s*)){7})|((\d{3}|\d{3}-)?\d{8})|(1(?:\s*)[35](?:\s*)[0123456789](?:\s*)(\d(?:\s*)){8})
+		[qQ](.+?)(\d(?:\s*)){7}</Disablepostadregular>
+		
+	<!-- 在线列表是否隐藏游客: 1 是 0 否 -->
+	<Whosonlinecontract>1</Whosonlinecontract>
+</ConfigInfo>

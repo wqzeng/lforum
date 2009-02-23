@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd"
+	default-autowire="byType" default-lazy-init="true">
+	<!--
+		在此定义URL与授权的关系. 注意此处ROLE_*代表的是授权,而非角色.用户、角色、授权及三者关系的数据保存在数据库中.
+	-->
+	<!--
+		<http auto-config="true"> <intercept-url pattern="/login.action*"
+		access="IS_AUTHENTICATED_ANONYMOUSLY" /> <intercept-url
+		pattern="/user/user!save.action*" access="ROLE_MODIFY_USER" />
+		<intercept-url pattern="/user/user!delete.action*"
+		access="ROLE_MODIFY_USER" /> <intercept-url
+		pattern="/user/user*.action*" access="ROLE_VIEW_USER" />
+		<intercept-url pattern="/user/role!save.action*"
+		access="ROLE_MODIFY_ROLE" /> <intercept-url
+		pattern="/user/role!delete.action*" access="ROLE_MODIFY_ROLE" />
+		<intercept-url pattern="/user/role*.action*" access="ROLE_VIEW_ROLE"
+		/> <form-login login-page="/login.action"
+		default-target-url="/user/user.action"
+		authentication-failure-url="/login.action?error=true" /> <logout
+		logout-success-url="/" /> <remember-me
+		key="e37f4b31-0c45-11dd-bd0b-0800200c9a66" /> </http>
+		<authentication-provider user-service-ref="userDetailsService">
+	-->
+		<!-- 可设置hash使用sha1或md5散列密码后再存入数据库 -->
+	<!--
+		<password-encoder hash="plaintext" /> </authentication-provider>
+		<beans:bean id="userDetailsService"
+		class="com.javaeye.lonlysky.service.security.UserDetailServiceImpl" />
+	-->
+</beans:beans>

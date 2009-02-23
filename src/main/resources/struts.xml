@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>	
+	<constant name="struts.multipart.maxSize" value="204800000" />
+	<constant name="struts.codebehind.pathPrefix" value="/WEB-INF/template/" />
+	<package name="default" extends="struts-default">		
+		<!-- 基于paramsPrepareParamsStack,增加store interceptor -->
+		<interceptors>
+			<!-- 初始化接口 -->
+			<interceptor name="foruminit"
+				class="com.javaeye.lonlysky.lforum.interceptor.ForumInterceptor" />
+		
+			<!-- 防止表单重复提交 -->
+			<interceptor name="token"
+				class="com.javaeye.lonlysky.lforum.interceptor.TokenInterceptor" />
+
+			<!-- 系统安装检测 -->
+			<interceptor name="installInterceptor"
+				class="com.javaeye.lonlysky.lforum.interceptor.InstallInterceptor" />
+				
+			<!-- 页面执行时间 -->
+			<interceptor name="timerInterceptor"
+				class="com.javaeye.lonlysky.lforum.interceptor.TimerInterceptor" />
+				
+			<!-- 拦截器栈 -->
+			<interceptor-stack name="lforumStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="fileUploadStack" />
+				<interceptor-ref name="store">
+					<param name="operationMode">AUTOMATIC</param>
+				</interceptor-ref>
+				<interceptor-ref name="paramsPrepareParamsStack" />
+				<interceptor-ref name="foruminit" />
+				<interceptor-ref name="token" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="lforumStack" />
+		<global-results>
+			<result type="freemarker" name="message"> /WEB-INF/template/message.ftl
+			</result>
+			<result type="freemarker" name="install">
+				/WEB-INF/template/install/install.ftl</result>
+			<result name="invalid.token" type="freemarker"> /noBack.html</result>
+		</global-results>
+	</package>	
+</struts>
