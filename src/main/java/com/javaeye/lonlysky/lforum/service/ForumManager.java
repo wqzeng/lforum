@@ -717,15 +717,11 @@ public class ForumManager {
 			if (postinfo == null) {
 				postinfo = new Posts();
 				postinfo.setPid(0);
-				Topics topics = new Topics();
-				topics.setTid(0);
-				postinfo.setTopics(topics);
+				postinfo.setTopics(new Topics(0));
 				postinfo.setTitle("从未");
 				postinfo.setPostdatetime("1900-1-1 00:00:00");
 				postinfo.setPoster("");
-				Users users = new Users();
-				users.setUid(0);
-				postinfo.setUsers(users);
+				postinfo.setUsers(new Users(0));
 
 			}
 		} else {
@@ -756,9 +752,9 @@ public class ForumManager {
 	private void updateLastPost(Forums foruminfo, Posts postinfo) {
 		forumDAO.createQuery(
 				"update Forums set topics.tid=?, lasttitle=?, lastpost=?,users.uid=?,lastposter=? where fid=? or fid in ("
-						+ foruminfo.getParentidlist() + ")", postinfo.getTopics().getTid(), postinfo.getTitle(),
-				postinfo.getPostdatetime(), postinfo.getUsers().getUid(), postinfo.getPoster(), foruminfo.getFid())
-				.executeUpdate();
+						+ foruminfo.getParentidlist() + ")", postinfo.getTopics().getTid(),
+				postinfo.getTopics().getTitle(), postinfo.getPostdatetime(), postinfo.getUsers().getUid(),
+				postinfo.getPoster(), foruminfo.getFid()).executeUpdate();
 
 	}
 
@@ -793,5 +789,51 @@ public class ForumManager {
 			return result.delete(0, 1).toString();
 		else
 			return "";
+	}
+
+	/**
+	 * 获取板块ID列表
+	 * @param lastfid
+	 * @param statcount
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Integer> getTopForumFids(int lastfid, int statcount) {
+		return forumDAO.createQuery("select fid from Forums where fid>?", lastfid).setMaxResults(statcount).list();
+	}
+
+	/**
+	 * 获取板块最后回复帖子
+	 * @param lastfid
+	 * @param topiccount
+	 * @param postcount
+	 * @param lasttid
+	 * @param lasttitle
+	 * @param lastpost
+	 * @param lastposterid
+	 * @param lastposter
+	 * @param todaypostcount
+	 * @return
+	 */
+	public Object[] getForumLastPost(int lastfid, int topiccount, int postcount, int lasttid, String lasttitle,
+			String lastpost, int lastposterid, String lastposter, int todaypostcount) {
+		return (Object[]) forumDAO
+				.createQuery(
+						"select topics.tid,title,postdatetime,users.uid,poster From Posts where forums.fid=? order by pid desc",
+						lastfid).setMaxResults(1).uniqueResult();
+	}
+
+	/**
+	 * 获取分类
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Forums> getMainForum() {
+		return forumDAO.find("from Forums where layer=0 order by displayorder asc");
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Integer> getForumIdList() {
+		return forumDAO.find("select fid from Forums");
 	}
 }

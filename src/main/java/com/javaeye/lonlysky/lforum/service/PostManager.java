@@ -1315,4 +1315,53 @@ public class PostManager {
 		}
 		return info;
 	}
+
+	/**
+	 * 获取指定用户的帖子总数
+	 * @param uid 用户ID
+	 * @return
+	 */
+	public int getPostCountByUid(int uid) {
+		return Utils.null2Int(postDAO.findUnique("select count(pid) from Posts where users.uid=?", uid), 0);
+	}
+
+	/**
+	 * 获取置顶用户今日发帖数
+	 * @param uid 用户ID
+	 * @return
+	 */
+	public int getTodayPostCountByUid(int uid) {
+		return Utils.null2Int(postDAO.findUnique(
+				"select count(pid) from Posts where users.uid=? and day(postdatetime)-day('" + Utils.getNowTime()
+						+ "')=0", uid), 0);
+	}
+
+	/**
+	 * 获取指定主题ID的回帖总数
+	 * @param tid
+	 * @return
+	 */
+	public int getPostCountByTid(int tid) {
+		return Utils.null2Int(postDAO.findUnique("select count(pid) from Posts where topics.tid=? and layer<>0", tid),
+				0);
+	}
+
+	/**
+	 * 获取指定主题ID的最后回复
+	 * @param tid 主题ID
+	 * @return
+	 */
+	public Object[] getLastPost(int tid) {
+		return (Object[]) postDAO.createQuery(
+				"select pid,postdatetime,users.uid,poster from Posts where topics.tid=? order by pid desc", tid)
+				.setMaxResults(1).uniqueResult();
+	}
+
+	/**
+	 * 获取帖子统计
+	 * @return
+	 */
+	public int getPostCount() {
+		return Utils.null2Int(postDAO.findUnique("select count(pid) from Posts"),0);
+	}
 }

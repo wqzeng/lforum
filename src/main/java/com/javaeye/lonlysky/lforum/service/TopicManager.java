@@ -664,6 +664,7 @@ public class TopicManager {
 		try {
 			page = mytopicDAO.find(page, "from Mytopics where users.uid=? order by topics.tid desc", userid);
 		} catch (ObjectNotFoundException e) {
+			logger.warn("获取用户主题"+e.getMessage());
 			return topicList;
 		}
 		for (Mytopics mytopics : page.getResult()) {
@@ -1004,5 +1005,56 @@ public class TopicManager {
 			return "";
 
 		return FileUtils.readFileToString(new File(filename), "UTF-8");
+	}
+
+	/**
+	 * 获取置顶用户的最大主题ID和最小主题ID
+	 * @param uid 用户ID
+	 * @return
+	 */
+	public Object[] getMaxAndMinTidByUid(int uid) {
+		return (Object[]) topicDAO.findUnique("select max(tid),min(tid) from Topics where usersByPosterid.uid=?", uid);
+	}
+
+	/**
+	 * 获取主题ID列表
+	 * @param statcount
+	 * @param lasttid
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Integer> getTopicTids(int statcount, int lasttid) {
+		return topicDAO.createQuery("select tid from Topics where tid>? order by tid", lasttid)
+				.setMaxResults(statcount).list();
+	}
+
+	/**
+	 * 更新主题信息
+	 * @param tid 主题ID
+	 * @param postcount 回复数
+	 * @param lastpostid 最后回复帖子ID
+	 * @param lastpost 最后回复时间
+	 * @param lastposterid 最后回复者
+	 * @param poster 最后回复者姓名
+	 */
+	public void updateTopic(int tid, int postcount, int lastpostid, String lastpost, int lastposterid, String poster) {
+		topicDAO
+				.createQuery(
+						"update Topics set lastpost=?,usersByLastposterid.uid=?,lastposter=?,replies=? postid.pid=? where tid=?",
+						lastpost, lastposterid, poster, postcount, lastpostid, tid).executeUpdate();
+
+	}
+
+	public void updateTopicLastPosterId(int lasttid) {
+		logger.warn("暂不支持此方法 updateTopicLastPosterId(int lasttid)");
+	}
+
+	/**
+	 * 获取所有主题统计
+	 * 
+	 * @return
+	 */
+	public int getTopicCount() {
+		return Utils.null2Int(topicDAO.findUnique("select count(tid) from Topics"), 0);
 	}
 }

@@ -113,6 +113,13 @@ public class Users implements java.io.Serializable {
 	private Set<Moderatormanagelog> moderatormanagelogs = new HashSet<Moderatormanagelog>(0);
 	private Set<Mytopics> mytopicses = new HashSet<Mytopics>(0);
 
+	public Users(int uid) {
+		this.uid = uid;
+	}
+	
+	public Users() {
+	}
+
 	@Id
 	@GeneratedValue(generator = "paymentableGenerator")
 	@GenericGenerator(name = "paymentableGenerator", strategy = "increment")

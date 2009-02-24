@@ -19,7 +19,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-
 /**
  * 主题
  * 
@@ -79,10 +78,16 @@ public class Topics implements java.io.Serializable {
 	private Set<Attachments> attachmentses = new HashSet<Attachments>(0);
 	private Set<Myattachments> myattachmentses = new HashSet<Myattachments>(0);
 
-	
+	public Topics() {
+	}
+
+	public Topics(int tid) {
+		this.tid = tid;
+	}
+
 	@Id
-	@GeneratedValue(generator = "paymentableGenerator")     
-	@GenericGenerator(name = "paymentableGenerator", strategy = "increment")  
+	@GeneratedValue(generator = "paymentableGenerator")
+	@GenericGenerator(name = "paymentableGenerator", strategy = "increment")
 	@Column(name = "tid", unique = true, nullable = false, insertable = true, updatable = true)
 	public Integer getTid() {
 		return tid;

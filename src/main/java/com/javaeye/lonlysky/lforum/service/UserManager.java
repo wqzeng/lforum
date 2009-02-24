@@ -753,4 +753,30 @@ public class UserManager {
 		return Utils.null2Int(userDAO.findUnique("select uid from Users where day(userfields.authtime)-day('"
 				+ Utils.getNowTime() + "')<=3 and userfields.authstr=?", authstr));
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Integer> getTopUsers(int statcount, int lastuid) {
+		return userDAO.createQuery("select uid from Users where uid>?", lastuid).setMaxResults(statcount).list();
+	}
+
+	/**
+	 * 重置用户的精华帖子数
+	 * @param lastuid
+	 */
+	public void resetUserDigestPosts(int lastuid) {
+		userDAO
+				.createQuery(
+						"update Users set digestposts=(select count(tid) from Topics where usersByPosterid.uid=uid and digest>0) where uid=?",
+						lastuid).executeUpdate();
+
+	}
+
+	/**
+	 * 更新用户发帖记录
+	 * @param postcount
+	 * @param userid
+	 */
+	public void updateUserPostCount(int postcount, int userid) {
+		userDAO.createQuery("update Users set posts=? where uid=?", postcount, userid);
+	}
 }

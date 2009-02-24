@@ -7,8 +7,8 @@
 <@comm.header/>
 <script type="text/javascript">
 var templatepath = "${templatepath}";
-var postminchars = parseInt(${config.minpostsize});
-var postmaxchars = parseInt(${config.maxpostsize});
+var postminchars = parseInt(${config.minpostsize.toString()});
+var postmaxchars = parseInt(${config.maxpostsize.toString()});
 var disablepostctrl = parseInt(${disablepostctrl});
 var forumpath = "";
 </script>

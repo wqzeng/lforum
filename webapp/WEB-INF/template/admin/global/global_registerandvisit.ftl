@@ -69,14 +69,14 @@
 		                            <tr>
                                         <td>IP注册间隔限制:</td>
                                         <td>
-                                            <@c.textBox id="regctrl" required="true" size="5" maxlength="4" digits="true" hintTitle="提示"
+                                            <@c.textBox id="regctrl" required="true" width="50" size="5" maxlength="4" digits="true" hintTitle="提示"
                                                 hintInfo="同一 IP 在本时间间隔内将只能注册一个帐号, 限制对自修改后的新注册用户生效, 0 为不限制" value="${config.regctrl}" />(单位:小时)
                                         </td>
 		                            </tr>		                            
                                     <tr>
                                         <td>新手见习期限:</td>
                                         <td>
-                                            <@c.textBox id="newbiespan" required="true" size="5" maxlength="4" digits="true"
+                                            <@c.textBox id="newbiespan" required="true" width="50" size="5" maxlength="4" digits="true"
                                                 hintTitle="提示" hintInfo="新注册用户在本期限内将无法发帖, 不影响版主和管理员, 0 为不限制" value="${config.newbiespan}"/>(单位:分钟)
                                         </td>
                                     </tr>
