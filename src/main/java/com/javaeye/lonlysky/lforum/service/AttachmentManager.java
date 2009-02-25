@@ -228,7 +228,8 @@ public class AttachmentManager {
 				myattachments.setAttachments(attachments);
 				myattachments.setDescription(attachments.getDescription());
 				myattachments.setDownloads(attachments.getDownloads());
-				myattachments.setExtname(attachments.getDescription().trim());
+				myattachments.setExtname(attachments.getFilename().substring(
+						attachments.getFilename().lastIndexOf(".") + 1).toLowerCase());
 				myattachments.setFilename(attachments.getFilename());
 				myattachments.setPostdatetime(attachments.getPostdatetime());
 				myattachments.setPostid(attachments.getPostid());

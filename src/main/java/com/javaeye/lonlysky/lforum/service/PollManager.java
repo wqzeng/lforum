@@ -368,7 +368,7 @@ public class PollManager {
 					if (polloptioninfo.getVoternames().trim().equals("")) {
 						polloptioninfo.setVoternames(username);
 					} else {
-						polloptioninfo.setVoternames(pollinfo.getVoternames() + "\r\n" + username);
+						polloptioninfo.setVoternames(polloptioninfo.getVoternames() + "\r\n" + username);
 					}
 					polloptioninfo.setVotes(polloptioninfo.getVotes() + 1);
 					polloptionDAO.save(polloptioninfo);

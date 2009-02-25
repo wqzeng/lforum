@@ -93,7 +93,7 @@ public class LoginAction extends ForumBaseAction {
 
 		// 如果表单提交
 		if (LForumRequest.isPost()) {
-			reqcfg.setBackLink("login.action?postusername=" + Utils.urlEncode(LForumRequest.getParamValue("username")));
+			reqcfg.setBackLink("login.action?postusername=" + LForumRequest.getParamValue("username"));
 
 			//如果没输入验证码就要求用户填写
 			if (isseccode && LForumRequest.getParamValue("vcode").equals("")) {

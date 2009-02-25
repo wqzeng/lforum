@@ -3,9 +3,9 @@
 	作者：黄磊 
 	版本：v1.0 
 -->
-<#macro dropDownList id hintInfo="" hintTitle="">
+<#macro dropDownList id hintInfo="" hintTitle="" onchange="">
 <span id="${id}"  <#if hintInfo!="" && hintTitle!="">onmouseover="showhintinfo(this,0,0,'${hintTitle}','${hintInfo}','50','up');" onmouseout="hidehintinfo();"</#if>>
-<select name="${id}" id="${id}">
+<select name="${id}" id="${id}" <#if onchange!="">onchange="${onchange}"</#if>>
 <#nested>
 </select>
 </span>

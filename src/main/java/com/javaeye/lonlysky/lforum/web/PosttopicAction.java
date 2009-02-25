@@ -33,6 +33,7 @@ import com.javaeye.lonlysky.lforum.service.ModeratorManager;
 import com.javaeye.lonlysky.lforum.service.PollManager;
 import com.javaeye.lonlysky.lforum.service.PostManager;
 import com.javaeye.lonlysky.lforum.service.ScoresetManager;
+import com.javaeye.lonlysky.lforum.service.TopicAdminManager;
 import com.javaeye.lonlysky.lforum.service.TopicManager;
 import com.javaeye.lonlysky.lforum.service.UserCreditManager;
 
@@ -237,6 +238,9 @@ public class PosttopicAction extends ForumBaseAction {
 
 	@Autowired
 	private UserCreditManager userCreditManager;
+
+	@Autowired
+	private TopicAdminManager topicAdminManager;
 
 	@Override
 	public String execute() throws Exception {
@@ -904,7 +908,7 @@ public class PosttopicAction extends ForumBaseAction {
 				postManager.createPost(postinfo);
 			} catch (Exception e) {
 				e.printStackTrace();
-				//TopicAdmins.DeleteTopics(topicid.ToString(), false); 删除主题
+				topicAdminManager.deleteTopics(topicinfo.getTid().toString(), false); //删除主题
 				reqcfg.addErrLine("帖子保存出现异常");
 				return SUCCESS;
 			}
