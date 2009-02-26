@@ -19,14 +19,8 @@ import com.javaeye.lonlysky.lforum.plugin.verifyImage.VerifyImage;
 public class OtherTest extends TestCase {
 
 	public void test() throws FileNotFoundException, IOException {
-		String string = "尊敬的用户:您好!您已在本论坛注册成功, 论坛地址为:FORUMURL感谢您使用FORUMTITLE的服务, 如果您需要了解更多FORUMTITLE相关的信息, 请登录我们的网站: WEBURL希望您继续支持我们WEBTITLE";
-		String body = string.replaceAll("WEBTITLE", "LForum");
-		body= body.replaceAll("WEBURL", "<a href=test.com>test.com</a>");
-		body =body.replaceAll("FORUMURL", "<a href=aaa.com>aaa.com</a>");
-		body =body.replaceAll("FORUMTITLE", "LForum");
-		body = "<pre style=\"width:100%;word-wrap:break-word\">" + body + "</pre>";
-		
-		System.out.println(body);
+		String path = "E:\\项目\\LForum项目\\lforum\\webapp\\";
+		System.out.println(path);
 		//		BufferedImage image = ImageIO.read(new FileInputStream("c:/test.jpg"));
 		//		ForumUtils.addImageSignText(image, "c:/ttt.jpg", "lonlysky.javaeye.com 测试水印", 2, 0.5f, "宋体", 12);
 		//		String string = "abccdccssdaa";

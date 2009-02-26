@@ -13,6 +13,7 @@
 <#include "checkBoxList.ftl">
 <#include "dropDownList.ftl">
 <#include "tabControl.ftl">
+<#include "colorPicker.ftl">
 
 <#-- 表单验证器定义 -->
 <#macro validator formname>

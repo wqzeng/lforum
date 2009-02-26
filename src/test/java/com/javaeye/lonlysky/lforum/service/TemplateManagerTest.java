@@ -1,5 +1,7 @@
 package com.javaeye.lonlysky.lforum.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springside.modules.test.SpringTransactionalTestCase;
 
@@ -24,6 +26,14 @@ public class TemplateManagerTest extends SpringTransactionalTestCase {
 		assertEquals(1, templateManager.getValidTemplateList().size());
 		
 		assertNotNull(templateManager.getTemplateItem(1));
+	}
+	
+	public void testList() {
+		String path = "E:\\项目\\LForum项目\\lforum\\webapp\\";
+		List<TemplateAboutInfo> abList = templateManager.getTemplateList(path);
+		for (TemplateAboutInfo templateAboutInfo : abList) {
+			System.out.println(templateAboutInfo.getName());
+		}
 	}
 
 }

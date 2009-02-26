@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +17,7 @@ import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
 import com.javaeye.lonlysky.lforum.cache.LForumCache;
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
 import com.javaeye.lonlysky.lforum.comm.utils.XmlElementUtil;
+import com.javaeye.lonlysky.lforum.config.impl.ConfigLoader;
 import com.javaeye.lonlysky.lforum.entity.forum.Templates;
 
 /**
@@ -41,6 +40,68 @@ public class TemplateManager {
 	}
 
 	/**
+	 * 获取模板文件列表
+	 * @param apppath
+	 * @return
+	 */
+	public List<String[]> getTemplateFiles(String apppath) {
+		List<String[]> fileList = new ArrayList<String[]>();
+		File templateFile = new File(apppath + "WEB-INF/template/");
+		for (File file : templateFile.listFiles()) {
+			//0-文件名,1-文件名带后缀,2-文件类型
+			String[] fileStrs = new String[3];
+			if (file.getName().indexOf(".ftl") != -1) {
+				fileStrs[0] = file.getName().substring(0, file.getName().indexOf("."));
+				fileStrs[1] = file.getName();
+				fileStrs[2] = file.getName().substring(file.getName().indexOf(".") + 1);
+				fileList.add(fileStrs);
+			}
+		}
+		templateFile = new File(apppath + "WEB-INF/template/inc/commfiles/");
+		for (File file : templateFile.listFiles()) {
+			//0-文件名,1-文件名带后缀,2-文件类型
+			String[] fileStrs = new String[3];
+			if (file.getName().indexOf(".ftl") != -1) {
+				fileStrs[0] = file.getName().substring(0, file.getName().indexOf("."));
+				fileStrs[1] = file.getName();
+				fileStrs[2] = file.getName().substring(file.getName().indexOf(".") + 1);
+				fileList.add(fileStrs);
+			}
+		}
+		return fileList;
+	}
+
+	/**
+	 * 获取模板其他文件
+	 * @param apppath
+	 * @param templatename
+	 * @return
+	 */
+	public List<String[]> getTemplateOtherFiles(String apppath, String templatename) {
+		List<String[]> fileList = new ArrayList<String[]>();
+		File templateFile = new File(apppath + "templates/" + templatename+"/");
+		for (File file : templateFile.listFiles()) {
+			//0-文件名,1-文件名带后缀,2-文件类型
+			String[] fileStrs = new String[3];
+			if (file.getName().indexOf(".") != -1) {
+				fileStrs[0] = file.getName().substring(0, file.getName().indexOf("."));
+				fileStrs[1] = file.getName();
+				fileStrs[2] = file.getName().substring(file.getName().indexOf(".") + 1);
+				if (fileStrs[2].equals("xml") || fileStrs[2].equals("css")) {
+					fileList.add(fileStrs);
+				}
+			}
+		}
+		return fileList;
+	}
+
+	public static void main(String[] agos) {
+		String path = "E:\\项目\\LForum项目\\lforum\\webapp\\";
+		TemplateManager templateManager = new TemplateManager();
+		templateManager.getTemplateFiles(path);
+	}
+
+	/**
 	 * 从模板说明文件中获得模板说明信息
 	 * @param xmlPath 说明文件路径
 	 * @return 模板说明信息
@@ -54,28 +115,87 @@ public class TemplateManager {
 		aboutInfo.setVer("");
 
 		///存放关于信息的文件 about.xml是否存在,不存在返回空串
-		File file = new File(xmlPath);
-		if (!file.exists()) {
+		if (!Utils.fileExists(xmlPath)) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("找不到模板about.xml文件{}", xmlPath);
 			}
 			return aboutInfo;
 		}
-		SAXReader saxReader = new SAXReader();
-		try {
-			Document document = saxReader.read(file);
-			// 获取template元素
-			Element template = XmlElementUtil.findElement("template", document.getRootElement());
-			// 设值
-			aboutInfo.setAuthor(Utils.null2String(template.attributeValue("author")));
-			aboutInfo.setCopyright(Utils.null2String(template.attributeValue("copyright")));
-			aboutInfo.setCreatedate(Utils.null2String(template.attributeValue("createdate")));
-			aboutInfo.setName(Utils.null2String(template.attributeValue("name")));
-			aboutInfo.setVer(Utils.null2String(template.attributeValue("ver")));
-		} catch (DocumentException e) {
-			logger.warn("解析{}异常", xmlPath, e);
-		}
+		Document document = XmlElementUtil.readXML(xmlPath);
+		// 获取template元素
+		Element template = XmlElementUtil.findElement("template", document.getRootElement());
+		// 设值
+		aboutInfo.setAuthor(Utils.null2String(template.attributeValue("author")));
+		aboutInfo.setCopyright(Utils.null2String(template.attributeValue("copyright")));
+		aboutInfo.setCreatedate(Utils.null2String(template.attributeValue("createdate")));
+		aboutInfo.setName(Utils.null2String(template.attributeValue("name")));
+		aboutInfo.setVer(Utils.null2String(template.attributeValue("ver")));
+		aboutInfo.setForumver(Utils.null2String(template.attributeValue("fordntver")));
 		return aboutInfo;
+	}
+
+	/**
+	 * 获取所有模板列表
+	 * 
+	 * @param appPath 系统路径
+	 * @return 模板列表
+	 */
+	public List<TemplateAboutInfo> getTemplateList(String appPath) {
+		List<TemplateAboutInfo> aboutList = new ArrayList<TemplateAboutInfo>();
+		File file = new File(appPath + "templates/");
+		for (File root : file.listFiles()) {
+			// 循环templates目录，获取模板信息
+			if (Utils.fileExists(root.getPath() + "/about.xml")) {
+				TemplateAboutInfo aboutInfo = getTemplateAboutInfo(root.getPath() + "/about.xml");
+				aboutInfo.setDirectory(root.getName());
+				aboutList.add(aboutInfo);
+			}
+		}
+		return aboutList;
+	}
+
+	/**
+	 * 获取所有模板列表
+	 * 
+	 * @return 模板列表
+	 */
+	public List<TemplateAboutInfo> getTemplateList() {
+		return getTemplateList(ConfigLoader.getConfig().getWebpath());
+	}
+
+	/**
+	 * 获取所有模板列表
+	 * @return
+	 */
+	public List<Templates> getAllTemplates() {
+		List<Templates> allList = new ArrayList<Templates>();
+		List<TemplateAboutInfo> aboutList = getTemplateList();
+		List<Templates> templateList = getValidTemplateList();
+		for (TemplateAboutInfo info : aboutList) {
+			Templates templates = new Templates();
+			boolean isIn = false; // 是否入库
+			for (Templates template : templateList) {
+				if (template.getName().trim().equals(info.getName().trim())) {
+					isIn = true;
+					templates = template;
+					break;
+				} else {
+					isIn = false;
+				}
+			}
+			if (!isIn) {
+				templates.setAuthor(info.getAuthor().trim());
+				templates.setCopyright(info.getCopyright().trim());
+				templates.setCreatedate(info.getCreatedate().trim());
+				templates.setDirectory(info.getDirectory().trim());
+				templates.setFordntver(info.getForumver());
+				templates.setTemplateid(0);
+				templates.setVer(info.getVer());
+				templates.setName(info.getName().trim());
+			}
+			allList.add(templates);
+		}
+		return allList;
 	}
 
 	/**
@@ -142,7 +262,44 @@ public class TemplateManager {
 			}
 		}
 		return template;
+	}
 
+	/**
+	 * 模板入库
+	 * 
+	 * @param template
+	 */
+	public void intoDB(Templates template) {
+		Templates templates = new Templates();
+		templates.setAuthor(template.getAuthor().trim());
+		templates.setCopyright(template.getCopyright().trim());
+		templates.setCreatedate(template.getCreatedate().trim());
+		templates.setDirectory(template.getDirectory().trim());
+		templates.setFordntver(template.getFordntver());
+		templates.setVer(template.getVer());
+		templates.setName(template.getName().trim());
+		templateDAO.save(templates);
+	}
+
+	/**
+	 * 更新论坛板块和用户个性模板设置
+	 * 
+	 * @param templateidlist
+	 */
+	public void updateForumAndUserTemplateId(String templateidlist) {
+		templateDAO.createQuery("update Forums set templateid=1 where templateid in(" + templateidlist + ")")
+				.executeUpdate();
+		templateDAO.createQuery("update Users set templateid=1 where templateid in(" + templateidlist + ")")
+				.executeUpdate();
+	}
+
+	/**
+	 * 模板出库
+	 * 
+	 * @param templateidlist
+	 */
+	public void deleteTemplateItem(String templateidlist) {
+		templateDAO.createQuery("delete from Templates where templateid in(" + templateidlist + ")").executeUpdate();
 	}
 
 	/**
@@ -157,7 +314,25 @@ public class TemplateManager {
 		private String author; // 模板作者
 		private String createdate; // 创建时间
 		private String ver; // 版本
+		private String forumver; // 版本
 		private String copyright; // 版权文字
+		private String directory; // 目录
+
+		public String getForumver() {
+			return forumver;
+		}
+
+		public void setForumver(String forumver) {
+			this.forumver = forumver;
+		}
+
+		public String getDirectory() {
+			return directory;
+		}
+
+		public void setDirectory(String directory) {
+			this.directory = directory;
+		}
 
 		public String getName() {
 			return name;

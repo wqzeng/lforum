@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<about>
+     <template name="Darkred"
+          author="LForum"
+          createdate = "2008-10-15"
+          ver="1.0"
+          fordntver="1.0"
+          copyright="Copyright 2008 LForum" />
+</about>
