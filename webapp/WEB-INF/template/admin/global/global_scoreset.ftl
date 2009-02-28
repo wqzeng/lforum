@@ -16,9 +16,124 @@
 <body>
     <form id="Form1" method="post">
     ${htmlBuilder}
-        <!-- <@c.pageInfo id="info1" icon="Information"
+        <@c.pageInfo id="info1" icon="Information"
         text="以下标明(+)的为增加的积分数, 标明(-)的为减少的积分数, 您也可以通过设置负值的方式变更积分的增减, 各项积分增减允许的范围为-999～+999. 如果为更多的操作设置积分策略, 系统就需要更频繁的更新用户积分, 同时意味着消耗更多的系统资源, 因此请根据实际情况酌情设置"/>
-        -->
+       <table cellspacing="0" cellpadding="4" width="100%" align="center">
+            <tr>
+                <td>
+                    <table class="ntcplist" >
+
+<tr class="head">
+
+<td><img src='../images/icons/icon31.jpg'>积分设置</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<table class="datalist" cellspacing="0" rules="all" border="1" id="DataGrid1" style="border-collapse:collapse;">
+	<tr class="category">
+		<td nowrap="nowrap" colspan="1" style="border-color:#EAE9E1;border-width:1px;border-style:solid;">&nbsp;</td>
+		<td nowrap="nowrap" style="border-color:#EAE9E1;border-width:1px;border-style:solid;">名称</td>
+		<td nowrap="nowrap" style="border-color:#EAE9E1;border-width:1px;border-style:solid;">extcredits1</td>
+		<td nowrap="nowrap" style="border-color:#EAE9E1;border-width:1px;border-style:solid;">extcredits2</td>
+		<td nowrap="nowrap" style="border-color:#EAE9E1;border-width:1px;border-style:solid;">extcredits3</td>
+		<td nowrap="nowrap" style="border-color:#EAE9E1;border-width:1px;border-style:solid;">extcredits4</td>
+		<td nowrap="nowrap" style="border-color:#EAE9E1;border-width:1px;border-style:solid;">extcredits5</td>
+		<td nowrap="nowrap" style="border-color:#EAE9E1;border-width:1px;border-style:solid;">extcredits6</td>
+		<td nowrap="nowrap" style="border-color:#EAE9E1;border-width:1px;border-style:solid;">extcredits7</td>
+		<td nowrap="nowrap" style="border-color:#EAE9E1;border-width:1px;border-style:solid;">extcredits8</td>
+	</tr>
+	<#list 0..12 as i>
+	<tr onmouseover="this.className='mouseoverstyle'" onmouseout="this.className='mouseoutstyle'" style="cursor:hand;">
+		<#if updateid?exists && updateid==i>
+		<td nowrap="nowrap" style="border-color:#EAE9E1;border-width:1px;border-style:Solid;width:70px;">
+		<input type="hidden" name="scoreID" value="${updateid}">
+		<a href="javascript:doPost('updateScore')">更新</a>&nbsp;
+		<a href="javascript:doPost('noUpdateScore');">取消</a>		
+		</td>
+		<td style="border-color:#EAE9E1;border-width:1px;border-style:solid;">${scoreSets[i][0]}</td>
+		<input type="hidden" name="scoreName" value="${scoreSets[i][0]}">
+		<#list 1..8 as j>		
+		<td style="border-color:#EAE9E1;border-width:1px;border-style:Solid;">
+		<input name="ct${i}_ct${j}" type="text" value="${scoreSets[i][j]}" onfocus="this.className='FormFocus';" onblur="this.className='FormBase';" class="FormBase" style="width:60px;" />
+		</td>
+		</#list>		
+		<#else>
+		<td nowrap="nowrap" style="border-color:#EAE9E1;border-width:1px;border-style:Solid;width:70px;">
+		<a href="javascript:document.Form1.action="?updateid=${i}}";doPost('doEidtScore');">编辑</a>
+		</td>
+		<#list 0..8 as j>
+		<td style="border-color:#EAE9E1;border-width:1px;border-style:solid;">${scoreSets[i][j]}</td>
+		</#list>
+		</#if>
+	</tr>
+	</#list>	
+</table></td></tr></TABLE>
+  </td>
+            </tr>
+            <tr>
+                <td class="panelbox">
+                    <table class="table1" cellspacing="0" cellpadding="4" width="100%" align="center">
+                        <tr>
+                            <td width="100">兑换比率</td>
+                            <td>
+                                兑换比率为单项积分对应一个单位标准积分的值, 例如 extcredits1 的比率为 1.5(相当于 1.5 个单位标准积分)、extcredits2 的比率为
+                                3(相当于 3 个单位标准积分)、extcredits3 的比率为 15(相当于 15 个单位标准积分), 则 extcredits3 的 1 分相当于 extcredits2
+                                的 5 分或 extcredits1 的 10 分. 一旦设置兑换比率, 则用户将可以在控制面板中自行兑换各项设置了兑换比率的积分, 如不希望实行积分自由兑换,
+                                请将其兑换比率设置为 0
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>积分名称</td>
+                            <td>该项积分的名称, 如果为空则不启用该项积分显示</td>
+                        </tr>
+                        <tr>
+                            <td>积分单位</td>
+                            <td>如金币,元等</td>
+                        </tr>
+                        <tr>
+                            <td>发主题(+)</td>
+                            <td>作者发新主题增加的积分数, 如果该主题被删除, 作者积分也会按此标准相应减少</td>
+                        </tr>
+                        <tr>
+                            <td>回复(+)</td>
+                            <td>作者发新回复增加的积分数, 如果该回复被删除, 作者积分也会按此标准相应减少</td>
+                        </tr>
+                        <tr>
+                            <td>加精华(+)</td>
+                            <td>主题被加入精华时单位级别作者增加的积分数(根据精华级别乘以1～3), 如果该主题被移除精华, 作者积分也会按此标准相应减少</td>
+                        </tr>
+                        <tr>
+                            <td>上传附件(+)</td>
+                            <td>用户每上传一个附件增加的积分数, 如果该附件被删除, 发布者积分也会按此标准相应减少</td>
+                        </tr>
+                        <tr>
+                            <td>下载附件(-)</td>
+                            <td>用户每下载一个附件扣除的积分数. 注意: 如果允许游客组下载附件, 本策略将可能被绕过</td>
+                        </tr>
+                        <tr>
+                            <td>发短消息(-)</td>
+                            <td>用户每发送一条短消息扣除的积分数</td>
+                        </tr>
+                        <tr>
+                            <td>搜索(-)</td>
+                            <td>用户每进行一次帖子搜索或短消息搜索扣除的积分数</td>
+                        </tr>
+                        <tr>
+                            <td>交易成功(+)</td>
+                            <td>用户每成功进行一次交易后增加的积分数</td>
+                        </tr>
+                        <tr>
+                            <td>参与投票(+)</td>
+                            <td>用户每参与一次投票后增加的积分数</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
         <div class="ManagerForm">
             <fieldset>
                 <legend style="background: url(../images/icons/icon25.jpg) no-repeat 6px 50%;">积分设置</legend>

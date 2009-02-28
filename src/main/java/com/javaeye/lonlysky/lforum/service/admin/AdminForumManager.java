@@ -534,16 +534,16 @@ public class AdminForumManager {
 		for (String username : moderators.split(",")) {
 			if (!username.trim().equals("")) {
 				Object object = forumDAO.createQuery(
-						"from Users where usergroups.groupid<>7 and usergroups.groupid<>8 and username=?", username)
-						.setMaxResults(1).uniqueResult();
+						"select uid from Users where usergroups.groupid<>7 and usergroups.groupid<>8 and username=?",
+						username).setMaxResults(1).uniqueResult();
 				//先取出当前节点的信息
 				if (object != null) {
 					Moderators moderator = new Moderators();
 					moderator.setDisplayorder(count);
-					moderator.setUsers((Users) object);
 					moderator.setForums(forums);
 					moderator.setInherited(inherited);
-
+					moderator.setUsers(new Users(Utils.null2Int(object)));
+					moderatorDAO.save(moderator);
 					usernamelist = usernamelist + username.trim() + ",";
 					count++;
 				}

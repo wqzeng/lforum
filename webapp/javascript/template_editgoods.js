@@ -379,7 +379,7 @@ function bbcode2html(str) {
 			str = str.replace(/\[localimg=(\d{1,4}),(\d{1,4})\](\d+)\[\/localimg\]/ig, function ($1, $2, $3, $4) {if($('attach_' + $4)) {var src = $('attach_' + $4).value; if(src != '') return '<img style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=\'scale\',src=\'' + src + '\');width:' + $2 + ';height=' + $3 + '" src=\'images/common/none.gif\' border="0" aid="attach_' + $4 + '" alt="" />';}});
 			str = str.replace(/\[img\]\s*([^\[\<\r\n]+?)\s*\[\/img\]/ig, '<img src="$1" border="0" alt="" />');
 			//str = str.replace(/\[attachimg\](\d+)\[\/attachimg\]/ig, function ($1, $2) {eval('var attachimg = $(\'preview_' + $2 + '\')');return '<img src="' + attachimg.src + '" border="0" aid="attachimg_' + $2 + '" width="' + attachimg.clientWidth + '" alt="" />';});
-			str = str.replace(/\[attachimg\](\d+)\[\/attachimg\]/ig, '<img src="attachment.aspx?goodsattach=yes&attachmentid=$1" border="0" aid="attachimg_$1" alt="" />');
+			str = str.replace(/\[attachimg\](\d+)\[\/attachimg\]/ig, '<img src="attachment.action?goodsattach=yes&attachmentid=$1" border="0" aid="attachimg_$1" alt="" />');
 
 			str = str.replace(/\[img=(\d{1,4})[x|\,](\d{1,4})\]\s*([^\[\<\r\n]+?)\s*\[\/img\]/ig, '<img width="$1" height="$2" src="$3" border="0" alt="" />');
 		} else {

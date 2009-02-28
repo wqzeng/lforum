@@ -66,7 +66,7 @@ public class EmailUtil {
 			props.put("mail.smtp.auth", "true");
 			props.put("mail.transport.protoco1", "smtp");
 			props.put("mail.smtp.host", server);
-			props.put("mail.smtp.prot", port);
+			props.put("mail.smtp.port", port);
 			Session session = Session.getDefaultInstance(props, null);
 			Message msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress(from));

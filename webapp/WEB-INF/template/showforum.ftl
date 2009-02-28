@@ -259,10 +259,9 @@
 					<#if toptopic.special==4>
 						<#assign aspxrewriteurl = "showdebate.action?topicid="+toptopic.tid>
 					</#if>
-					<#assign ishtmltitle=0/>
-					<!--<%set (int){ishtmltitle} = Topics.GetMagicValue(toptopic.Magic, MagicType.HtmlTitle)>-->
+					<#assign ishtmltitle=topicManager.getMagicValue(toptopic.magic, 1)/>
 					<#if ishtmltitle==1>
-						<a href="${aspxrewriteurl}">{Topics.GetHtmlTitle(toptopic.Tid)}</a>
+						<a href="${aspxrewriteurl}">${topicManager.getHtmlTitle(toptopic.tid)}</a>
 					<#else>
 						<a href="${aspxrewriteurl}">${toptopic.title}</a>
 					</#if>
@@ -391,12 +390,12 @@
 							<#if topic.special==4>
 								<#assign aspxrewriteurl = "showdebate.action?topicid="+topic.tid>
 							</#if>
-							<#assign ishtmltitle=0/>
+							<#assign ishtmltitle=topicManager.getMagicValue(topic.magic, 1)/>
 							<#if ishtmltitle==1>
-								<a href="${aspxrewriteurl}">{Topics.GetHtmlTitle(topic.Tid)}</a>
+								<a href="${aspxrewriteurl}">${topicManager.getHtmlTitle(topic.tid)}</a>
 							<#else>
 								<a href="${aspxrewriteurl}">${topic.title}</a>
-							</#if>
+							</#if>							
 							<#if topic.folder=="new">
 								<img src="templates/${templatepath}/images/posts_new.gif" />
 							</#if>
@@ -417,9 +416,9 @@
 							<#if topic.special==4>
 								<#assign aspxrewriteurl = "showdebate.action?topicid="+topic.tid>
 							</#if>
-							<#assign ishtmltitle=0/>
+							<#assign ishtmltitle=topicManager.getMagicValue(topic.magic, 1)/>
 							<#if ishtmltitle==1>
-								<a href="${aspxrewriteurl}">{Topics.GetHtmlTitle(topic.Tid)}</a>
+								<a href="${aspxrewriteurl}">${topicManager.getHtmlTitle(topic.tid)}</a>
 							<#else>
 								<a href="${aspxrewriteurl}">${topic.title}</a>
 							</#if>
@@ -443,10 +442,10 @@
 						</#if>
 						<#if topic.special==4>
 							<#assign aspxrewriteurl = "showdebate.action?topicid="+topic.tid>
-						</#if>
-						<#assign ishtmltitle=0/>
+						</#if>						
+						<#assign ishtmltitle=topicManager.getMagicValue(topic.magic, 1)/>
 						<#if ishtmltitle==1>
-							<a href="${aspxrewriteurl}">{Topics.GetHtmlTitle(topic.Tid)}</a>
+							<a href="${aspxrewriteurl}">${topicManager.getHtmlTitle(topic.tid)}</a>
 						<#else>
 							<a href="${aspxrewriteurl}">${topic.title}</a>
 						</#if>

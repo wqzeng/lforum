@@ -2,8 +2,8 @@ function commentdebates(tid,messageid)
 {
 
 	
-	//sendRequest_commentdebates('tools/ajax.aspx?tid=' + tid + '&t=addcommentdebates',messageid);			
-	_sendRequest('tools/ajax.aspx?t=addcommentdebates', commentdebate_callback, true, 'commentdebates='+ '[area=点评内容]' + $('commentdebatesmsg').value + '[/area]&tid='+tid);
+	//sendRequest_commentdebates('tools/ajax.action?tid=' + tid + '&t=addcommentdebates',messageid);			
+	_sendRequest('tools/ajax.action?t=addcommentdebates', commentdebate_callback, true, 'commentdebates='+ '[area=点评内容]' + $('commentdebatesmsg').value + '[/area]&tid='+tid);
 	
 	}
          
@@ -48,10 +48,10 @@ var currentpid=0;
 
 function digg(pid,tid,type)
 {
-	//sendRequest_countenance('tools/ajax.aspx?pid=' + pid + '&t=countenancedebates&tid='+tid,pid);
+	//sendRequest_countenance('tools/ajax.action?pid=' + pid + '&t=countenancedebates&tid='+tid,pid);
 	cureentpid=pid;
 
-	_sendRequest('tools/ajax.aspx?t=diggdebates', diggdebate_callback, true, 'pid=' + pid + '&tid='+tid +'&type='+type);
+	_sendRequest('tools/ajax.action?t=diggdebates', diggdebate_callback, true, 'pid=' + pid + '&tid='+tid +'&type='+type);
 		
 	
 	switch (type){
@@ -112,7 +112,7 @@ function debatequickreply(event)
 function showDebatReplyBox(tid, pid, opinion, parseurloff, smileyoff, bbcodeoff)
 {
 	var html = '<div id="reply_box" style="margin-top: 10px;" class="debatemessage">';
-	html += '	<form method="post" name="postform'+pid+'" id="postform'+pid+'" action="postreply.aspx?topicid=' + tid + '"	enctype="multipart/form-data" onsubmit="return validate(this);" >';
+	html += '	<form method="post" name="postform'+pid+'" id="postform'+pid+'" action="postreply.action?topicid=' + tid + '"	enctype="multipart/form-data" onsubmit="return validate(this);" >';
 	html += '	<table>';
 	html += '		<tr><td>我要提出';
 	if (opinion == 1)
@@ -257,12 +257,12 @@ function showdebatepage(dataSource, parseurloff, smileyoff, bbcodeoff,isenddebat
 			html += '					</p>';
 			html += '				</td>';
 			html += '				<td class="comment">';
-			html += '					<h3><span>时间:' + ((postlist[i].Postdatetime).toString()).replace(":00","") + '</span>发表者:<a id="poster' + postlist[i].Pid + '" href="userinfo.aspx?userid='+ postlist[i].Posterid + '">' + postlist[i].Poster + '</a>';
+			html += '					<h3><span>时间:' + ((postlist[i].Postdatetime).toString()).replace(":00","") + '</span>发表者:<a id="poster' + postlist[i].Pid + '" href="userinfo.action?userid='+ postlist[i].Posterid + '">' + postlist[i].Poster + '</a>';
 			if (ismoder || (postlist[i].Posterid != -1 && postlist[i].Posterid == userid))
 			{
 				html += '&nbsp;';
-				html += '<a href="editpost.aspx?topicid=' + tid + '&postid=' + postlist[i].Pid + '&debate=1">编辑</a> | ';
-				html += '<a href="delpost.aspx?topicid=' + tid + '&postid=' + postlist[i].Pid + '&opinion='+type+'" onclick="return confirm(\'确定要删除吗?\');">删除</a>';
+				html += '<a href="editpost.action?topicid=' + tid + '&postid=' + postlist[i].Pid + '&debate=1">编辑</a> | ';
+				html += '<a href="delpost.action?topicid=' + tid + '&postid=' + postlist[i].Pid + '&opinion='+type+'" onclick="return confirm(\'确定要删除吗?\');">删除</a>';
 			}
 			html += '</h3>';
 			html += '					<div class="debatemessage" id="message' + postlist[i].Pid + '">' + postlist[i].Message + '</div>';

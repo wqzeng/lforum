@@ -255,7 +255,7 @@ function relatekw(title, message) {
 	title = encodeURL(title);
 	message = message.replace(/&/ig, '', message);
 	message = encodeURL(message);
-	_sendRequest('tools/ajax.aspx?t=relatekw', relatedkw, true, 'titleenc=' + title + '&contentenc=' + message);
+	_sendRequest('tools/ajax.action?t=relatekw', relatedkw, true, 'titleenc=' + title + '&contentenc=' + message);
 }
 
 function relatedkw(obj) {

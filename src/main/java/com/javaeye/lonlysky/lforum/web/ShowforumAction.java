@@ -1015,4 +1015,9 @@ public class ShowforumAction extends ForumBaseAction {
 	public String getCondition() {
 		return condition;
 	}
+
+	public TopicManager getTopicManager() {
+		return topicManager;
+	}
+		
 }

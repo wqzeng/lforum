@@ -46,20 +46,20 @@ function loadsubcategory(categoryid) {
 		        break;
 		    }
 		    if (aspxrewrite == 1) {
-		        outputhtml += '<a href="showgoodslist-'+cats[i].id+'.aspx">'+cats[i].name+'</a>';
+		        outputhtml += '<a href="showgoodslist-'+cats[i].id+'.action">'+cats[i].name+'</a>';
 		    }
 		    else {
-                outputhtml += '<a href="showgoodslist.aspx?categoryid='+cats[i].id+'">'+cats[i].name+'</a>';
+                outputhtml += '<a href="showgoodslist.action?categoryid='+cats[i].id+'">'+cats[i].name+'</a>';
             }
             count_i++;
 		}
    }
    
    if (aspxrewrite == 1) {
-       outputhtml += '<a href="showgoodslist-'+categoryid+'.aspx" class="more">更多</a>&gt;&gt;';
+       outputhtml += '<a href="showgoodslist-'+categoryid+'.action" class="more">更多</a>&gt;&gt;';
    }
    else {
-       outputhtml += '<a href="showgoodslist.aspx?categoryid='+categoryid+'" class="more">更多</a>&gt;&gt;';
+       outputhtml += '<a href="showgoodslist.action?categoryid='+categoryid+'" class="more">更多</a>&gt;&gt;';
    }
    $('goodscategory_'+categoryid).innerHTML = outputhtml;
 }
@@ -111,7 +111,7 @@ function cutstring(str,len)
 //获取热门商品信息
 function ajaxgethotgoods(days, categoryid, count, div_id) {
     $(div_id).innerHTML = '加载数据中...';
-    _sendRequest('tools/ajax.aspx?t=gethotgoods&days=' + days + '&categoryid=' + categoryid + '&count=' + count, function(d){
+    _sendRequest('tools/ajax.action?t=gethotgoods&days=' + days + '&categoryid=' + categoryid + '&count=' + count, function(d){
 		try{
 		eval('hotgoods_callback(' + d + ',\'' + div_id + '\')');}catch(e){};
 	});
@@ -136,10 +136,10 @@ function hotgoods_callback(data, div_id) {
         }
 	    goods_html += '</dt><dd class="title"><a href="#">'+data[i].title+'</a></dd>';
 	    if (aspxrewrite == 1) {
-	        goods_html += '<dd>商家:<a href="userinfo-'+data[i].selleruid+'.aspx">'+data[i].seller+'</a></dd>';
+	        goods_html += '<dd>商家:<a href="userinfo-'+data[i].selleruid+'.action">'+data[i].seller+'</a></dd>';
 	    }
 	    else {
-	        goods_html += '<dd>商家:<a href="userinfo.aspx?userid='+data[i].selleruid+'">'+data[i].seller+'</a></dd>';
+	        goods_html += '<dd>商家:<a href="userinfo.action?userid='+data[i].selleruid+'">'+data[i].seller+'</a></dd>';
 	    }
 	    goods_html += '<dd>价格:<em>'+data[i].price+'</em>元</dd>';
         goods_html += '</dl>';  
@@ -150,7 +150,7 @@ function hotgoods_callback(data, div_id) {
 //获取指定分类的商品信息
 function ajaxgetgoodslist(categoryid) {
     $('goodsinfo_li_' + categoryid).innerHTML = '加载数据中...';
-    _sendRequest('tools/ajax.aspx?t=getgoodslist&categoryid=' + categoryid + '&topnumber=12' , function(d){
+    _sendRequest('tools/ajax.action?t=getgoodslist&categoryid=' + categoryid + '&topnumber=12' , function(d){
 		try{
 		eval('goods_callback(' + d + ',\'goodsinfo_li_' + categoryid + '\')');}catch(e){};
 	});
@@ -167,10 +167,10 @@ function goods_callback(data, div_id) {
     for(var i in data) {
         goods_html += '<li>';
         if (aspxrewrite == 1) {
-	        goods_html += '<a href="showgoods-'+data[i].goodsid+'.aspx">';
+	        goods_html += '<a href="showgoods-'+data[i].goodsid+'.action">';
 	    }
 	    else {
-	        goods_html += '<a href="showgoods.aspx?goodsid='+data[i].goodsid+'">';
+	        goods_html += '<a href="showgoods.action?goodsid='+data[i].goodsid+'">';
 	    }
         
         if (data[i].goodspic == '') {
@@ -180,10 +180,10 @@ function goods_callback(data, div_id) {
             goods_html += '<img width="49" height="49" src="upload/'+data[i].goodspic+'" onerror="this.onerror=null;this.src=\''+data[i].goodspic+'\';"  title="'+data[i].title+'"></a>';
         }
         if (aspxrewrite == 1) {
-	        goods_html += '<h4><a href="showgoods-'+data[i].goodsid+'.aspx">'+cutstring(data[i].title,32)+'</a></h4>';
+	        goods_html += '<h4><a href="showgoods-'+data[i].goodsid+'.action">'+cutstring(data[i].title,32)+'</a></h4>';
 	    }
 	    else {
-	        goods_html += '<h4><a href="showgoods.aspx?goodsid='+data[i].goodsid+'">'+cutstring(data[i].title,32)+'</a></h4>';
+	        goods_html += '<h4><a href="showgoods.action?goodsid='+data[i].goodsid+'">'+cutstring(data[i].title,32)+'</a></h4>';
 	    }
 	    goods_html += '<p>市场价:<strike>'+data[i].costprice+'</strike>元</p><p class="price">现价:'+data[i].price+'元</p></li>';
     }
@@ -194,12 +194,12 @@ function goods_callback(data, div_id) {
 //获取人气商品信息
 function ajaxgetfocusgoodlist(parentid, categoryid) {
     $('hotgoodsinfo_' + parentid).innerHTML = '加载数据中...';
-    _sendRequest('tools/ajax.aspx?t=getgoodslist&order=1&categoryid=' + categoryid + '&topnumber=9' , function(d){
+    _sendRequest('tools/ajax.action?t=getgoodslist&order=1&categoryid=' + categoryid + '&topnumber=9' , function(d){
 	    try{
 	    eval('focusgoodslist_callback(' + d + ',\'hotgoodsinfo_' + parentid + '\')');}catch(e){};
     });
 //    $('hotgoodsinfo_' + parentid).innerHTML = '加载数据中...';
-//    _sendRequest('tools/ajax.aspx?t=gethotgoods&days=' + 365 + '&categoryid=' + categoryid + '&count=9', function(d){
+//    _sendRequest('tools/ajax.action?t=gethotgoods&days=' + 365 + '&categoryid=' + categoryid + '&count=9', function(d){
 //		try{
 //		eval('focusgoodslist_callback(' + d + ',\'hotgoodsinfo_' + parentid + '\')');}catch(e){};
 //	});
@@ -216,10 +216,10 @@ function focusgoodslist_callback(data, div_id) {
     for(var i in data) {
         goods_html += '<li><cite>'+(parseInt(i)+1)+'</cite>';
         if (aspxrewrite == 1) {
-	        goods_html += '<a href="showgoods-'+data[i].goodsid+'.aspx">';
+	        goods_html += '<a href="showgoods-'+data[i].goodsid+'.action">';
 	    }
 	    else {
-	        goods_html += '<a href="showgoods.aspx?goodsid='+data[i].goodsid+'">';
+	        goods_html += '<a href="showgoods.action?goodsid='+data[i].goodsid+'">';
 	    }
 	    goods_html += cutstring(data[i].title,25) + '</a></li>';
     }
@@ -230,7 +230,7 @@ function focusgoodslist_callback(data, div_id) {
 function ajaxgetshop(shoptype, div_id) {
     $(div_id).innerHTML = '加载数据中...';
     var shop_type = shoptype=='hotshop' ? 1 : 2;
-    _sendRequest('tools/ajax.aspx?t=getshopinfo&shoptype=' +  shop_type, function(d){
+    _sendRequest('tools/ajax.action?t=getshopinfo&shoptype=' +  shop_type, function(d){
 		try{
 		eval('getshops_callback(' + d + ',\'' + div_id + '\')');}catch(e){};
 	});
@@ -252,14 +252,14 @@ function getshops_callback(data, div_id) {
             shops_html += '<img width="49" height="49" src="upload/'+data[i].logo+'" onerror="this.onerror=null;this.src=\''+data[i].logo+'\';"  title="'+data[i].title+'">';
         }
         shops_html += '</dt>';
-		shops_html += '<dd class="title"><a href="shop.aspx?shopid='+data[i].shopid+'">'+data[i].shopname+'</a></dd>';
+		shops_html += '<dd class="title"><a href="shop.action?shopid='+data[i].shopid+'">'+data[i].shopname+'</a></dd>';
 		if (aspxrewrite == 1) {
-		    shops_html += '<dd>商家:<a href="userinfo-'+data[i].uid+'.aspx">'+data[i].username+'</a></dd>';
+		    shops_html += '<dd>商家:<a href="userinfo-'+data[i].uid+'.action">'+data[i].username+'</a></dd>';
 		}
 		else {
-	        shops_html += '<dd>商家:<a href="userinfo.aspx?userid='+data[i].uid+'">'+data[i].username+'</a></dd>';
+	        shops_html += '<dd>商家:<a href="userinfo.action?userid='+data[i].uid+'">'+data[i].username+'</a></dd>';
 	    }
-	    shops_html += '<dd><a href="shop.aspx?shopid='+data[i].shopid+'">进去逛逛:)</a></dd>';  
+	    shops_html += '<dd><a href="shop.action?shopid='+data[i].shopid+'">进去逛逛:)</a></dd>';  
         shops_html += '</dl>';  
     }
     $(div_id).innerHTML = shops_html;

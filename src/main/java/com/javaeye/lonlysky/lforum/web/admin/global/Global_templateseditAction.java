@@ -33,11 +33,12 @@ public class Global_templateseditAction extends AdminBaseAction {
 		templateid = LForumRequest.getParamIntValue("templateid", 1);
 		templatename = LForumRequest.getParamValue("templatename");
 		if (!LForumRequest.isPost()) {
+			// 读取文件
 			if (Utils.fileExists(config.getWebpath() + "WEB-INF/template/" + filename)) {
 				content = FileUtils.readFileToString(new File(config.getWebpath() + "WEB-INF/template/" + filename),
 						"UTF-8");
-			} else if (Utils.fileExists(config.getWebpath() + "WEB-INF/template/inc/commfiles" + filename)) {
-				content = FileUtils.readFileToString(new File(config.getWebpath() + "WEB-INF/template/inc/commfiles"
+			} else if (Utils.fileExists(config.getWebpath() + "WEB-INF/template/inc/commfiles/" + filename)) {
+				content = FileUtils.readFileToString(new File(config.getWebpath() + "WEB-INF/template/inc/commfiles/"
 						+ filename), "UTF-8");
 			} else if (Utils.fileExists(config.getWebpath() + "templates/" + path + "/" + filename)) {
 				content = FileUtils.readFileToString(new File(config.getWebpath() + "templates/" + path + "/"
@@ -47,13 +48,14 @@ public class Global_templateseditAction extends AdminBaseAction {
 						+ "');window.location.href='global_templatesedit.action';</script>");
 			}
 		} else {
+			// 保存文件
 			content = LForumRequest.getParamValue("templatenew_posttextarea");
 			if (Utils.fileExists(config.getWebpath() + "WEB-INF/template/" + filename)) {
 				FileUtils.writeStringToFile(new File(config.getWebpath() + "WEB-INF/template/" + filename), content,
 						"UTF-8");
-			} else if (Utils.fileExists(config.getWebpath() + "WEB-INF/template/inc/commfiles" + filename)) {
+			} else if (Utils.fileExists(config.getWebpath() + "WEB-INF/template/inc/commfiles/" + filename)) {
 				FileUtils.writeStringToFile(
-						new File(config.getWebpath() + "WEB-INF/template/inc/commfiles" + filename), content, "UTF-8");
+						new File(config.getWebpath() + "WEB-INF/template/inc/commfiles/" + filename), content, "UTF-8");
 			} else if (Utils.fileExists(config.getWebpath() + "templates/" + path + "/" + filename)) {
 				FileUtils.writeStringToFile(new File(config.getWebpath() + "templates/" + path + "/" + filename),
 						content, "UTF-8");

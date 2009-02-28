@@ -78,7 +78,7 @@ var tempaccounts = false;
 			<div id="titleEditorDiv" style="display: none;">
 				<textarea name="htmltitle" id="htmltitle" cols="80" rows="10"></textarea>
 				<script type="text/javascript">
-					var forumpath = '${forumpath}';
+					var forumpath = '${forumurl}';
 					var templatepath = '${templatepath}';
 					var temptitle = $('faketitle');
 					var titleEditor = null;
@@ -86,7 +86,7 @@ var tempaccounts = false;
 						$('title').style.display = 'none';
 						$('titleEditorDiv').style.display = '';
 						$('titleEditorButton').style.display = 'none';
-						titleEditor = new DNTeditor('htmltitle', '500', '50', '{htmltitle}'==''?$('title').value:'{htmltitle}');
+						titleEditor = new DNTeditor('htmltitle', '500', '50', '${htmltitle}'==''?$('title').value:'${htmltitle}');
 
 						titleEditor.OnChange = function(){
 							//temptitle.innerHTML = html2bbcode(titleEditor.GetHtml().replace(/<[^>]*>/ig, ''));

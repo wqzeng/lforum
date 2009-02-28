@@ -949,7 +949,7 @@ public class TopicManager {
 	/**
 	 * 获得相应的magic值
 	 * @param magic 数据库中magic值
-	 * @param magicType magic类型
+	 * @param magicType magic类型 HtmlTitle = 1,MagicTopic = 2,TopicTag = 3
 	 * @return
 	 */
 	public int getMagicValue(int magic, int magicType) {
@@ -958,11 +958,11 @@ public class TopicManager {
 		String m = magic + "";
 		if (magicType == 1) {
 			if (m.length() >= 2) {
-				return Utils.null2Int(m.substring(1, 1));
+				return Utils.null2Int(m.substring(1,2));
 			}
 		} else if (magicType == 2) {
 			if (m.length() >= 5) {
-				return Utils.null2Int(m.substring(2, 3));
+				return Utils.null2Int(m.substring(2, 5));
 			}
 		} else if (magicType == 3) {
 			if (m.length() >= 6) {

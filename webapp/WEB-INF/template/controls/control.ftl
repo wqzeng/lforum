@@ -17,6 +17,7 @@
 
 <#-- 表单验证器定义 -->
 <#macro validator formname>
+<#-- 
 <@jquery.jquery_main />
 <@jquery.jquery_validator />
 <script type="text/javascript">
@@ -24,4 +25,5 @@ $(document).ready(function(){
 $("#${formname}").validate();
 });
 </script>
+-->
 </#macro>

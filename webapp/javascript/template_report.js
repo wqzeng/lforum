@@ -19,7 +19,7 @@ function show_report_button(disableinfo)
 function send_report(id,index, disableinfo)
 {
 	var message=$('reportmessage'+index).value;
-    sendReportRequest('tools/ajax.aspx?t=report', index, disableinfo,message,id);    
+    sendReportRequest('tools/ajax.action?t=report', index, disableinfo,message,id);    
 }
 
 function output_html(html)

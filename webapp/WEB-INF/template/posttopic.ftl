@@ -71,7 +71,7 @@ var disablepostctrl = parseInt('${disablepost.toString()}');
 					<div id="titleEditorDiv" style="display: none;">
 					<textarea name="htmltitle" id="htmltitle" cols="80" rows="10"></textarea>
 					<script type="text/javascript">
-						var forumpath = '${forumpath}';
+						var forumpath = '${forumurl}';
 						var templatepath = '${templatepath}';
 						var temptitle = $('faketitle');
 						var titleEditor = null;

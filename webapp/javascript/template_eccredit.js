@@ -121,7 +121,7 @@ function ajaxgetrate(uid, uidtype, ratetype, filter, tabname) {
     }
     
     $('ratelist_html').innerHTML = '加载数据中...';
-    _sendRequest('tools/ajax.aspx?t=ajaxgetgoodsratelist&uid=' + uid + '&uidtype=' + uidtype + '&ratetype=' + ratetype + '&filter=' + filter, function(d){
+    _sendRequest('tools/ajax.action?t=ajaxgetgoodsratelist&uid=' + uid + '&uidtype=' + uidtype + '&ratetype=' + ratetype + '&filter=' + filter, function(d){
 		try{
 		eval('ratelist_callback(' + d + ','+uidtype+')');}catch(e){};
 	});
@@ -149,7 +149,7 @@ function ratelist_callback(data, uidtype) {
 	    }	
 	    
 	    ratelist_html += '</td><td><p>' + data[i].message + ' <BR />' + data[i].postdatetime + '</p></td>';//<p>解释: XXXX</p>';
-	    ratelist_html += '<td><p><a href="showgoods.aspx?goodsid=' + data[i].goodsid + '">' + data[i].goodstitle + '</a></p>';
+	    ratelist_html += '<td><p><a href="showgoods.action?goodsid=' + data[i].goodsid + '">' + data[i].goodstitle + '</a></p>';
 	  
 	        
 	    if(uidtype>=0 && uidtype <3) {
@@ -160,10 +160,10 @@ function ratelist_callback(data, uidtype) {
                  ratelist_html += '<p>买家: ';
             }
 	        if(data[i].uidtype > 0 && data[i].uidtype<3) { //1:卖家 2:买家  3:给他人
-	            ratelist_html += '<a href="userinfo.aspx?uid=' + data[i].uid + '">' + data[i].username + '</a></p></td>';
+	            ratelist_html += '<a href="userinfo.action?uid=' + data[i].uid + '">' + data[i].username + '</a></p></td>';
 	        }
 	        else { //给他人
-	            ratelist_html += '<a href="userinfo.aspx?uid=' + data[i].ratetouid + '">' + data[i].ratetousername + '</a></p></td>';
+	            ratelist_html += '<a href="userinfo.action?uid=' + data[i].ratetouid + '">' + data[i].ratetousername + '</a></p></td>';
 	        }
 	    }
 	    else {
@@ -173,7 +173,7 @@ function ratelist_callback(data, uidtype) {
 	            }else{     
 	                 ratelist_html += '<p>买家: ';
 	            }
-                 ratelist_html += '<a href="userinfo.aspx?uid=' + data[i].uid + '">' + data[i].username + '</a></p></td>';
+                 ratelist_html += '<a href="userinfo.action?uid=' + data[i].uid + '">' + data[i].username + '</a></p></td>';
 	        }
 	        else {
 	            if(data[i].uidtype == 1) { 
@@ -181,7 +181,7 @@ function ratelist_callback(data, uidtype) {
 	            }else{     
 	                 ratelist_html += '<p>卖家: ';
 	            }
-	            ratelist_html += '<a href="userinfo.aspx?uid=' + data[i].ratetouid + '">' + data[i].ratetousername + '</a></p></td>';
+	            ratelist_html += '<a href="userinfo.action?uid=' + data[i].ratetouid + '">' + data[i].ratetousername + '</a></p></td>';
 	        }
 	    }
 	    

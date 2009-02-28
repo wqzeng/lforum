@@ -133,7 +133,7 @@ this.init = function(){
 		}
 		outputhtml += '<input type="text" value="'+treeNodes[i].name+'" size="20" id="categoryname_'+ treeNodes[i].categoryid +'" onChange="$(\'editcategoryname\').value=this.value;" onfocus="$(\'editcategoryname\').value=this.value;" maxlength="50">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="TopicButton" type="button" onclick="javascript:$(\'operation\').value=\'edit\';$(\'categoryid\').value='+ treeNodes[i].categoryid +';$(\'shopcategorysubmit\').click();"><img src="admin/images/submit.gif"/>确定修改</a><a href="#" class="TopicButton" type="button" onclick="javascript:if(confirm(\'您要删除该项吗?\')){$(\'operation\').value=\'delete\';$(\'categoryid\').value='+ treeNodes[i].categoryid +';$(\'shopcategorysubmit\').click();}"><img src="admin/images/del.gif" />删除</a>';
 		if(treeNodes[i].childcount == 0) {
-		    outputhtml +='<a href="#" class="TopicButton" type="button" onclick="javascript:window.location=\'usercpshopgoodsmanage.aspx?item=shopcategory&shopgoodscategoryid='+treeNodes[i].categoryid+'\';">商品列表<img src="admin/images/selector.gif" /></a></div>';
+		    outputhtml +='<a href="#" class="TopicButton" type="button" onclick="javascript:window.location=\'usercpshopgoodsmanage.action?item=shopcategory&shopgoodscategoryid='+treeNodes[i].categoryid+'\';">商品列表<img src="admin/images/selector.gif" /></a></div>';
 		}
 		else {
 		    outputhtml +='</div>';

@@ -301,7 +301,7 @@ function ajaxgettradelog(goodsid, pagesize, pageindex)
 {
     $('tradelog_html').innerHTML = '加载数据中...';
     page_currentpage = pageindex;
-    _sendRequest('tools/ajax.aspx?t=getgoodstradelog&goodsid=' + goodsid + '&pagesize=' + pagesize + '&pageindex=' + pageindex + '&orderby=lastupdate&ascdesc=1', function(d){
+    _sendRequest('tools/ajax.action?t=getgoodstradelog&goodsid=' + goodsid + '&pagesize=' + pagesize + '&pageindex=' + pageindex + '&orderby=lastupdate&ascdesc=1', function(d){
 		try{
 		eval('tradelog_callback(' + d + ')');}catch(e){};
 	});
@@ -325,7 +325,7 @@ function tradelog_callback(data) {
 	for(var i in data) {
 		tradelog_html += '<tr class="list" onmouseover="this.className=\'liston\'" onmouseout="this.className=\'list\'">';
 		tradelog_html += '<td style="text-align:left; padding-left:10px;">';
-		tradelog_html += '<a target="_blank" href="userrate.aspx?uid=' + data[i].buyerid + '">'+ data[i].buyer +'</a>';
+		tradelog_html += '<a target="_blank" href="userrate.action?uid=' + data[i].buyerid + '">'+ data[i].buyer +'</a>';
 		for (j = 0; j< parseInt(data[i].buyercredit,0); j++) {
 		   tradelog_html += '<img alt="0" src="'+ path +'/images/1.gif"/>'; //<span rank:params="type=b&uid=1418fcc13383f28e49634d03bfb89380&override=1" class="rank:token"><a href="#" target="_blank" title="11－40个买家信用积分，请点击查看详情" class="tb-rank buyer-rank-2"/></span>
 		}
@@ -395,7 +395,7 @@ function ajaxgetleaveword(goodsid, pagesize, pageindex)
 {
     $('leavewordlist').innerHTML = '加载数据中...';
     leaveword_page_currentpage = pageindex;
-    _sendRequest('tools/ajax.aspx?t=getgoodsleaveword&goodsid=' + goodsid + '&pagesize=' + pagesize + '&pageindex=' + pageindex, function(d){
+    _sendRequest('tools/ajax.action?t=getgoodsleaveword&goodsid=' + goodsid + '&pagesize=' + pagesize + '&pageindex=' + pageindex, function(d){
 		try{
 		eval('leaveword_callback(' + d + ')');}catch(e){};
 	});
@@ -403,7 +403,7 @@ function ajaxgetleaveword(goodsid, pagesize, pageindex)
 
 function ajaxgetleavewordbyid(leavewordid)
 {
-    _sendRequest('tools/ajax.aspx?t=getgoodsleavewordbyid&leavewordid=' + leavewordid, function(d){
+    _sendRequest('tools/ajax.action?t=getgoodsleavewordbyid&leavewordid=' + leavewordid, function(d){
 		try{
 		eval('leavewordmessage_callback(' + d + ')');}catch(e){};
 	});
@@ -434,7 +434,7 @@ function leaveword_callback(data) {
         }   
         
         if(data[i].uid>0) {
-            leaveword_html += '<a href="userinfo.aspx?userid=' + data[i].uid + '">' + data[i].username + '</a> : ';
+            leaveword_html += '<a href="userinfo.action?userid=' + data[i].uid + '">' + data[i].username + '</a> : ';
         }
         else {
             leaveword_html += data[i].username + ' : '; 
@@ -443,7 +443,7 @@ function leaveword_callback(data) {
         leaveword_html += '<BR />' + data[i].message + '<span>&nbsp;<BR />';
         //当为管理组身份或卖家或留言发布人时
 		if(useradminid == 1 || isseller || (data[i].uid>0 && data[i].uid == userid)) {
-		    leaveword_html += '<a href="#" onclick="javascript:if(confirm(\'确认要删除吗?\')){window.location.href= \'showgoods.aspx?goodsid=' + page_goodsid + '&deleteleaveword=1&leavewordid=' + data[i].id + '\';}">[删除]</a> &nbsp;';
+		    leaveword_html += '<a href="#" onclick="javascript:if(confirm(\'确认要删除吗?\')){window.location.href= \'showgoods.action?goodsid=' + page_goodsid + '&deleteleaveword=1&leavewordid=' + data[i].id + '\';}">[删除]</a> &nbsp;';
 		    if(data[i].uid>0 && data[i].uid == userid) {
 		        leaveword_html += '<a href="javascript:;" onclick="ajaxgetleavewordbyid(' + data[i].id + ');">[编辑]</a>&nbsp;';
 		    }
@@ -509,10 +509,10 @@ function gettradecredit(goodsratenum, isseller, span_credit, uid) {
     }
     
     if(raterank == '') {
-        $(span_credit).innerHTML = '<a href="eccredit.aspx?uid=' + uid + '" target="_blank">' + goodsratenum + '</a>';
+        $(span_credit).innerHTML = '<a href="eccredit.action?uid=' + uid + '" target="_blank">' + goodsratenum + '</a>';
     }
     else {
-        $(span_credit).innerHTML = goodsratenum + '</a> <a href="eccredit.aspx?uid=' + uid + '" target="_blank"><img alt="0" src="templates/' + templatepath + '/images/' + raterank + '" /></a>';
+        $(span_credit).innerHTML = goodsratenum + '</a> <a href="eccredit.action?uid=' + uid + '" target="_blank"><img alt="0" src="templates/' + templatepath + '/images/' + raterank + '" /></a>';
     }
 }
 

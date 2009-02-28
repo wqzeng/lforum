@@ -499,10 +499,9 @@ public class EditpostAction extends ForumBaseAction {
 		attachmentlist = attachmentManager.getAttachmentListByPid(postid);
 		attachmentcount = attachmentlist.size();
 
-		//        if (topicManager.getMagicValue(topic.Magic, MagicType.HtmlTitle) == 1)
-		//        {
-		//            htmltitle = Topics.GetHtmlTitle(topic.Tid).Replace("\"", "\\\"").Replace("'", "\\'");
-		//        }
+		if (topicManager.getMagicValue(topic.getMagic(), 1) == 1) {
+			htmltitle = topicManager.getHtmlTitle(topic.getTid()).replace("\"", "\\\"").replace("'", "\\'");
+		}
 
 		enabletag = (config.getEnabletag() & forum.getAllowtag()) == 1;
 		//        if (enabletag && Topics.GetMagicValue(topic.Magic, MagicType.TopicTag) == 1)

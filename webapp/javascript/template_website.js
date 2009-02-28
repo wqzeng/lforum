@@ -117,7 +117,7 @@ function showtopicinfo(forumid, index) {
    var no_pic_path = 'templates/' + templatepath +'/images/NoPhoto.jpg';
    for(var i in reco_topic) {
        if (reco_topic[i].fid == forumid || index == i) { 
-            return '<div class="maintopic"><a href="'+ (aspxrewrite == 1 ? 'showtopic-'+reco_topic[i].tid+ '.aspx':'showtopic.aspx?topicid='+reco_topic[i].tid) +'"><img onload="imgautosize(this, 237,130);" src="' + (reco_topic[i].img.indexOf('http')>=0 ? reco_topic[i].img : 'upload/' + reco_topic[i].img) + '" alt="' + reco_topic[i].title + '" onerror="this.onerror=null;this.src=\'' + no_pic_path + '\';"/><h4>'+ reco_topic[i].title +'</h4></a></div>';
+            return '<div class="maintopic"><a href="'+ (aspxrewrite == 1 ? 'showtopic-'+reco_topic[i].tid+ '.action':'showtopic.action?topicid='+reco_topic[i].tid) +'"><img onload="imgautosize(this, 237,130);" src="' + (reco_topic[i].img.indexOf('http')>=0 ? reco_topic[i].img : 'upload/' + reco_topic[i].img) + '" alt="' + reco_topic[i].title + '" onerror="this.onerror=null;this.src=\'' + no_pic_path + '\';"/><h4>'+ reco_topic[i].title +'</h4></a></div>';
        }
    }
    //return '<img width="237" height="130" src="'+no_pic_path+'" alt="暂无推荐"/><h4>暂无推荐</h4>';

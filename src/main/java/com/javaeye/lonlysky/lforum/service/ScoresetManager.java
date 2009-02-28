@@ -53,6 +53,34 @@ public class ScoresetManager {
 	}
 
 	/**
+	 * 获取积分策略集合(表格)
+	 * 
+	 * @return 获取积分策略集合
+	 */
+	public String[][] getScoreSets() {
+		String[][] scoreSets = (String[][]) LForumCache.getInstance().getCache("ScoreSets");
+		if (scoreSets == null) {
+			// 13行9列的表格
+			scoreSets = new String[13][9];
+			Document document = getScoreDoc(ConfigLoader.getConfig().getWebpath());
+			// 循环Record节点并加入到集合中
+			List<Element> recordList = XmlElementUtil.findElements("record", document.getRootElement());
+			int i = 0; // 行标识			
+			for (Element element : recordList) {
+				scoreSets[i][0] = XmlElementUtil.findElement("name", element).getTextTrim();
+				for (int j = 1; j <= 8; j++) {
+					// 循环列
+					scoreSets[i][j] = XmlElementUtil.findElement("extcredits" + j, element).getTextTrim();
+					System.out.println(scoreSets[i][j]);
+				}
+				i++;
+			}
+			LForumCache.getInstance().addCache("ScoreSets", scoreSets);
+		}
+		return scoreSets;
+	}
+
+	/**
 	 * 获取积分策略集合
 	 * 
 	 * @return 积分策略集合

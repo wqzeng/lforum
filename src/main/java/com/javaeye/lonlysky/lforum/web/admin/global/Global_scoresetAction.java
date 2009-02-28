@@ -37,18 +37,35 @@ public class Global_scoresetAction extends AdminBaseAction {
 	private String creditstax;
 	private String exchangemincredits;
 	private String maxchargespan;
+	private String[][] scoreSets;
+	private int updateid = -1;
 
 	@Override
 	public String execute() throws Exception {
-		if (!LForumRequest.isPost()) {
-			formula = scoresetManager.getScoreCalFormula();
-			creditstrans = Utils.null2String(scoresetManager.getCreditsTrans());
-			transfermincredits = Utils.null2String(scoresetManager.getTransferMinCredits());
-			maxincperthread = Utils.null2String(scoresetManager.getMaxIncPerTopic());
-			creditstax = Utils.null2String(scoresetManager.getCreditsTax());
-			exchangemincredits = Utils.null2String(scoresetManager.getExchangeMinCredits());
-			maxchargespan = Utils.null2String(scoresetManager.getMaxChargeSpan());
-		} else {
+		scoreSets = scoresetManager.getScoreSets();
+		formula = scoresetManager.getScoreCalFormula();
+		creditstrans = Utils.null2String(scoresetManager.getCreditsTrans());
+		transfermincredits = Utils.null2String(scoresetManager.getTransferMinCredits());
+		maxincperthread = Utils.null2String(scoresetManager.getMaxIncPerTopic());
+		creditstax = Utils.null2String(scoresetManager.getCreditsTax());
+		exchangemincredits = Utils.null2String(scoresetManager.getExchangeMinCredits());
+		maxchargespan = Utils.null2String(scoresetManager.getMaxChargeSpan());
+
+		// 如果表单提交
+		if (LForumRequest.isPost()) {
+			String submitMethod = LForumRequest.getParamValue("submitMethod");
+			if (!submitMethod.equals("")) {
+				submitMethod = submitMethod.substring(submitMethod.indexOf(":") + 1);
+				if (submitMethod.equals("doEidtScore")) {
+					doEidtScore();
+					return SUCCESS;
+				} else if (submitMethod.equals("updateScore")) {
+					updateScore();
+					return SUCCESS;
+				} else if (submitMethod.equals("noUpdateScore")) {
+					return SUCCESS;
+				}
+			}
 			if (Utils.null2Double(creditstax.trim(), 2) > 1) {
 				registerStartupScript("",
 						"<script>alert('积分交易税必须是0--1之间的小数');window.location.href='global_scoreset.action';</script>");
@@ -111,6 +128,54 @@ public class Global_scoresetAction extends AdminBaseAction {
 			registerStartupScript("PAGE", "window.location.href='global_scoreset.action';");
 		}
 		return SUCCESS;
+	}
+
+	/**
+	 * 更新指定策略
+	 */
+	private void updateScore() {
+		int scoreID = LForumRequest.getParamIntValue("scoreID", -1);
+		if (scoreID == -1) {
+			registerStartupScript("",
+					"<script>alert('无效的策略ID');window.location.href='global_scoreset.action';</script>");
+		}
+		String scoreName = LForumRequest.getParamValue("scoreName");
+		Document document = scoresetManager.getScoreDoc(config.getWebpath());
+		for (int i = 1; i <= 8; i++) {
+			String value = LForumRequest.getParamValue("ct" + scoreID + "_ct" + i);
+			document.selectSingleNode("/scoreset/record[name=\"" + scoreName + "\"]/extcredits" + i).setText(value);
+		}
+		try {
+			XmlElementUtil.saveXML(config.getWebpath() + "WEB-INF/config/scoreset.xml", document);
+		} catch (WebException e) {
+			registerStartupScript("", "<script>alert('" + e.getMessage()
+					+ "');window.location.href='global_scoreset.action';</script>");
+		}
+		LForumCache.getInstance().removeCache("ScoreSets");
+		LForumCache.getInstance().removeCache("ScoreSet");
+
+		adminVistLogManager.insertLog(user, username, usergroup, grouptitle, ip, "积分设置", "");
+
+		registerStartupScript("PAGE", "window.location.href='global_scoreset.action';");
+	}
+
+	/**
+	 * 编辑积分策略
+	 */
+	private void doEidtScore() {
+		updateid = LForumRequest.getParamIntValue("updateid", -1);
+		if (updateid == -1) {
+			registerStartupScript("",
+					"<script>alert('无效的策略ID');window.location.href='global_scoreset.action';</script>");
+		}
+	}
+
+	public int getUpdateid() {
+		return updateid;
+	}
+
+	public String[][] getScoreSets() {
+		return scoreSets;
 	}
 
 	public ScoresetManager getScoresetManager() {

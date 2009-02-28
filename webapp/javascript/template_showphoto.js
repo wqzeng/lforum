@@ -6,7 +6,7 @@ var bannerPhotolink=new Array();
 
 function shownavbar(albumid, curphotoid){
 	var b = bindPhotoNav;
-	var c="tools/ajax.aspx?t=album&albumid=" + albumid;
+	var c="tools/ajax.action?t=album&albumid=" + albumid;
 	var f = "cache/album/" + (Math.floor(albumid / 1000) + 1) + "/" + albumid + "_json.txt";
 	_sendRequest(f,function(d){var e={};try{e=eval("("+d+")")}catch(f){e={};
 	
@@ -18,7 +18,7 @@ function shownavbar(albumid, curphotoid){
 
 function showTags(photoid){
 	var f = "cache/photo/" + (Math.floor(photoid / 1000) + 1) + "/" + photoid + "_tags.txt";
-	var c="tools/ajax.aspx?t=getphototags&photoid=" + photoid;
+	var c="tools/ajax.action?t=getphototags&photoid=" + photoid;
 	_sendRequest(f,function(d){var e={};try{e=eval("("+d+")")}catch(f){e={};
 	_sendRequest(c,function(d){var e={};try{e=eval("("+d+")")}catch(f){e={}}var h=e?e:null;bindTags(h);e=null;bindTags=null},false,true);
 	return;
@@ -31,7 +31,7 @@ function bindTags(obj) {
 	var tagcontainer = $('tagcontainer');
 	var html = "";
 	for (var i in tagitems) {
-		html += "<li><a href='phototag-" + tagitems[i].tagid + ".aspx'>" + tagitems[i].tagname + "</a></li>";
+		html += "<li><a href='phototag-" + tagitems[i].tagid + ".action'>" + tagitems[i].tagname + "</a></li>";
 	}
 	tagcontainer.innerHTML = html;
 }
@@ -59,7 +59,7 @@ function bindPhotoNav(obj, curphotoid){
 			border = " class=\"activeimg\"";
 			size = 76;
 		}
-		html += "<td><a href='showphoto.aspx?photoid=" + items[i].photoid + "'><div" + border + "><img title='" + items[i].title + "' alt='" + items[i].title + "' src='" + items[i].square + "' onerror=\"this.onerror=null;this.src='templates/" + templatepath + "/images/errorphoto.gif';\" width='" + size + "' height='" + size + "' border='0' /></div></a></td>";
+		html += "<td><a href='showphoto.action?photoid=" + items[i].photoid + "'><div" + border + "><img title='" + items[i].title + "' alt='" + items[i].title + "' src='" + items[i].square + "' onerror=\"this.onerror=null;this.src='templates/" + templatepath + "/images/errorphoto.gif';\" width='" + size + "' height='" + size + "' border='0' /></div></a></td>";
 	
 	}
 	html += "</tr></table>";
@@ -76,24 +76,24 @@ function bindPhotoNav(obj, curphotoid){
 			$("prevImg").style.display = 'none';
 			if (1 == length) {
 				$("nextImg").style.display = 'none';
-				$("nextImgOnPhoto").href = 'showphoto.aspx?photoid=' + items[0].photoid;
+				$("nextImgOnPhoto").href = 'showphoto.action?photoid=' + items[0].photoid;
 			}
 			else{
-				$("nextImgOnPhoto").href = 'showphoto.aspx?photoid=' + items[photoindex].photoid;
-				$("nextImg").href = 'showphoto.aspx?photoid=' + items[photoindex].photoid;
+				$("nextImgOnPhoto").href = 'showphoto.action?photoid=' + items[photoindex].photoid;
+				$("nextImg").href = 'showphoto.action?photoid=' + items[photoindex].photoid;
 			}
 		}
 
 		//disable nextImg
 		else if (photoindex == length) {
 			$("nextImg").style.display = 'none';
-			$("nextImgOnPhoto").href = 'showphoto.aspx?photoid=' + items[0].photoid;
-			$("prevImg").href = 'showphoto.aspx?photoid=' + items[photoindex - 2].photoid;
+			$("nextImgOnPhoto").href = 'showphoto.action?photoid=' + items[0].photoid;
+			$("prevImg").href = 'showphoto.action?photoid=' + items[photoindex - 2].photoid;
 		}
 		else {
-			$("prevImg").href = 'showphoto.aspx?photoid=' + items[photoindex - 2].photoid;
-			$("nextImg").href = 'showphoto.aspx?photoid=' + items[photoindex].photoid;
-			$("nextImgOnPhoto").href = 'showphoto.aspx?photoid=' + items[photoindex].photoid;
+			$("prevImg").href = 'showphoto.action?photoid=' + items[photoindex - 2].photoid;
+			$("nextImg").href = 'showphoto.action?photoid=' + items[photoindex].photoid;
+			$("nextImgOnPhoto").href = 'showphoto.action?photoid=' + items[photoindex].photoid;
 		}
 		$("photoIndex").innerHTML = '<em>' + photoindex + '</em>/' + length;
 	});
