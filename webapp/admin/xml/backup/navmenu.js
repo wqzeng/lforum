@@ -1,9 +1,0 @@
-﻿var toptabmenu = [
-{'id':'1','title':'全 局','mainmenulist':'1,2','mainmenuidlist':'1010,1020','defaulturl':'rapidset/shortcut.action','system':'1'},{'id':'2','title':'论 坛','mainmenulist':'3,4,5','mainmenuidlist':'2010,2020,2030','defaulturl':'forum/forum_forumstree.action','system':'1'},{'id':'3','title':'用 户','mainmenulist':'6,7','mainmenuidlist':'3010,3020','defaulturl':'global/global_usergrid.action','system':'1'},{'id':'4','title':'帖 子','mainmenulist':'8,9','mainmenuidlist':'4010,4020','defaulturl':'forum/forum_auditpost.action','system':'1'},{'id':'5','title':'扩 展','mainmenulist':'10','mainmenuidlist':'5010','defaulturl':'global/global_passportmanage.action','system':'2'},{'id':'6','title':'其 他','mainmenulist':'11,12','mainmenuidlist':'6010,6020','defaulturl':'global/global_announcegrid.action','system':'1'},{'id':'7','title':'工 具','mainmenulist':'13,14','mainmenuidlist':'7010,7020','defaulturl':'global/global_cachemanage.action','system':'1'}
-];
-var mainmenu = [
-{'id':'1','menuid':'1010','menutitle':'常规选项'},{'id':'2','menuid':'1020','menutitle':'界面风格'},{'id':'3','menuid':'2010','menutitle':'版块设置'},{'id':'4','menuid':'2020','menutitle':'论坛维护'},{'id':'5','menuid':'2030','menutitle':'论坛聚合'},{'id':'6','menuid':'3010','menutitle':'用户管理'},{'id':'7','menuid':'3020','menutitle':'分组与级别'},{'id':'8','menuid':'4010','menutitle':'审核管理'},{'id':'9','menuid':'4020','menutitle':'帖子相关'},{'id':'10','menuid':'5010','menutitle':'整合设置'},{'id':'11','menuid':'6010','menutitle':'其它设置'},{'id':'12','menuid':'6020','menutitle':'运行记录'},{'id':'13','menuid':'7010','menutitle':'数据库'},{'id':'14','menuid':'7020','menutitle':'系统工具'}
-];
-var submenu = [
-];
-var shortcut = []

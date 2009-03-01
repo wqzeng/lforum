@@ -271,4 +271,8 @@ public class RequestConfig {
 	public int opNum(int num1, int num2) {
 		return num1 & num2;
 	}
+
+	public String urlEncode(String str) {
+		return Utils.urlEncode(str);
+	}
 }

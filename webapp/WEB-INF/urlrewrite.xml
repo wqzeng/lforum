@@ -3,11 +3,23 @@
         "http://tuckey.org/res/dtds/urlrewrite3.1.dtd">
 <urlrewrite>
 	<rule>
-		<from>^/(\w+).html$</from>
-		<to type="forward">$1/$1.action</to>
-	</rule>
+		<note>   
+        	- 这是一个显示帖子请求url rewrite   
+        	- 将请求forword url加上“showtopic.action”的处理器上。   
+        	- 例：   
+        	- 请求 http://{domain}/showtopic-1.html    将被forward到 http://{domain}/showtopic.action?topicid=1   
+   	 	</note> 
+		<from>^/showtopic-([0-9+]).html$</from>
+		<to type="forward">/showtopic.action?topicid=$1</to>
+	</rule>	
 	<rule>
-		<from>^/(\w+)-(\w+).html$</from>
-		<to type="forward">$1/$1!$2.action</to>
-	</rule>
+		<note>   
+        	- 这是一个通用请求url rewrite   
+        	- 将请求forword url加上“.action”的处理器上。   
+        	- 例：   
+        	- 请求 http://{domain}/userinfo.html    将被forward到 http://{domain}/userinfo.action   
+   	 	</note> 
+		<from>^/([_a-zA-Z]+[_0-9a-zA-Z-/]*[_0-9a-zA-Z]+).html$</from>
+		<to type="forward">/$1.action</to>
+	</rule>		
 </urlrewrite>

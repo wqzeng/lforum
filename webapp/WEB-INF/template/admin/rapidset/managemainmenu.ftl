@@ -43,7 +43,7 @@
                     return false;
                 }
             }
-            document.getElementById("form1").submit();
+            document.getElementById("Form1").submit();
             return true;
         }
     </script>
@@ -52,7 +52,7 @@
 <br />
     <form id="Form1" method="post">
     ${htmlBuilder}
-	    <@c.pageInfo id="info1"  icon="information" text="<li>主菜单项必须在其下没有子菜单时才可删除!</li><li>编辑完菜单后必须点击<b>生成菜单</b>按钮才能使编辑生效!</li><li>建议在编辑菜单前先进入<b>备份管理</b>中对当前未编辑的菜单进行备份,如果修改不当还可以从备份中恢复!</li>" />
+	    <@c.pageInfo id="info1"  icon="Information" text="<li>主菜单项必须在其下没有子菜单时才可删除!</li><li>编辑完菜单后必须点击<b>生成菜单</b>按钮才能使编辑生效!</li><li>建议在编辑菜单前先进入<b>备份管理</b>中对当前未编辑的菜单进行备份,如果修改不当还可以从备份中恢复!</li>" />
 	    <table class="ntcplist" >
 
 <tr class="head">

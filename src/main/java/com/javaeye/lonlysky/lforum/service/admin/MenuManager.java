@@ -101,8 +101,8 @@ public class MenuManager {
 		Element delMenu = null;
 		int newid = menuid;
 		for (Element menuitem : mainmenus) {
-			if (XmlElementUtil.findElement("id", menuitem).getTextTrim().equals(menuid + "")) {
-				if (!XmlElementUtil.findElement("mainmenulist", menuitem).getTextTrim().equals("")) {
+			if (menuitem.elementTextTrim("id").equals(Utils.null2String(menuid))) {
+				if (!menuitem.elementTextTrim("mainmenulist").equals("")) {
 					return false;
 				}
 				delMenu = menuitem;
@@ -111,7 +111,8 @@ public class MenuManager {
 				break;
 			} else {
 				if (delMenu != null) {
-					menuitem.element("id").setText(newid + "");
+					doc.selectSingleNode("/dataset/toptabmenu[id=\"" + menuitem.elementTextTrim("id") + "\"]/id")
+							.setText(newid + "");
 					newid++;
 				}
 			}
@@ -326,7 +327,7 @@ public class MenuManager {
 	 */
 	public static boolean editMenuItem(int id, String title, String link) {
 		Document doc = XmlElementUtil.readXML(CONFIG_PATH);
-		List<Element> submains = XmlElementUtil.findElements("submains", doc.getRootElement());
+		List<Element> submains = XmlElementUtil.findElements("submain", doc.getRootElement());
 		int rowcount = 0;
 		for (Element sub : submains) {
 			if (rowcount != id && sub.elementTextTrim("link").equals(link)) {
@@ -372,7 +373,7 @@ public class MenuManager {
 	 */
 	public static void deleteMenuItem(int id) {
 		Document doc = XmlElementUtil.readXML(CONFIG_PATH);
-		List<Element> submains = XmlElementUtil.findElements("submains", doc.getRootElement());
+		List<Element> submains = XmlElementUtil.findElements("submain", doc.getRootElement());
 		String link = submains.get(id).elementText("link");
 		doc.getRootElement().remove(submains.get(id));
 		List<Element> shortcuts = XmlElementUtil.findElements("shortcut", doc.getRootElement());

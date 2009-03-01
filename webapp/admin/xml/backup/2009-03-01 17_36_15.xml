@@ -42,6 +42,11 @@
     <menutitle>帖子相关</menutitle> 
   </mainmenu>  
   <mainmenu> 
+    <id>10</id>  
+    <menuid>5010</menuid>  
+    <menutitle>整合设置</menutitle> 
+  </mainmenu>  
+  <mainmenu> 
     <id>11</id>  
     <menuid>6010</menuid>  
     <menutitle>其它设置</menutitle> 
@@ -188,6 +193,18 @@
     <frameid>main</frameid> 
   </submain>  
   <submain> 
+    <menuparentid>2020</menuparentid>  
+    <menutitle>远程附件设置</menutitle>  
+    <link>global/global_ftpsetting.action?ftptype=ForumAttach</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>2020</menuparentid>  
+    <menutitle>分表设置</menutitle>  
+    <link>global/global_detachtable.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
     <menuparentid>3010</menuparentid>  
     <menutitle>添加用户</menutitle>  
     <link>global/global_adduser.action</link>  
@@ -261,7 +278,7 @@
   </submain>  
   <submain> 
     <menuparentid>4020</menuparentid>  
-    <menutitle>LForum代码</menutitle>  
+    <menutitle>Discuz!NT代码</menutitle>  
     <link>forum/forum_bbcodegrid.action</link>  
     <frameid>main</frameid> 
   </submain>  
@@ -293,6 +310,12 @@
     <menuparentid>4020</menuparentid>  
     <menutitle>标签管理</menutitle>  
     <link>forum/forum_tagmanage.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>5010</menuparentid>  
+    <menutitle>通行证设置</menutitle>  
+    <link>global/global_passportmanage.action</link>  
     <frameid>main</frameid> 
   </submain>  
   <submain> 
@@ -381,7 +404,7 @@
   </submain>  
   <submain> 
     <menuparentid>7010</menuparentid>  
-    <menutitle>运行指定的HQL语句</menutitle>  
+    <menutitle>运行指定的SQL语句</menutitle>  
     <link>global/global_runsql.action</link>  
     <frameid>main</frameid> 
   </submain>  
@@ -395,6 +418,12 @@
     <menuparentid>7010</menuparentid>  
     <menutitle>数据库信息备份</menutitle>  
     <link>global/global_backupandrestore.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7010</menuparentid>  
+    <menutitle>数据库优化</menutitle>  
+    <link>global/global_dboptimize.action</link>  
     <frameid>main</frameid> 
   </submain>  
   <submain> 
@@ -449,6 +478,14 @@
   </toptabmenu>  
   <toptabmenu> 
     <id>5</id>  
+    <title>扩 展</title>  
+    <mainmenulist>10,15,16,17,18,19,20,21</mainmenulist>  
+    <mainmenuidlist>5010,7120,7220,7320,7420,7520</mainmenuidlist>  
+    <defaulturl>global/global_passportmanage.action</defaulturl>  
+    <system>2</system> 
+  </toptabmenu>  
+  <toptabmenu> 
+    <id>6</id>  
     <title>其 他</title>  
     <mainmenulist>11,12</mainmenulist>  
     <mainmenuidlist>6010,6020</mainmenuidlist>  
@@ -456,11 +493,238 @@
     <system>1</system> 
   </toptabmenu>  
   <toptabmenu> 
-    <id>6</id>  
+    <id>7</id>  
     <title>工 具</title>  
     <mainmenulist>13,14</mainmenulist>  
     <mainmenuidlist>7010,7020</mainmenuidlist>  
     <defaulturl>global/global_cachemanage.action</defaulturl>  
     <system>1</system> 
-  </toptabmenu> 
+  </toptabmenu>  
+  <mainmenu> 
+    <id>15</id>  
+    <menuid>7120</menuid>  
+    <menutitle>个人空间管理</menutitle> 
+  </mainmenu>  
+  <submain> 
+    <menuparentid>7120</menuparentid>  
+    <menutitle>申请设置</menutitle>  
+    <link>space/space_spaceapplysetting.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7120</menuparentid>  
+    <menutitle>主题管理</menutitle>  
+    <link>space/space_spacethememanage.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7120</menuparentid>  
+    <menutitle>审核空间</menutitle>  
+    <link>space/space_spaceapplymanage.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7120</menuparentid>  
+    <menutitle>模块管理</menutitle>  
+    <link>space/space_moduledefmanage.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7120</menuparentid>  
+    <menutitle>模块分类管理</menutitle>  
+    <link>space/space_moduledefcategorymanage.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7120</menuparentid>  
+    <menutitle>其它信息设置</menutitle>  
+    <link>space/space_spacefooterinfo.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7120</menuparentid>  
+    <menutitle>管理空间</menutitle>  
+    <link>space/space_spacemanage.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7120</menuparentid>  
+    <menutitle>远程附件设置</menutitle>  
+    <link>global/global_ftpsetting.action?ftptype=SpaceAttach</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <mainmenu> 
+    <id>16</id>  
+    <menuid>7220</menuid>  
+    <menutitle>个人空间聚合</menutitle> 
+  </mainmenu>  
+  <submain> 
+    <menuparentid>7220</menuparentid>  
+    <menutitle>聚合首页推荐</menutitle>  
+    <link>space/aggregation_spaceaggset.action?pagename=website</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7220</menuparentid>  
+    <menutitle>空间首页推荐</menutitle>  
+    <link>space/aggregation_spaceaggset.action?pagename=spaceindex</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7220</menuparentid>  
+    <menutitle>聚合首页日志推荐</menutitle>  
+    <link>space/aggregation_postaggset.action?pagename=website</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7220</menuparentid>  
+    <menutitle>空间首页日志推荐</menutitle>  
+    <link>space/aggregation_postaggset.action?pagename=spaceindex</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7220</menuparentid>  
+    <menutitle>自动提取数据</menutitle>  
+    <link>space/aggregation_spaceindexaggset.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7220</menuparentid>  
+    <menutitle>轮显图片</menutitle>  
+    <link>aggregation/aggregation_rotatepic.action?pagename=spaceindex</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <mainmenu> 
+    <id>17</id>  
+    <menuid>7320</menuid>  
+    <menutitle>相册管理</menutitle> 
+  </mainmenu>  
+  <submain> 
+    <menuparentid>7320</menuparentid>  
+    <menutitle>相册设置</menutitle>  
+    <link>album/album_config.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7320</menuparentid>  
+    <menutitle>相册分类管理</menutitle>  
+    <link>album/album_categorymanage.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7320</menuparentid>  
+    <menutitle>相册管理</menutitle>  
+    <link>album/album_manage.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7320</menuparentid>  
+    <menutitle>远程附件设置</menutitle>  
+    <link>global/global_ftpsetting.action?ftptype=AlbumAttach</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <mainmenu> 
+    <id>18</id>  
+    <menuid>7420</menuid>  
+    <menutitle>相册聚合</menutitle> 
+  </mainmenu>  
+  <submain> 
+    <menuparentid>7420</menuparentid>  
+    <menutitle>推荐照片</menutitle>  
+    <link>album/aggregation_photoaggset.action?pagename=albumindex</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7420</menuparentid>  
+    <menutitle>聚合首页推荐</menutitle>  
+    <link>album/aggregation_commendalbums.action?pagename=website</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7420</menuparentid>  
+    <menutitle>相册首页推荐相册</menutitle>  
+    <link>album/aggregation_commendalbums.action?pagename=albumindex</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7420</menuparentid>  
+    <menutitle>空间首页推荐相册</menutitle>  
+    <link>album/aggregation_commendalbums.action?pagename=spaceindex</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7420</menuparentid>  
+    <menutitle>自动提取数据</menutitle>  
+    <link>album/aggregation_autoalbums.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7420</menuparentid>  
+    <menutitle>轮显图片</menutitle>  
+    <link>aggregation/aggregation_rotatepic.action?pagename=albumindex</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <mainmenu> 
+    <id>19</id>  
+    <menuid>7520</menuid>  
+    <menutitle>电子商务</menutitle> 
+  </mainmenu>  
+  <submain> 
+    <menuparentid>7520</menuparentid>  
+    <menutitle>诚信规则</menutitle>  
+    <link>mall/mall_creditrule.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7520</menuparentid>  
+    <menutitle>区域管理</menutitle>  
+    <link>mall/mall_locationsmanage.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7520</menuparentid>  
+    <menutitle>商品分类</menutitle>  
+    <link>mall/mall_goodscategoriesmanage.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7520</menuparentid>  
+    <menutitle>远程附件设置</menutitle>  
+    <link>global/global_ftpsetting.action?ftptype=MallAttach</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7520</menuparentid>  
+    <menutitle>商品交易订单</menutitle>  
+    <link>mall/mall_tradelog.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7520</menuparentid>  
+    <menutitle>商城设置</menutitle>  
+    <link>mall/mall_mallsetting.action</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7520</menuparentid>  
+    <menutitle>商品审核</menutitle>  
+    <link>mall/mall_goodsmanage.action?mod=audit</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <submain> 
+    <menuparentid>7520</menuparentid>  
+    <menutitle>商品回收站</menutitle>  
+    <link>mall/mall_goodsmanage.action?mod=recycle</link>  
+    <frameid>main</frameid> 
+  </submain>  
+  <mainmenu> 
+    <id>20</id>  
+    <menuid>7620</menuid>  
+    <menutitle>个人空间管理</menutitle> 
+  </mainmenu>  
+  <mainmenu> 
+    <id>21</id>  
+    <menuid>7720</menuid>  
+    <menutitle>个人空间聚合</menutitle> 
+  </mainmenu> 
 </dataset>
