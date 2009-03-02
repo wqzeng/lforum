@@ -160,7 +160,7 @@ public class UserManager {
 		}
 		List<Object[]> objList = userDAO
 				.createQuery(
-						"select uid,usergroups.groupid,username,nickname,joindate,credits,posts,lastactivity,email,oltime,userfields.location From Users "
+						"select uid,usergroups.groupid,username,nickname,joindate,credits,posts,lastactivity,email,oltime,userfields.location from Users "
 								+ orderby).setMaxResults(pageSize).setFirstResult((pageNo - 1) * pageSize).list();
 		i = 0;
 		for (Object[] objects : objList) {

@@ -160,6 +160,18 @@ public class LForumRequest {
 	 * @return 值(如果没有或为空则返回"")
 	 */
 	public static String getParamValue(String paramName) {
+		return getParamValue(paramName, true);
+	}
+
+	/**
+	 * 获得指定请求参数值
+	 * @param paramName 参数名
+	 * @return 值(如果没有或为空则返回"")
+	 */
+	public static String getParamValue(String paramName, boolean clearHtml) {
+		if (clearHtml) {
+			return Utils.cleanHtmlTag(Utils.null2String(getRequest().getParameter(paramName)).trim());
+		}
 		return Utils.null2String(getRequest().getParameter(paramName)).trim();
 	}
 

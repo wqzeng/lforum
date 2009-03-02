@@ -171,6 +171,9 @@ public class Forum_editforumsAction extends AdminBaseAction {
 	 * 绑定页面数据
 	 */
 	private void bindData() {
+		if (!LForumRequest.getParamValue("tabindex").equals("")) {
+			tabDef = "tabPage" + LForumRequest.getParamValue("tabindex");
+		}
 		forum = forumManager.getForumInfo(fid);
 		// 权限
 		List<Usergroups> groupList = userGroupManager.getUserGroupList();

@@ -817,36 +817,36 @@ public class ForumUtils {
 			ypos = (float) img.getHeight() * (float) .01;
 			break;
 		case 2:
-			xpos = ((float) img.getWidth() * (float) .50) - (fontsize * watermarkText.split("").length / 2);
+			xpos = ((float) img.getWidth() * (float) .50) - (g.getFontMetrics(drawFont).stringWidth(watermarkText) / 2);
 			ypos = (float) img.getHeight() * (float) .01;
 			break;
 		case 3:
-			xpos = ((float) img.getWidth() * (float) .99) - fontsize * watermarkText.split("").length;
+			xpos = ((float) img.getWidth() * (float) .99) - g.getFontMetrics(drawFont).stringWidth(watermarkText);
 			ypos = (float) img.getHeight() * (float) .01;
 			break;
 		case 4:
 			xpos = (float) img.getWidth() * (float) .01;
-			ypos = ((float) img.getHeight() * (float) .50) - (fontsize / 2);
+			ypos = ((float) img.getHeight() * (float) .50) - (g.getFontMetrics(drawFont).getHeight() / 2);
 			break;
 		case 5:
-			xpos = ((float) img.getWidth() * (float) .50) - (fontsize * watermarkText.split("").length / 2);
-			ypos = ((float) img.getHeight() * (float) .50) - (fontsize / 2);
+			xpos = ((float) img.getWidth() * (float) .50) - (g.getFontMetrics(drawFont).stringWidth(watermarkText) / 2);
+			ypos = ((float) img.getHeight() * (float) .50) - (g.getFontMetrics(drawFont).getHeight() / 2);
 			break;
 		case 6:
-			xpos = ((float) img.getWidth() * (float) .99) - fontsize * watermarkText.split("").length;
-			ypos = ((float) img.getHeight() * (float) .50) - (fontsize / 2);
+			xpos = ((float) img.getWidth() * (float) .99) - g.getFontMetrics(drawFont).stringWidth(watermarkText);
+			ypos = ((float) img.getHeight() * (float) .50) - (g.getFontMetrics(drawFont).getHeight() / 2);
 			break;
 		case 7:
 			xpos = (float) img.getWidth() * (float) .01;
-			ypos = ((float) img.getHeight() * (float) .99) - fontsize;
+			ypos = ((float) img.getHeight() * (float) .99) - g.getFontMetrics(drawFont).getHeight();
 			break;
 		case 8:
-			xpos = ((float) img.getWidth() * (float) .50) - (fontsize * watermarkText.split("").length / 2);
-			ypos = ((float) img.getHeight() * (float) .99) - fontsize;
+			xpos = ((float) img.getWidth() * (float) .50) - (g.getFontMetrics(drawFont).stringWidth(watermarkText) / 2);
+			ypos = ((float) img.getHeight() * (float) .99) - g.getFontMetrics(drawFont).getHeight();
 			break;
 		case 9:
-			xpos = ((float) img.getWidth() * (float) .99) - fontsize * watermarkText.split("").length;
-			ypos = ((float) img.getHeight() * (float) .99) - fontsize;
+			xpos = ((float) img.getWidth() * (float) .99) - g.getFontMetrics(drawFont).stringWidth(watermarkText);
+			ypos = ((float) img.getHeight() * (float) .99) - g.getFontMetrics(drawFont).getHeight();
 			break;
 		}
 		g.setFont(drawFont);

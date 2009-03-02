@@ -712,10 +712,11 @@ public class PosttopicAction extends ForumBaseAction {
 			topicinfo.setForums(forum);
 			topicinfo.setIconid(iconid);
 			if (useradminid == 1) {
-				topicinfo.setTitle(LForumRequest.getParamValue("title"));
+				topicinfo.setTitle(Utils.cleanHtmlTag(LForumRequest.getParamValue("title")));
 				message = postmessage;
 			} else {
-				topicinfo.setTitle(cachesManager.banWordFilter(LForumRequest.getParamValue("title")));
+				topicinfo.setTitle(cachesManager
+						.banWordFilter(Utils.cleanHtmlTag(LForumRequest.getParamValue("title"))));
 				message = cachesManager.banWordFilter(postmessage);
 			}
 
@@ -852,9 +853,10 @@ public class PosttopicAction extends ForumBaseAction {
 			postinfo.setPoster(username);
 			postinfo.setUsers(user);
 			if (useradminid == 1) {
-				postinfo.setTitle(LForumRequest.getParamValue("title"));
+				postinfo.setTitle(Utils.cleanHtmlTag(LForumRequest.getParamValue("title")));
 			} else {
-				postinfo.setTitle(cachesManager.banWordFilter(LForumRequest.getParamValue("title")));
+				postinfo
+						.setTitle(cachesManager.banWordFilter(Utils.cleanHtmlTag(LForumRequest.getParamValue("title"))));
 			}
 
 			postinfo.setPostdatetime(curdatetime);

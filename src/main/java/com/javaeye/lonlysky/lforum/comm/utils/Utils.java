@@ -17,6 +17,10 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.oro.text.regex.MalformedPatternException;
+import org.apache.oro.text.regex.Perl5Compiler;
+import org.apache.oro.text.regex.Perl5Matcher;
+
 /**
  * 一些通用的工具处理方法
  * 
@@ -887,5 +891,44 @@ public class Utils {
 			return "";
 		}
 		return strEmail.substring(strEmail.lastIndexOf("@")).toLowerCase();
+	}
+
+	/**
+	 * HTML标签过滤
+	 * @param value
+	 * @return
+	 */
+	public static String dhtmlspecialchars(String value) {
+		if (matches(value, "(&|\"|<|>)")) {
+			value = value.replaceAll("&", "&amp;");
+			value = value.replaceAll("\"", "&quot;");
+			value = value.replaceAll("<", "&lt;");
+			value = value.replaceAll(">", "&gt;");
+		}
+		return value;
+	}
+
+	/**
+	 * HTML标签反
+	 * @param value
+	 * @return
+	 */
+	public static String htmlspecialchars(String value) {
+		if (matches(value, "(&amp;|&quot;|&lt;|&gt;)")) {
+			value = value.replaceAll("&amp;", "&");
+			value = value.replaceAll("&quot;", "\"");
+			value = value.replaceAll("&lt;", "<");
+			value = value.replaceAll("&gt;", ">");
+		}
+		return value;
+	}
+
+	public static boolean matches(String content, String regex) {
+		boolean flag = false;
+		try {
+			flag = new Perl5Matcher().contains(content, new Perl5Compiler().compile(regex));
+		} catch (MalformedPatternException e) {
+		}
+		return flag;
 	}
 }

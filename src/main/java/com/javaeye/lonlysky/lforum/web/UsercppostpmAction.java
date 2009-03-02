@@ -94,11 +94,11 @@ public class UsercppostpmAction extends ForumBaseAction {
 			String curdatetime = Utils.getNowTime();
 			// 收件箱
 			if (useradminid == 1) {
-				pm.setMessage(LForumRequest.getParamValue("message"));
-				pm.setSubject(LForumRequest.getParamValue("subject"));
+				pm.setMessage(Utils.cleanHtmlTag(LForumRequest.getParamValue("message")));
+				pm.setSubject(Utils.cleanHtmlTag(LForumRequest.getParamValue("subject")));
 			} else {
-				pm.setMessage(cachesManager.banWordFilter(LForumRequest.getParamValue("message")));
-				pm.setSubject(cachesManager.banWordFilter(LForumRequest.getParamValue("subject")));
+				pm.setMessage(cachesManager.banWordFilter(Utils.cleanHtmlTag(LForumRequest.getParamValue("message"))));
+				pm.setSubject(cachesManager.banWordFilter(Utils.cleanHtmlTag(LForumRequest.getParamValue("subject"))));
 			}
 
 			if (cachesManager.hasBannedWord(pm.getMessage()) || cachesManager.hasBannedWord(pm.getSubject())) {

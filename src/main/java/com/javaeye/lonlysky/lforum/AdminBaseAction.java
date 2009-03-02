@@ -90,7 +90,7 @@ public class AdminBaseAction extends BaseAction implements ActionInitAware {
 		if (!config.getAdminipaccess().trim().equals("")) {
 			String[] regctrl = config.getAdminipaccess().trim().split("\n");
 			if (!Utils.inIPArray(LForumRequest.getIp(), regctrl)) {
-				response.sendRedirect(config.getWeburl() + "syslogin.action");
+				response.sendRedirect(config.getWeburl() + "admin/syslogin.action");
 				return null;
 			}
 		}
@@ -99,7 +99,7 @@ public class AdminBaseAction extends BaseAction implements ActionInitAware {
 		Online oluserinfo = onlineUserManager.updateInfo(config.getPasswordkey(), config.getOnlinetimeout());
 		usergroup = groupManager.adminGetUserGroupInfo(oluserinfo.getUsergroups().getGroupid());
 		if (oluserinfo.getUsers().getUid() <= 0 || usergroup.getAdmingroups().getAdmingid() != 1) {
-			response.sendRedirect(config.getWeburl() + "syslogin.action");
+			response.sendRedirect(config.getWeburl() + "admin/syslogin.action");
 			return null;
 		}
 
@@ -110,7 +110,7 @@ public class AdminBaseAction extends BaseAction implements ActionInitAware {
 		if (ForumUtils.getCookie("lforumkey").equals("")
 				|| !ForumUtils.getCookiePassword(ForumUtils.getCookie("lforumkey"), config.getPasswordkey()).equals(
 						(oluserinfo.getPassword() + secques + oluserinfo.getUsers().getUid()))) {
-			response.sendRedirect(config.getWeburl() + "syslogin.action");
+			response.sendRedirect(config.getWeburl() + "admin/syslogin.action");
 			return null;
 		} else {
 			ForumUtils.writeCookie("lforumkey", ForumUtils.setCookiePassword(oluserinfo.getPassword() + secques

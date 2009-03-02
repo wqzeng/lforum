@@ -7,6 +7,7 @@ import com.javaeye.lonlysky.lforum.ForumBaseAction;
 import com.javaeye.lonlysky.lforum.comm.LForumRequest;
 import com.javaeye.lonlysky.lforum.comm.utils.ForumUtils;
 import com.javaeye.lonlysky.lforum.comm.utils.UBBUtils;
+import com.javaeye.lonlysky.lforum.comm.utils.Utils;
 import com.javaeye.lonlysky.lforum.entity.forum.PostpramsInfo;
 import com.javaeye.lonlysky.lforum.entity.forum.Users;
 import com.javaeye.lonlysky.lforum.service.SmilieManager;
@@ -54,7 +55,7 @@ public class UsercpforumsettingAction extends ForumBaseAction {
 			user.getUserfields().setCustomstatus(
 					cachesManager.banWordFilter(LForumRequest.getParamValue("customstatus")));
 			//获取提交的内容并进行脏字和Html处理
-			String signature = cachesManager.banWordFilter(LForumRequest.getParamValue("signature"));
+			String signature = cachesManager.banWordFilter(Utils.cleanHtmlTag(LForumRequest.getParamValue("signature")));
 
 			int sigstatus = LForumRequest.getParamIntValue("sigstatus", 0);
 			//错误参数值纠正

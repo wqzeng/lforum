@@ -152,8 +152,12 @@ public class UsercpprofileAction extends ForumBaseAction {
 				user.getUserfields().setLocation(LForumRequest.getParamValue("location"));
 				user.getUserfields().setBio(LForumRequest.getParamValue("bio"));
 
-				userManager.updateUserInfo(user);
-				reqcfg.setUrl("usercpprofile.action").setMetaRefresh().setShowBackLink(true).addMsgLine("修改个人档案完毕");
+				try {
+					userManager.updateUserInfo(user);
+					reqcfg.setUrl("usercpprofile.action").setMetaRefresh().setShowBackLink(true).addMsgLine("修改个人档案完毕");
+				} catch (Exception e) {
+					reqcfg.addErrLine("修改个人档案失败!");
+				}
 			}
 		}
 		return SUCCESS;

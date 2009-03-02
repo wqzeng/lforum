@@ -97,6 +97,7 @@ public class OnlineuserAction extends ForumBaseAction {
 		Map<String, Integer> countMap = new HashMap<String, Integer>();
 		List<IndexOnline> allonlineuserlist = onlineUserManager.getOnlineUserList(countMap);
 		totalonline = countMap.get(OnlineUserManager.TOTALUSER);
+		totalonlineuser = countMap.get(OnlineUserManager.USER);
 		totalonlineguest = countMap.get(OnlineUserManager.GUESTUSER);
 		totalonlineinvisibleuser = countMap.get(OnlineUserManager.INVISIBLEUSER);
 		onlineusernumber = onlineusercount;

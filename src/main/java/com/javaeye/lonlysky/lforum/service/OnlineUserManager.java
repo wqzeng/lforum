@@ -277,8 +277,8 @@ public class OnlineUserManager {
 	 * @return 在线信息
 	 */
 	public Online getOnlineUserByIp(int userid, String ip) {
-		Online online = (Online) onlineDAO.createCriteria(Property.forName("users.uid").eq(userid),
-				Property.forName("ip").eq(ip)).uniqueResult();
+		Online online = (Online) onlineDAO.createQuery("from Online where users.uid=? and ip=?", userid, ip)
+				.setMaxResults(1).uniqueResult();
 		if (logger.isDebugEnabled()) {
 			logger.debug("获取ID为{}且IP为{}的用户在线信息", userid, ip);
 		}
