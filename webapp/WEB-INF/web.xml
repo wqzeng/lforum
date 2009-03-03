@@ -29,6 +29,12 @@
 		</init-param>
 	</filter>
 	
+	<!-- Lite 模板引擎 -->
+	<servlet>
+		<servlet-name>XWorkTemplate</servlet-name>
+		<servlet-class>org.xidea.lite.servlet.XWorkTempateServlet</servlet-class>
+	</servlet>
+	
 	<!-- Struts2 filter,actionPackages定义扫描Action类的目录 -->
 	<filter>
 		<filter-name>struts2</filter-name>
@@ -51,6 +57,10 @@
 		<filter-name>struts2</filter-name>
 		<url-pattern>*.action</url-pattern>
 	</filter-mapping>
+	<servlet-mapping>
+		<servlet-name>XWorkTemplate</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
 
 	<!--Spring ApplicationContext 载入 -->
 	<listener>

@@ -118,12 +118,22 @@ public class PostManager {
 				fids = fids + "," + post.getForums().getFid();
 			}
 			// 更新论坛信息
-			postDAO
-					.createQuery(
-							"update Forums set posts=posts+1,todayposts=case when day(lastpost)-day(?)=0 then (todayposts+1) else 1 end,topics.tid=?,lasttitle=?,lastpost=?,lastposter=?,users.uid=? where (charindex(',' + rtrim(fid) + ',', ',"
-									+ fids + ",') > 0)", Utils.getNowTime(), post.getTopics().getTid(),
-							post.getTopics().getTitle(), post.getPostdatetime(), post.getPoster(),
-							post.getUsers().getUid()).executeUpdate();
+			if (ConfigLoader.getConfig().getDatatype().indexOf("sqlerver") != -1) {
+				postDAO
+						.createQuery(
+								"update Forums set posts=posts+1,todayposts=case when day(lastpost)-day(?)=0 then (todayposts+1) else 1 end,topics.tid=?,lasttitle=?,lastpost=?,lastposter=?,users.uid=? where (charindex(',' + rtrim(fid) + ',', ',"
+										+ fids + ",') > 0)", Utils.getNowTime(), post.getTopics().getTid(),
+								post.getTopics().getTitle(), post.getPostdatetime(), post.getPoster(),
+								post.getUsers().getUid()).executeUpdate();
+
+			} else {
+				postDAO
+						.createQuery(
+								"update Forums set posts=posts+1,todayposts=case when day(lastpost)-day(?)=0 then (todayposts+1) else 1 end,topics.tid=?,lasttitle=?,lastpost=?,lastposter=?,users.uid=? where (fid in ("
+										+ fids + "))", Utils.getNowTime(), post.getTopics().getTid(),
+								post.getTopics().getTitle(), post.getPostdatetime(), post.getPoster(),
+								post.getUsers().getUid()).executeUpdate();
+			}
 
 			// 更新主题信息
 			Topics topics = post.getTopics();
@@ -1173,13 +1183,24 @@ public class PostManager {
 				// 更新板块状态
 				if (Utils.dateFormat(Utils.parseDate(posts.getPostdatetime()), "yyyy-MM-dd").equals(
 						Utils.dateFormat("yyyy-MM-dd"))) {
-					postDAO.createQuery(
-							"update Forums set posts=posts - 1,todayposts=todayposts-1 where charindex(','+rtrim(fid)+',',',"
-									+ fidlist + ",')>0").executeUpdate();
+					if (ConfigLoader.getConfig().getDatatype().indexOf("sqlerver") != -1) {
+						postDAO.createQuery(
+								"update Forums set posts=posts - 1,todayposts=todayposts-1 where charindex(','+rtrim(fid)+',',',"
+										+ fidlist + ",')>0").executeUpdate();
+					} else {
+						postDAO.createQuery(
+								"update Forums set posts=posts - 1,todayposts=todayposts-1 where fid in(" + fidlist
+										+ ")").executeUpdate();
+					}
 				} else {
-					postDAO.createQuery(
-							"update Forums set posts=posts - 1 where charindex(','+rtrim(fid)+',','," + fidlist
-									+ ",')>0").executeUpdate();
+					if (ConfigLoader.getConfig().getDatatype().indexOf("sqlerver") != -1) {
+						postDAO.createQuery(
+								"update Forums set posts=posts - 1 where charindex(','+rtrim(fid)+',','," + fidlist
+										+ ",')>0").executeUpdate();
+					} else {
+						postDAO.createQuery("update Forums set posts=posts - 1 where fid in(" + fidlist + ")")
+								.executeUpdate();
+					}
 				}
 
 				// 更新用户信息
@@ -1203,9 +1224,15 @@ public class PostManager {
 						postcount).executeUpdate();
 
 				// 更新板块状态
-				postDAO.createQuery(
-						"update Forums set posts=posts - ?,todayposts=todayposts-? where charindex(','+rtrim(fid)+',',',"
-								+ fidlist + ",')>0", postcount, todaycount).executeUpdate();
+				if (ConfigLoader.getConfig().getDatatype().indexOf("sqlerver") != -1) {
+					postDAO.createQuery(
+							"update Forums set posts=posts - ?,todayposts=todayposts-? where charindex(','+rtrim(fid)+',',',"
+									+ fidlist + ",')>0", postcount, todaycount).executeUpdate();
+				} else {
+					postDAO.createQuery(
+							"update Forums set posts=posts - ?,todayposts=todayposts-? where fid in(" + fidlist + ")",
+							postcount, todaycount).executeUpdate();
+				}
 
 				// 更新用户信息
 				postDAO.createQuery("update Users set posts=posts - ? where uid=?", posts.getUsers().getUid(),
@@ -1221,8 +1248,12 @@ public class PostManager {
 	public int getLastPostTid(Forums foruminfo, String visibleForum) {
 		String fidParam = "";
 		if (foruminfo.getFid() > 0) {
-			fidParam = "and (forums.fid = " + foruminfo.getFid() + " or charindex('," + foruminfo.getFid()
-					+ ",' , ',' + rtrim(forums.parentidlist) + ',') > 0 )  ";
+			if (ConfigLoader.getConfig().getDatatype().indexOf("sqlerver") != -1) {
+				fidParam = "and (forums.fid = " + foruminfo.getFid() + " or charindex('," + foruminfo.getFid()
+						+ ",' , ',' + rtrim(forums.parentidlist) + ',') > 0 )  ";
+			} else {
+				fidParam = "and (forums.fid = " + foruminfo.getFid() + " or "+foruminfo.getFid()+" in(forums.parentidlist) )  ";
+			}
 		}
 
 		if (!visibleForum.trim().equals("")) {
@@ -1362,6 +1393,6 @@ public class PostManager {
 	 * @return
 	 */
 	public int getPostCount() {
-		return Utils.null2Int(postDAO.findUnique("select count(pid) from Posts"),0);
+		return Utils.null2Int(postDAO.findUnique("select count(pid) from Posts"), 0);
 	}
 }

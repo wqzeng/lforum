@@ -43,6 +43,12 @@
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 		</filter>
 	-->
+	
+	<!-- Lite 模板引擎 -->
+	<servlet>
+		<servlet-name>XWorkTemplate</servlet-name>
+		<servlet-class>org.xidea.lite.servlet.XWorkTempateServlet</servlet-class>
+	</servlet>
 
 	<!-- Struts2 filter,actionPackages定义扫描Action类的目录 -->
 	<filter>
@@ -89,6 +95,11 @@
 		<listener-class> com.javaeye.lonlysky.lforum.SystemInitListener 
 		</listener-class>
 	</listener>
+	
+	<servlet-mapping>
+		<servlet-name>XWorkTemplate</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
 
 	<!-- session超时定义,单位为分钟 -->
 	<session-config>

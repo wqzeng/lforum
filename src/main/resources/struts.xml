@@ -4,7 +4,7 @@
 <struts>	
 	<constant name="struts.multipart.maxSize" value="204800000" />
 	<constant name="struts.codebehind.pathPrefix" value="/WEB-INF/template/" />
-	<package name="default" extends="struts-default">		
+	<package name="default" extends="struts-default">			
 		<!-- 基于paramsPrepareParamsStack,增加store interceptor -->
 		<interceptors>
 			<!-- 初始化接口 -->

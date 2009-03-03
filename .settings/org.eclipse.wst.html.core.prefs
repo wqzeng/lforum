@@ -1,4 +1,4 @@
-#Tue Dec 30 09:42:47 CST 2008
+#Tue Mar 03 20:25:19 CST 2009
 attrDuplicate=2
 attrInvalidName=2
 attrInvalidValue=2
@@ -34,3 +34,4 @@ piInvalidContent=2
 piUnclosed=1
 piUndefined=2
 refInvalidContent=2
+use-project-settings=true

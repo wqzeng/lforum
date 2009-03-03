@@ -104,12 +104,21 @@ public class TopicManager {
 	 * @return 主题总数
 	 */
 	public int getAllTopicCount(int fid) {
-		int count = Utils
-				.null2Int(
-						topicDAO
-								.findUnique(
-										"select count(tid) from Topics where (forums.fid=? or forums.fid in (  select fid  from Forums  where  charindex(',' + trim(?) + ',', ',' + trim(parentidlist) + ',') > 0)) and displayorder>=0",
-										fid, fid), 0);
+
+		int count = 0;
+		if (ConfigLoader.getConfig().getDatatype().indexOf("sqlserver") != -1) {
+			count = Utils
+					.null2Int(
+							topicDAO
+									.findUnique(
+											"select count(tid) from Topics where (forums.fid=? or forums.fid in (  select fid  from Forums  where  charindex(',' + trim(?) + ',', ',' + trim(parentidlist) + ',') > 0)) and displayorder>=0",
+											fid, fid), 0);
+		} else {
+			count = Utils.null2Int(topicDAO.findUnique(
+					"select count(tid) from Topics where (forums.fid=? or forums.fid in (  select fid  from Forums  where  "
+							+ fid + " in(parentidlist)) and displayorder>=0", fid), 0);
+		}
+
 		if (logger.isDebugEnabled()) {
 			logger.debug("得到当前版块内(包括子版){}正常(未关闭)主题总数{}", fid, count);
 		}
@@ -311,8 +320,13 @@ public class TopicManager {
 
 		Page<Topics> page = new Page<Topics>(pagesize);
 		page.setPageNo(pageindex);
-		page = topicDAO.find(page, "from Topics where displayorder>0 and charindex(','+rtrim(tid)+',' , '," + tids
-				+ ",')>0  order by lastpost desc");
+		if (ConfigLoader.getConfig().getDatatype().indexOf("sqlserver") != -1) {
+			page = topicDAO.find(page, "from Topics where displayorder>0 and charindex(','+rtrim(tid)+',' , '," + tids
+					+ ",')>0  order by lastpost desc");
+		} else {
+			page = topicDAO.find(page, "from Topics where displayorder>0 and tid in(" + tids
+					+ ") order by lastpost desc");
+		}
 
 		Map<Integer, Object> topictypeMap = cachesManager.getTopicTypeArray();
 		StringBuilder closeid = new StringBuilder();
@@ -664,7 +678,7 @@ public class TopicManager {
 		try {
 			page = mytopicDAO.find(page, "from Mytopics where users.uid=? order by topics.tid desc", userid);
 		} catch (ObjectNotFoundException e) {
-			logger.warn("获取用户主题"+e.getMessage());
+			logger.warn("获取用户主题" + e.getMessage());
 			return topicList;
 		}
 		for (Mytopics mytopics : page.getResult()) {
@@ -958,7 +972,7 @@ public class TopicManager {
 		String m = magic + "";
 		if (magicType == 1) {
 			if (m.length() >= 2) {
-				return Utils.null2Int(m.substring(1,2));
+				return Utils.null2Int(m.substring(1, 2));
 			}
 		} else if (magicType == 2) {
 			if (m.length() >= 5) {

@@ -1,4 +1,5 @@
-#Tue Dec 30 21:21:38 CST 2008
+#Tue Mar 03 20:01:56 CST 2009
 eclipse.preferences.version=1
 encoding//webapp/WEB-INF/database/sqlserver05/setup.sql=GBK
+encoding//webapp/WEB-INF/template/hello-world.xhtml=UTF-8
 encoding/<project>=UTF-8

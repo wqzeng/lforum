@@ -1,4 +1,4 @@
-#Tue Dec 30 10:04:55 CST 2008
+#Tue Mar 03 20:25:19 CST 2009
 eclipse.preferences.version=1
 validateFragments=true
 validation.actions-missing-required-attribute=1
@@ -26,3 +26,4 @@ validation.translation-tei-message=1
 validation.translation-usebean-ambiguous-type-info=2
 validation.translation-usebean-invalid-id=1
 validation.translation-usebean-missing-type-info=1
+validation.use-project-settings=true

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
 
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
+import com.javaeye.lonlysky.lforum.config.impl.ConfigLoader;
 import com.javaeye.lonlysky.lforum.entity.forum.ForumStatistics;
 import com.javaeye.lonlysky.lforum.entity.forum.Forums;
 import com.javaeye.lonlysky.lforum.entity.forum.Topics;
@@ -104,10 +105,17 @@ public class AdminStatsManager {
 		map.put(ForumStats.todaypostcount, 0);
 
 		///得到指定版块的最大和最小主题ID
-		Object obj = topicDAO
-				.createQuery(
-						"select max(tid),min(tid) from Topics where fid in (select fid from Forums where fid=? or charindex(',' + trim(?) + ',', ',' + trim(parentidlist) + ',')>0)",
-						fid, fid).uniqueResult();
+		Object obj = null;
+		if (ConfigLoader.getConfig().getDatatype().indexOf("sqlserver") != -1) {
+			obj = topicDAO
+					.createQuery(
+							"select max(tid),min(tid) from Topics where fid in (select fid from Forums where fid=? or charindex(',' + trim(?) + ',', ',' + trim(parentidlist) + ',')>0)",
+							fid, fid).uniqueResult();
+		} else {
+			obj = topicDAO.createQuery(
+					"select max(tid),min(tid) from Topics where fid in (select fid from Forums where fid=? or " + fid
+							+ " in(parentidlist))", fid).uniqueResult();
+		}
 		int maxtid = 0;
 		int mintid = 0;
 		if (obj != null) {
