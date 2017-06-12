@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.cache.LForumCache;
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
@@ -29,14 +29,14 @@ import com.javaeye.lonlysky.lforum.entity.forum.Usergroups;
 public class UserGroupManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserGroupManager.class);
-	private SimpleHibernateTemplate<Usergroups, Integer> userGroupDAO;
+	private SimpleHibernateDao<Usergroups, Integer> userGroupDAO;
 
 	@Autowired
 	private ScoresetManager scoresetManager;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		userGroupDAO = new SimpleHibernateTemplate<Usergroups, Integer>(sessionFactory, Usergroups.class);
+		userGroupDAO = new SimpleHibernateDao<Usergroups, Integer>(sessionFactory, Usergroups.class);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class UserGroupManager {
 		if (userGroupList != null) {
 			return userGroupList;
 		}
-		userGroupList = userGroupDAO.findAll();
+		userGroupList = userGroupDAO.getAll();
 		if (logger.isDebugEnabled()) {
 			logger.debug("找到用户组信息{}个", userGroupList.size());
 		}

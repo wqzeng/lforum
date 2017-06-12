@@ -1,23 +1,22 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.javaeye.lonlysky.lforum.comm.utils.Utils;
+import com.javaeye.lonlysky.lforum.entity.forum.Bonuslog;
+import com.javaeye.lonlysky.lforum.entity.forum.Postid;
+import com.javaeye.lonlysky.lforum.entity.forum.Topics;
+import com.javaeye.lonlysky.lforum.entity.forum.Users;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
-import com.javaeye.lonlysky.lforum.comm.utils.Utils;
-import com.javaeye.lonlysky.lforum.entity.forum.Bonuslog;
-import com.javaeye.lonlysky.lforum.entity.forum.Postid;
-import com.javaeye.lonlysky.lforum.entity.forum.Topics;
-import com.javaeye.lonlysky.lforum.entity.forum.Users;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 悬赏操作类
@@ -31,11 +30,11 @@ public class BonuManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(BonuManager.class);
 
-	private SimpleHibernateTemplate<Bonuslog, Integer> bonuslogDAO;
+	private SimpleHibernateDao<Bonuslog, Integer> bonuslogDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		bonuslogDAO = new SimpleHibernateTemplate<Bonuslog, Integer>(sessionFactory, Bonuslog.class);
+		bonuslogDAO = new SimpleHibernateDao<Bonuslog, Integer>(sessionFactory, Bonuslog.class);
 	}
 
 	@Autowired
@@ -160,7 +159,7 @@ public class BonuManager {
 	 * @return 指定主题的给分记录
 	 */
 	public Map<Integer, Bonuslog> getLogsForEachPost(int tid) {
-		List<Bonuslog> bList = bonuslogDAO.findByProperty("topics.tid", tid);
+		List<Bonuslog> bList = bonuslogDAO.findBy("topics.tid", tid);
 		Map<Integer, Bonuslog> blis = new HashMap<Integer, Bonuslog>();
 		for (Bonuslog blog : bList) {
 			blis.put(blog.getPostid().getPid(), blog);

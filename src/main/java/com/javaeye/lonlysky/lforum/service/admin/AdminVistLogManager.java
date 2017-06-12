@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
 import com.javaeye.lonlysky.lforum.entity.forum.Adminvisitlog;
@@ -25,11 +25,11 @@ public class AdminVistLogManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminVistLogManager.class);
 
-	private SimpleHibernateTemplate<Adminvisitlog, Integer> adminvisitlogDAO;
+	private SimpleHibernateDao<Adminvisitlog, Integer> adminvisitlogDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		adminvisitlogDAO = new SimpleHibernateTemplate<Adminvisitlog, Integer>(sessionFactory, Adminvisitlog.class);
+		adminvisitlogDAO = new SimpleHibernateDao<Adminvisitlog, Integer>(sessionFactory, Adminvisitlog.class);
 	}
 
 	/**

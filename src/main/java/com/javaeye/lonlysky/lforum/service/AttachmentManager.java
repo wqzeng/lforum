@@ -1,24 +1,5 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.io.FileUtils;
-import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.Page;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
-
 import com.javaeye.lonlysky.lforum.cache.LForumCache;
 import com.javaeye.lonlysky.lforum.comm.LForumRequest;
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
@@ -32,6 +13,25 @@ import com.javaeye.lonlysky.lforum.entity.forum.Postid;
 import com.javaeye.lonlysky.lforum.entity.forum.Topics;
 import com.javaeye.lonlysky.lforum.entity.forum.Users;
 import com.javaeye.lonlysky.lforum.entity.global.AttachmentType;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.io.FileUtils;
+import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.orm.Page;
+import org.springside.modules.orm.hibernate.HibernateDao;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 附件操作类
@@ -45,9 +45,9 @@ public class AttachmentManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(AttachmentManager.class);
 
-	private SimpleHibernateTemplate<Attachments, Integer> attachmentDAO;
-	private SimpleHibernateTemplate<Attachtypes, Integer> attachtypeDAO;
-	private SimpleHibernateTemplate<Myattachments, Integer> myattachDAO;
+	private SimpleHibernateDao<Attachments, Integer> attachmentDAO;
+	private SimpleHibernateDao<Attachtypes, Integer> attachtypeDAO;
+	private HibernateDao<Myattachments, Integer> myattachDAO;
 
 	@Autowired
 	private PostManager postManager;
@@ -57,9 +57,9 @@ public class AttachmentManager {
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		attachmentDAO = new SimpleHibernateTemplate<Attachments, Integer>(sessionFactory, Attachments.class);
-		attachtypeDAO = new SimpleHibernateTemplate<Attachtypes, Integer>(sessionFactory, Attachtypes.class);
-		myattachDAO = new SimpleHibernateTemplate<Myattachments, Integer>(sessionFactory, Myattachments.class);
+		attachmentDAO = new SimpleHibernateDao<Attachments, Integer>(sessionFactory, Attachments.class);
+		attachtypeDAO = new SimpleHibernateDao<Attachtypes, Integer>(sessionFactory, Attachtypes.class);
+		myattachDAO = new HibernateDao<Myattachments, Integer>(sessionFactory, Myattachments.class);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class AttachmentManager {
 		if (attactypeList != null) {
 			return attactypeList;
 		}
-		attactypeList = attachtypeDAO.findAll();
+		attactypeList = attachtypeDAO.getAll();
 		if (logger.isDebugEnabled()) {
 			logger.debug("获取所有的附件类型");
 		}
@@ -296,12 +296,12 @@ public class AttachmentManager {
 	 * @return 帖子信息
 	 */
 	public List<Attachments> getAttachmentListByPid(int pid) {
-		return attachmentDAO.findByProperty("postid.pid", pid);
+		return attachmentDAO.findBy("postid.pid", pid);
 	}
 
 	/**
 	 * 获得指定帖子的附件
-	 * @param pid 帖子ID
+	 * @param pidlist 帖子ID
 	 * @return 帖子信息
 	 */
 	@SuppressWarnings("unchecked")
@@ -614,9 +614,9 @@ public class AttachmentManager {
 			page.setPageNo(pageIndex);
 			if (typeid == 0) {
 				page = myattachDAO
-						.find(page, "from Myattachments where users.uid=? order by attachments.aid desc", uid);
+						.findPage(page, "from Myattachments where users.uid=? order by attachments.aid desc", uid);
 			} else {
-				page = myattachDAO.find(page, "from Myattachments where extname in(" + setExtNamelist(typeid)
+				page = myattachDAO.findPage(page, "from Myattachments where extname in(" + setExtNamelist(typeid)
 						+ ") and users.uid=? order by attachments.aid desc", uid);
 			}
 			myattachment = page.getResult();

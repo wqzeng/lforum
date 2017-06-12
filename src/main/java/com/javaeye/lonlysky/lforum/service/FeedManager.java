@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.cache.LForumCache;
 import com.javaeye.lonlysky.lforum.comm.utils.UBBUtils;
@@ -36,11 +36,11 @@ public class FeedManager {
 	@Autowired
 	private UserGroupManager userGroupManager;
 
-	private SimpleHibernateTemplate<Posts, Integer> postDAO;
+	private SimpleHibernateDao<Posts, Integer> postDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		postDAO = new SimpleHibernateTemplate<Posts, Integer>(sessionFactory, Posts.class);
+		postDAO = new SimpleHibernateDao<Posts, Integer>(sessionFactory, Posts.class);
 	}
 
 	/**

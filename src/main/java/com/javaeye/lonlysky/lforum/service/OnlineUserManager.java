@@ -1,21 +1,5 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Property;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
-
 import com.javaeye.lonlysky.lforum.comm.ForumAction;
 import com.javaeye.lonlysky.lforum.comm.LForumRequest;
 import com.javaeye.lonlysky.lforum.comm.utils.ForumUtils;
@@ -30,6 +14,22 @@ import com.javaeye.lonlysky.lforum.entity.forum.Topics;
 import com.javaeye.lonlysky.lforum.entity.forum.Usergroups;
 import com.javaeye.lonlysky.lforum.entity.forum.Users;
 import com.javaeye.lonlysky.lforum.exception.ServiceException;
+import org.apache.commons.beanutils.BeanUtils;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.orm.PropertyFilter;
+import org.springside.modules.orm.hibernate.HibernateDao;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 在线用户相关业务
@@ -43,8 +43,8 @@ public class OnlineUserManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(OnlineUserManager.class);
 	private static final Object synObject = new Object();
-	private SimpleHibernateTemplate<Online, Integer> onlineDAO;
-	private SimpleHibernateTemplate<Onlinelist, Integer> oimgDAO;
+	private HibernateDao<Online, Integer> onlineDAO;
+	private HibernateDao<Onlinelist, Integer> oimgDAO;
 
 	/**
 	 * 获取在线用户列表中返回的Map集合里面全部用户数
@@ -71,15 +71,15 @@ public class OnlineUserManager {
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		onlineDAO = new SimpleHibernateTemplate<Online, Integer>(sessionFactory, Online.class);
-		oimgDAO = new SimpleHibernateTemplate<Onlinelist, Integer>(sessionFactory, Onlinelist.class);
+		onlineDAO = new HibernateDao<Online, Integer>(sessionFactory, Online.class);
+		oimgDAO = new HibernateDao<Onlinelist, Integer>(sessionFactory, Onlinelist.class);
 	}
 
 	/**
 	 * 清理之前的在线表记录(本方法在应用程序初始化时被调用)
 	 */
 	public void initOnlineList() {
-		List<Online> onList = onlineDAO.findAll();
+		List<Online> onList = onlineDAO.getAll();
 		for (Online online : onList) {
 			onlineDAO.delete(online);
 		}
@@ -137,7 +137,7 @@ public class OnlineUserManager {
 	public List<Online> getForumOnlineUserList(int forumid, Map<String, Integer> map) {
 		List<Online> onList = new ArrayList<Online>();
 		synchronized (synObject) {
-			onList = onlineDAO.findByCriteria(Property.forName("forums.fid").eq(forumid));
+			onList = onlineDAO.findBy("forums.fid",forumid, PropertyFilter.MatchType.EQ);
 		}
 		if (map != null) { // 如果不为Null则统计
 			int totaluser = 0, guest = 0, user = 0, invisibleuser = 0;
@@ -168,7 +168,7 @@ public class OnlineUserManager {
 	 * @return 在线用户列表
 	 */
 	public List<IndexOnline> getOnlineUserList(Map<String, Integer> map) {
-		List<Online> onList = onlineDAO.findAll();
+		List<Online> onList = onlineDAO.getAll();
 		List<IndexOnline> indexonlineList = new ArrayList<IndexOnline>();
 		int totaluser = onList.size(); // 统计所有用户
 
@@ -213,7 +213,7 @@ public class OnlineUserManager {
 	 */
 	public List<Onlinelist> getOnlineGroupIconList() {
 		List<Onlinelist> iconList = null;
-		iconList = oimgDAO.findByCriteria(Property.forName("img").ne(""));
+		iconList = oimgDAO.findBy("img","", PropertyFilter.MatchType.GE);
 		if (logger.isDebugEnabled()) {
 			logger.debug("获取{}个在线用户图例", iconList.size());
 		}
@@ -343,7 +343,7 @@ public class OnlineUserManager {
 		if (logger.isDebugEnabled()) {
 			logger.debug("过期时间：" + timestr);
 		}
-		List<Online> onlList = onlineDAO.findByCriteria(Property.forName("lastupdatetime").lt(timestr));
+		List<Online> onlList = onlineDAO.findBy("lastupdatetime",timestr, PropertyFilter.MatchType.LT);
 		if (onlList.size() > 0) {
 			for (Online olu : onlList) {
 				if (olu.getUsers().getUid() != -1) {
@@ -710,7 +710,7 @@ public class OnlineUserManager {
 	 * @param ip IP地址
 	 */
 	public void deleteRowsByIP(String ip) {
-		List<Online> onlineList = onlineDAO.findByCriteria(Property.forName("ip").eq(ip));
+		List<Online> onlineList = onlineDAO.findBy("ip",ip, PropertyFilter.MatchType.EQ);
 		for (Online online : onlineList) {
 			if (online.getUsers().getUid() > 0) {
 				userManager.updateUserOnlineState(online.getUsers().getUid(), 0, Utils.getNowTime());

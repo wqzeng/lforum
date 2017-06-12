@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
 import com.javaeye.lonlysky.lforum.config.impl.ConfigLoader;
@@ -41,7 +41,7 @@ public class AdminStatsManager {
 
 	private static final long serialVersionUID = 8549350528434641912L;
 	private static final Logger logger = LoggerFactory.getLogger(AdminStatsManager.class);
-	private SimpleHibernateTemplate<Topics, Integer> topicDAO;
+	private SimpleHibernateDao<Topics, Integer> topicDAO;
 
 	@Autowired
 	private TopicManager topicManager;
@@ -60,7 +60,7 @@ public class AdminStatsManager {
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		topicDAO = new SimpleHibernateTemplate<Topics, Integer>(sessionFactory, Topics.class);
+		topicDAO = new SimpleHibernateDao<Topics, Integer>(sessionFactory, Topics.class);
 	}
 
 	/**

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.cache.LForumCache;
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
@@ -32,11 +32,11 @@ public class TemplateManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(TemplateManager.class);
 	private static final Object synObject = new Object();
-	private SimpleHibernateTemplate<Templates, Integer> templateDAO;
+	private SimpleHibernateDao<Templates, Integer> templateDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		templateDAO = new SimpleHibernateTemplate<Templates, Integer>(sessionFactory, Templates.class);
+		templateDAO = new SimpleHibernateDao<Templates, Integer>(sessionFactory, Templates.class);
 	}
 
 	/**
@@ -209,7 +209,7 @@ public class TemplateManager {
 				return templateList;
 			}
 			templateList = new ArrayList<Templates>();
-			templateList = templateDAO.findAll();
+			templateList = templateDAO.getAll();
 
 			if (logger.isDebugEnabled()) {
 				logger.debug("找到前台有效模板信息{}个", templateList.size());

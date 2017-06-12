@@ -1,15 +1,14 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.util.List;
-
+import com.javaeye.lonlysky.lforum.cache.LForumCache;
+import com.javaeye.lonlysky.lforum.entity.forum.Moderators;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
-import com.javaeye.lonlysky.lforum.cache.LForumCache;
-import com.javaeye.lonlysky.lforum.entity.forum.Moderators;
+import java.util.List;
 
 /**
  * 版主操作类
@@ -21,11 +20,11 @@ import com.javaeye.lonlysky.lforum.entity.forum.Moderators;
 @Transactional
 public class ModeratorManager {
 
-	private SimpleHibernateTemplate<Moderators, Integer> moderatorDAO;
+	private SimpleHibernateDao<Moderators, Integer> moderatorDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		moderatorDAO = new SimpleHibernateTemplate<Moderators, Integer>(sessionFactory, Moderators.class);
+		moderatorDAO = new SimpleHibernateDao<Moderators, Integer>(sessionFactory, Moderators.class);
 	}
 
 	/**
@@ -38,7 +37,7 @@ public class ModeratorManager {
 		if (moderatorList != null) {
 			return moderatorList;
 		}
-		moderatorList = moderatorDAO.findAll();
+		moderatorList = moderatorDAO.getAll();
 		LForumCache.getInstance().addCache("ModeratorList", moderatorList);
 		return moderatorList;
 	}

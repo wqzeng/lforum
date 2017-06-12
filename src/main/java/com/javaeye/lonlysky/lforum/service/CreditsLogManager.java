@@ -1,19 +1,18 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.util.List;
-
+import com.javaeye.lonlysky.lforum.comm.utils.Utils;
+import com.javaeye.lonlysky.lforum.entity.forum.Creditslog;
+import com.javaeye.lonlysky.lforum.entity.forum.Users;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.Page;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.Page;
+import org.springside.modules.orm.hibernate.HibernateDao;
 
-import com.javaeye.lonlysky.lforum.comm.utils.Utils;
-import com.javaeye.lonlysky.lforum.entity.forum.Creditslog;
-import com.javaeye.lonlysky.lforum.entity.forum.Users;
+import java.util.List;
 
 /**
  * 积分转帐历史记录操作类
@@ -26,11 +25,11 @@ import com.javaeye.lonlysky.lforum.entity.forum.Users;
 public class CreditsLogManager {
 
 	private final static Logger logger = LoggerFactory.getLogger(CreditsLogManager.class);
-	private SimpleHibernateTemplate<Creditslog, Integer> creditslogDAO;
+	private HibernateDao<Creditslog, Integer> creditslogDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		creditslogDAO = new SimpleHibernateTemplate<Creditslog, Integer>(sessionFactory, Creditslog.class);
+		creditslogDAO = new HibernateDao<Creditslog, Integer>(sessionFactory, Creditslog.class);
 	}
 
 	/**
@@ -75,7 +74,7 @@ public class CreditsLogManager {
 	public List<Creditslog> getCreditsLogList(int pagesize, int currentpage, int uid) {
 		Page<Creditslog> page = new Page<Creditslog>(pagesize);
 		page.setPageNo(currentpage);
-		page = creditslogDAO.find(page,
+		page = creditslogDAO.findPage(page,
 				"from Creditslog where usersByUid.uid=? or usersByFromto.uid=? order by id desc", uid, uid);
 		return page.getResult();
 	}

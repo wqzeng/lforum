@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.cache.LForumCache;
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
@@ -31,13 +31,13 @@ import com.javaeye.lonlysky.lforum.exception.ServiceException;
 public class StatisticManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(StatisticManager.class);
-	private SimpleHibernateTemplate<ForumStatistics, Integer> statisticsDAO;
-	private SimpleHibernateTemplate<Forums, Integer> forumDAO;
+	private SimpleHibernateDao<ForumStatistics, Integer> statisticsDAO;
+	private SimpleHibernateDao<Forums, Integer> forumDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		statisticsDAO = new SimpleHibernateTemplate<ForumStatistics, Integer>(sessionFactory, ForumStatistics.class);
-		forumDAO = new SimpleHibernateTemplate<Forums, Integer>(sessionFactory, Forums.class);
+		statisticsDAO = new SimpleHibernateDao<ForumStatistics, Integer>(sessionFactory, ForumStatistics.class);
+		forumDAO = new SimpleHibernateDao<Forums, Integer>(sessionFactory, Forums.class);
 	}
 
 	/**

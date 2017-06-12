@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.cache.LForumCache;
 import com.javaeye.lonlysky.lforum.comm.utils.ForumUtils;
@@ -37,7 +37,7 @@ import com.javaeye.lonlysky.lforum.exception.ServiceException;
 public class ForumManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(ForumManager.class);
-	private SimpleHibernateTemplate<Forums, Integer> forumDAO;
+	private SimpleHibernateDao<Forums, Integer> forumDAO;
 
 	@Autowired
 	private UserGroupManager userGroupManager;
@@ -62,7 +62,7 @@ public class ForumManager {
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		forumDAO = new SimpleHibernateTemplate<Forums, Integer>(sessionFactory, Forums.class);
+		forumDAO = new SimpleHibernateDao<Forums, Integer>(sessionFactory, Forums.class);
 	}
 
 	/**

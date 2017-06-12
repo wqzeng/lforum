@@ -110,7 +110,7 @@
 	<!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId 和 artifactId 即可 -->
 	<!-- 主要依赖库的版本定义属性 -->
 	<properties>
-		<springside.version>3.0.4</springside.version>
+		<springside.version>3.3.4</springside.version>
 		<spring.version>2.5.6</spring.version>
 		<hibernate.version>3.3.1.GA</hibernate.version>
 		<struts2.version>2.1.2</struts2.version>

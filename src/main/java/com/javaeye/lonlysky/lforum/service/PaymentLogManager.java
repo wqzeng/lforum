@@ -1,20 +1,19 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.util.List;
-
+import com.javaeye.lonlysky.lforum.comm.utils.Utils;
+import com.javaeye.lonlysky.lforum.entity.forum.Paymentlog;
+import com.javaeye.lonlysky.lforum.entity.forum.Topics;
+import com.javaeye.lonlysky.lforum.entity.forum.Users;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.Page;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.Page;
+import org.springside.modules.orm.hibernate.HibernateDao;
 
-import com.javaeye.lonlysky.lforum.comm.utils.Utils;
-import com.javaeye.lonlysky.lforum.entity.forum.Paymentlog;
-import com.javaeye.lonlysky.lforum.entity.forum.Topics;
-import com.javaeye.lonlysky.lforum.entity.forum.Users;
+import java.util.List;
 
 /**
  * 交易日志操作类
@@ -28,7 +27,7 @@ public class PaymentLogManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(PaymentLogManager.class);
 
-	private SimpleHibernateTemplate<Paymentlog, Integer> paymentlogDAO;
+	private HibernateDao<Paymentlog, Integer> paymentlogDAO;
 
 	@Autowired
 	private ScoresetManager scoresetManager;
@@ -41,7 +40,7 @@ public class PaymentLogManager {
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		paymentlogDAO = new SimpleHibernateTemplate<Paymentlog, Integer>(sessionFactory, Paymentlog.class);
+		paymentlogDAO = new HibernateDao<Paymentlog, Integer>(sessionFactory, Paymentlog.class);
 	}
 
 	/**
@@ -77,7 +76,7 @@ public class PaymentLogManager {
 	public List<Paymentlog> getPaymentLogByTid(int pagesize, int pageid, Integer tid) {
 		Page<Paymentlog> page = new Page<Paymentlog>(pagesize);
 		page.setPageNo(pageid);
-		page = paymentlogDAO.find(page, "from Paymentlog where topics.tid=? order by id desc", tid);
+		page = paymentlogDAO.findPage(page, "from Paymentlog where topics.tid=? order by id desc", tid);
 		return page.getResult();
 	}
 
@@ -155,7 +154,7 @@ public class PaymentLogManager {
 	public List<Paymentlog> getPayLogInList(int pagesize, int currentpage, int uid) {
 		Page<Paymentlog> page = new Page<Paymentlog>(pagesize);
 		page.setPageNo(currentpage);
-		page = paymentlogDAO.find(page, "from Paymentlog where usersByAuthorid.uid=? order by id desc", uid);
+		page = paymentlogDAO.findPage(page, "from Paymentlog where usersByAuthorid.uid=? order by id desc", uid);
 		return page.getResult();
 	}
 
@@ -179,7 +178,7 @@ public class PaymentLogManager {
 	public List<Paymentlog> getPayLogOutList(int pagesize, int currentpage, int uid) {
 		Page<Paymentlog> page = new Page<Paymentlog>(pagesize);
 		page.setPageNo(currentpage);
-		page = paymentlogDAO.find(page, "from Paymentlog where usersByUid.uid=? order by id desc", uid);
+		page = paymentlogDAO.findPage(page, "from Paymentlog where usersByUid.uid=? order by id desc", uid);
 		return page.getResult();
 	}
 

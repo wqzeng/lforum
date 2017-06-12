@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
 import com.javaeye.lonlysky.lforum.comm.utils.XmlElementUtil;
@@ -30,7 +30,7 @@ public class UserCreditManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserCreditManager.class);
 
-	private SimpleHibernateTemplate<Users, Integer> userDAO;
+	private SimpleHibernateDao<Users, Integer> userDAO;
 
 	@Autowired
 	private ScoresetManager scoresetManager;
@@ -46,7 +46,7 @@ public class UserCreditManager {
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		userDAO = new SimpleHibernateTemplate<Users, Integer>(sessionFactory, Users.class);
+		userDAO = new SimpleHibernateDao<Users, Integer>(sessionFactory, Users.class);
 	}
 
 	/**

@@ -1,19 +1,18 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.util.List;
-
+import com.javaeye.lonlysky.lforum.cache.LForumCache;
+import com.javaeye.lonlysky.lforum.config.impl.ConfigLoader;
+import com.javaeye.lonlysky.lforum.entity.global.Tags;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.Page;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.Page;
+import org.springside.modules.orm.hibernate.HibernateDao;
 
-import com.javaeye.lonlysky.lforum.cache.LForumCache;
-import com.javaeye.lonlysky.lforum.config.impl.ConfigLoader;
-import com.javaeye.lonlysky.lforum.entity.global.Tags;
+import java.util.List;
 
 /**
  * 论坛标签(Tag)操作类
@@ -26,14 +25,14 @@ import com.javaeye.lonlysky.lforum.entity.global.Tags;
 public class ForumTagManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(ForumTagManager.class);
-	private SimpleHibernateTemplate<Tags, Integer> tagDAO;
+	private HibernateDao<Tags, Integer> tagDAO;
 
 	@Autowired
 	private TagManager tagManager;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		tagDAO = new SimpleHibernateTemplate<Tags, Integer>(sessionFactory, Tags.class);
+		tagDAO = new HibernateDao<Tags, Integer>(sessionFactory, Tags.class);
 	}
 
 	/**
@@ -80,7 +79,7 @@ public class ForumTagManager {
 	public List<Tags> getHotTagsListForForum(int count) {
 		Page<Tags> page = new Page<Tags>(count);
 		page.setPageNo(1);
-		return tagDAO.find(page, "from Tags where fcount>0 and orderid>-1 order by orderid,fcount desc").getResult();
+		return tagDAO.findPage(page, "from Tags where fcount>0 and orderid>-1 order by orderid,fcount desc").getResult();
 	}
 
 	/**

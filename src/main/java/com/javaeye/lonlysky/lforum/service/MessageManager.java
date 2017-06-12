@@ -1,7 +1,7 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.util.List;
-
+import com.javaeye.lonlysky.lforum.comm.utils.Utils;
+import com.javaeye.lonlysky.lforum.entity.forum.Pms;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -9,11 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.Page;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.Page;
+import org.springside.modules.orm.hibernate.HibernateDao;
 
-import com.javaeye.lonlysky.lforum.comm.utils.Utils;
-import com.javaeye.lonlysky.lforum.entity.forum.Pms;
+import java.util.List;
 
 /**
  * 短消息操作类
@@ -27,14 +26,14 @@ public class MessageManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(MessageManager.class);
 
-	private SimpleHibernateTemplate<Pms, Integer> pmsDAO;
+	private HibernateDao<Pms, Integer> pmsDAO;
 
 	@Autowired
 	private UserManager userManager;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		pmsDAO = new SimpleHibernateTemplate<Pms, Integer>(sessionFactory, Pms.class);
+		pmsDAO = new HibernateDao<Pms, Integer>(sessionFactory, Pms.class);
 	}
 
 	/**
@@ -228,7 +227,7 @@ public class MessageManager {
 		if (inttype == 1) {
 			hql = "from Pms where " + msgformortoid + "=? and folder=? and new_=1 order by pmid desc";
 		}
-		page = pmsDAO.find(page, hql, userid, folder);
+		page = pmsDAO.findPage(page, hql, userid, folder);
 		return page.getResult();
 	}
 

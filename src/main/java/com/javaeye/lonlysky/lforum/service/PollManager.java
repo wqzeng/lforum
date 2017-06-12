@@ -1,15 +1,5 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
-
 import com.javaeye.lonlysky.lforum.comm.utils.ForumUtils;
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
 import com.javaeye.lonlysky.lforum.entity.forum.PollOptionView;
@@ -17,6 +7,15 @@ import com.javaeye.lonlysky.lforum.entity.forum.Polloptions;
 import com.javaeye.lonlysky.lforum.entity.forum.Polls;
 import com.javaeye.lonlysky.lforum.entity.forum.Topics;
 import com.javaeye.lonlysky.lforum.entity.forum.Users;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 投票操作类
@@ -28,16 +27,16 @@ import com.javaeye.lonlysky.lforum.entity.forum.Users;
 @Transactional
 public class PollManager {
 
-	private SimpleHibernateTemplate<Polls, Integer> pollDAO;
-	private SimpleHibernateTemplate<Polloptions, Integer> polloptionDAO;
+	private SimpleHibernateDao<Polls, Integer> pollDAO;
+	private SimpleHibernateDao<Polloptions, Integer> polloptionDAO;
 
 	@Autowired
 	private TopicManager topicManager;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		pollDAO = new SimpleHibernateTemplate<Polls, Integer>(sessionFactory, Polls.class);
-		polloptionDAO = new SimpleHibernateTemplate<Polloptions, Integer>(sessionFactory, Polloptions.class);
+		pollDAO = new SimpleHibernateDao<Polls, Integer>(sessionFactory, Polls.class);
+		polloptionDAO = new SimpleHibernateDao<Polloptions, Integer>(sessionFactory, Polloptions.class);
 	}
 
 	/**
@@ -167,7 +166,7 @@ public class PollManager {
 	 * @return 投票信息
 	 */
 	public Polls getPollInfo(int tid) {
-		List<Polls> polls = pollDAO.findByProperty("topics.tid", tid);
+		List<Polls> polls = pollDAO.findBy("topics.tid", tid);
 		return polls.size() > 0 ? polls.get(0) : new Polls();
 	}
 
@@ -177,7 +176,7 @@ public class PollManager {
 	 * @return 投票选项集合
 	 */
 	public List<Polloptions> getPollOptionInfoCollection(int tid) {
-		return polloptionDAO.findByProperty("topics.tid", tid);
+		return polloptionDAO.findBy("topics.tid", tid);
 	}
 
 	/**

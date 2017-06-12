@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.comm.MD5;
 import com.javaeye.lonlysky.lforum.comm.utils.ForumUtils;
@@ -31,7 +31,7 @@ import com.javaeye.lonlysky.lforum.exception.ServiceException;
 @Transactional
 public class UserManager {
 
-	private SimpleHibernateTemplate<Users, Integer> userDAO;
+	private SimpleHibernateDao<Users, Integer> userDAO;
 	private static final Logger logger = LoggerFactory.getLogger(UserManager.class);
 
 	@Autowired
@@ -42,7 +42,7 @@ public class UserManager {
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		userDAO = new SimpleHibernateTemplate<Users, Integer>(sessionFactory, Users.class);
+		userDAO = new SimpleHibernateDao<Users, Integer>(sessionFactory, Users.class);
 	}
 
 	/**

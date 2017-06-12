@@ -1,24 +1,5 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.Page;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
-
 import com.javaeye.lonlysky.lforum.comm.utils.UBBUtils;
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
 import com.javaeye.lonlysky.lforum.config.impl.ConfigLoader;
@@ -35,6 +16,25 @@ import com.javaeye.lonlysky.lforum.entity.forum.ShowtopicPagePostInfo;
 import com.javaeye.lonlysky.lforum.entity.forum.Topics;
 import com.javaeye.lonlysky.lforum.entity.forum.Usergroups;
 import com.javaeye.lonlysky.lforum.entity.forum.Users;
+import org.apache.commons.beanutils.BeanUtils;
+import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.orm.Page;
+import org.springside.modules.orm.hibernate.HibernateDao;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 帖子操作类
@@ -47,10 +47,10 @@ import com.javaeye.lonlysky.lforum.entity.forum.Users;
 public class PostManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(PostManager.class);
-	private SimpleHibernateTemplate<Posts, Integer> postDAO;
-	private SimpleHibernateTemplate<Postid, Integer> pidDAO;
-	private SimpleHibernateTemplate<Myposts, Integer> mypostDAO;
-	private SimpleHibernateTemplate<Ratelog, Integer> ratelogDAO;
+	private HibernateDao<Posts, Integer> postDAO;
+	private SimpleHibernateDao<Postid, Integer> pidDAO;
+	private SimpleHibernateDao<Myposts, Integer> mypostDAO;
+	private HibernateDao<Ratelog, Integer> ratelogDAO;
 
 	private Pattern patternAttach = Pattern.compile("\\[attach\\](\\d+?)\\[\\/attach\\]");
 	private Pattern patternHide = Pattern.compile("\\s*\\[hide\\][\n\r]*([\\s\\S]+?)[\n\r]*\\[\\/hide\\]\\s*");
@@ -82,10 +82,10 @@ public class PostManager {
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		postDAO = new SimpleHibernateTemplate<Posts, Integer>(sessionFactory, Posts.class);
-		pidDAO = new SimpleHibernateTemplate<Postid, Integer>(sessionFactory, Postid.class);
-		mypostDAO = new SimpleHibernateTemplate<Myposts, Integer>(sessionFactory, Myposts.class);
-		ratelogDAO = new SimpleHibernateTemplate<Ratelog, Integer>(sessionFactory, Ratelog.class);
+		postDAO = new HibernateDao<Posts, Integer>(sessionFactory, Posts.class);
+		pidDAO = new SimpleHibernateDao<Postid, Integer>(sessionFactory, Postid.class);
+		mypostDAO = new SimpleHibernateDao<Myposts, Integer>(sessionFactory, Myposts.class);
+		ratelogDAO = new HibernateDao<Ratelog, Integer>(sessionFactory, Ratelog.class);
 	}
 
 	/**
@@ -190,7 +190,6 @@ public class PostManager {
 	 * 按条件获取指定tid的帖子总数
 	 * @param tid 帖子的tid
 	 * @param condition
-	 * @param posttableid 
 	 * @return 指定tid的帖子总数
 	 */
 	public int getPostCount(int tid, String condition) {
@@ -500,10 +499,10 @@ public class PostManager {
 		Page<Posts> page = new Page<Posts>(postpramsInfo.getPagesize());
 		page.setPageNo(postpramsInfo.getPageindex());
 		if (!postpramsInfo.getCondition().equals("")) {
-			page = postDAO.find(page, "from Posts where topics.tid=? and invisible=0 and "
+			page = postDAO.findPage(page, "from Posts where topics.tid=? and invisible=0 and "
 					+ postpramsInfo.getCondition() + " order by pid", postpramsInfo.getTid());
 		} else {
-			page = postDAO.find(page, "from Posts where topics.tid=? and invisible<=0 order by pid", postpramsInfo
+			page = postDAO.findPage(page, "from Posts where topics.tid=? and invisible<=0 order by pid", postpramsInfo
 					.getTid());
 		}
 		if (logger.isDebugEnabled()) {
@@ -1052,7 +1051,7 @@ public class PostManager {
 	public List<Posts> getLastPostList(PostpramsInfo postpramsInfo) {
 		Page<Posts> page = new Page<Posts>(postpramsInfo.getPagesize());
 		page.setPageNo(postpramsInfo.getPageindex());
-		page = postDAO.find(page, "from Posts where topics.tid=? and invisible=0 order by pid desc", postpramsInfo
+		page = postDAO.findPage(page, "from Posts where topics.tid=? and invisible=0 order by pid desc", postpramsInfo
 				.getTid());
 		List<Posts> postList = page.getResult();
 		for (Posts posts : postList) {
@@ -1125,7 +1124,7 @@ public class PostManager {
 
 	/**
 	 * 获得指定帖子列表
-	 * @param topiclist 主题ID列表
+	 * @param postlist 主题ID列表
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -1320,14 +1319,14 @@ public class PostManager {
 	public List<Ratelog> getPostRateList(int pid) {
 		Page<Ratelog> page = new Page<Ratelog>(ConfigLoader.getConfig().getDisplayratecount());
 		page.setPageNo(1);
-		page = ratelogDAO.find(page, "from Ratelog where postid.pid=? order by id desc", pid);
+		page = ratelogDAO.findPage(page, "from Ratelog where postid.pid=? order by id desc", pid);
 		return page.getResult();
 	}
 
 	/**
 	 * 屏蔽帖子内容
 	 * @param postidlist
-	 * @param banposttype
+	 * @param invisible
 	 */
 	public void banPosts(String postidlist, int invisible) {
 		postDAO.createQuery("update Posts set invisible=? where pid in(" + postidlist + ")", invisible).executeUpdate();

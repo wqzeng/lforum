@@ -1,20 +1,19 @@
 package com.javaeye.lonlysky.lforum.service.admin;
 
-import java.util.List;
-
+import com.javaeye.lonlysky.lforum.comm.utils.Utils;
+import com.javaeye.lonlysky.lforum.entity.forum.Postid;
+import com.javaeye.lonlysky.lforum.entity.forum.Ratelog;
+import com.javaeye.lonlysky.lforum.entity.forum.Users;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.Page;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.Page;
+import org.springside.modules.orm.hibernate.HibernateDao;
 
-import com.javaeye.lonlysky.lforum.comm.utils.Utils;
-import com.javaeye.lonlysky.lforum.entity.forum.Postid;
-import com.javaeye.lonlysky.lforum.entity.forum.Ratelog;
-import com.javaeye.lonlysky.lforum.entity.forum.Users;
+import java.util.List;
 
 /**
  * 后台评分日志管理操作类
@@ -27,11 +26,11 @@ import com.javaeye.lonlysky.lforum.entity.forum.Users;
 public class AdminRateLogManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminRateLogManager.class);
-	private SimpleHibernateTemplate<Ratelog, Integer> ratelogDAO;
+	private HibernateDao<Ratelog, Integer> ratelogDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		ratelogDAO = new SimpleHibernateTemplate<Ratelog, Integer>(sessionFactory, Ratelog.class);
+		ratelogDAO = new HibernateDao<Ratelog, Integer>(sessionFactory, Ratelog.class);
 	}
 
 	/**
@@ -104,7 +103,7 @@ public class AdminRateLogManager {
 	public List<Ratelog> logList(int pagesize, int currentpage, String condition) {
 		Page<Ratelog> page = new Page<Ratelog>(pagesize);
 		page.setPageNo(currentpage);
-		page = ratelogDAO.find(page, "from Ratelog where "+condition+" order by id desc");
+		page = ratelogDAO.findPage(page, "from Ratelog where "+condition+" order by id desc");
 		return page.getResult();
 	}
 }

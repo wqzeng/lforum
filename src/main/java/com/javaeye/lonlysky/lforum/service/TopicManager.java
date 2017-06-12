@@ -1,29 +1,5 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.time.DateUtils;
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.hibernate.ObjectNotFoundException;
-import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.Page;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
-
 import com.javaeye.lonlysky.lforum.comm.utils.ForumUtils;
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
 import com.javaeye.lonlysky.lforum.comm.utils.XmlElementUtil;
@@ -37,6 +13,30 @@ import com.javaeye.lonlysky.lforum.entity.forum.Postid;
 import com.javaeye.lonlysky.lforum.entity.forum.ShowforumPageTopicInfo;
 import com.javaeye.lonlysky.lforum.entity.forum.Topics;
 import com.javaeye.lonlysky.lforum.entity.forum.Users;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.time.DateUtils;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.hibernate.ObjectNotFoundException;
+import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.orm.Page;
+import org.springside.modules.orm.hibernate.HibernateDao;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 主题操作类
@@ -49,10 +49,10 @@ import com.javaeye.lonlysky.lforum.entity.forum.Users;
 public class TopicManager {
 	private static final Logger logger = LoggerFactory.getLogger(TopicManager.class);
 
-	private SimpleHibernateTemplate<Topics, Integer> topicDAO;
-	private SimpleHibernateTemplate<Debates, Integer> debateDAO;
-	private SimpleHibernateTemplate<Mytopics, Integer> mytopicDAO;
-	private SimpleHibernateTemplate<Myposts, Integer> mypostDAO;
+	private HibernateDao<Topics, Integer> topicDAO;
+	private SimpleHibernateDao<Debates, Integer> debateDAO;
+	private HibernateDao<Mytopics, Integer> mytopicDAO;
+	private HibernateDao<Myposts, Integer> mypostDAO;
 
 	@Autowired
 	private ForumManager forumManager;
@@ -68,10 +68,10 @@ public class TopicManager {
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		mypostDAO = new SimpleHibernateTemplate<Myposts, Integer>(sessionFactory, Myposts.class);
-		topicDAO = new SimpleHibernateTemplate<Topics, Integer>(sessionFactory, Topics.class);
-		debateDAO = new SimpleHibernateTemplate<Debates, Integer>(sessionFactory, Debates.class);
-		mytopicDAO = new SimpleHibernateTemplate<Mytopics, Integer>(sessionFactory, Mytopics.class);
+		mypostDAO = new HibernateDao<Myposts, Integer>(sessionFactory, Myposts.class);
+		topicDAO = new HibernateDao<Topics, Integer>(sessionFactory, Topics.class);
+		debateDAO = new SimpleHibernateDao<Debates, Integer>(sessionFactory, Debates.class);
+		mytopicDAO = new HibernateDao<Mytopics, Integer>(sessionFactory, Mytopics.class);
 	}
 
 	/**
@@ -321,10 +321,10 @@ public class TopicManager {
 		Page<Topics> page = new Page<Topics>(pagesize);
 		page.setPageNo(pageindex);
 		if (ConfigLoader.getConfig().getDatatype().indexOf("sqlserver") != -1) {
-			page = topicDAO.find(page, "from Topics where displayorder>0 and charindex(','+rtrim(tid)+',' , '," + tids
+			page = topicDAO.findPage(page, "from Topics where displayorder>0 and charindex(','+rtrim(tid)+',' , '," + tids
 					+ ",')>0  order by lastpost desc");
 		} else {
-			page = topicDAO.find(page, "from Topics where displayorder>0 and tid in(" + tids
+			page = topicDAO.findPage(page, "from Topics where displayorder>0 and tid in(" + tids
 					+ ") order by lastpost desc");
 		}
 
@@ -437,7 +437,7 @@ public class TopicManager {
 		}
 
 		page.setAutoCount(true);
-		page = topicDAO.find(page, "from Topics where forums.fid=? and displayorder=0" + condition + order, fid);
+		page = topicDAO.findPage(page, "from Topics where forums.fid=? and displayorder=0" + condition + order, fid);
 
 		Map<Integer, Object> topictypeMap = cachesManager.getTopicTypeArray();
 		StringBuilder closeid = new StringBuilder();
@@ -567,7 +567,7 @@ public class TopicManager {
 
 	/**
 	 * 更新主题附件类型
-	 * @param pid 帖子
+	 * @param tid 帖子
 	 * @param attType 附件类型
 	 */
 	public void updateAttachment(int tid, int attType) {
@@ -676,7 +676,7 @@ public class TopicManager {
 		Page<Mytopics> page = new Page<Mytopics>(pagesize);
 		page.setPageNo(pageid);
 		try {
-			page = mytopicDAO.find(page, "from Mytopics where users.uid=? order by topics.tid desc", userid);
+			page = mytopicDAO.findPage(page, "from Mytopics where users.uid=? order by topics.tid desc", userid);
 		} catch (ObjectNotFoundException e) {
 			logger.warn("获取用户主题" + e.getMessage());
 			return topicList;
@@ -741,7 +741,7 @@ public class TopicManager {
 		Page<Myposts> page = new Page<Myposts>(pagesize);
 		page.setPageNo(pageid);
 		try {
-			page = mypostDAO.find(page, "from Myposts where users.uid=? order by topics.tid desc", userid);
+			page = mypostDAO.findPage(page, "from Myposts where users.uid=? order by topics.tid desc", userid);
 		} catch (ObjectNotFoundException e) {
 			return topicList;
 		}
@@ -807,7 +807,7 @@ public class TopicManager {
 		}
 		Page<Topics> page = new Page<Topics>(pagesize);
 		page.setPageNo(pageindex);
-		page = topicDAO.find(page, "from Topics where displayorder>=0 " + condition + " order by tid " + sortstr
+		page = topicDAO.findPage(page, "from Topics where displayorder>=0 " + condition + " order by tid " + sortstr
 				+ " ,postid.pid " + sortstr);
 		if (page != null) {
 
@@ -891,7 +891,7 @@ public class TopicManager {
 		}
 		Page<Topics> page = new Page<Topics>(pagesize);
 		page.setPageNo(pageindex);
-		page = topicDAO.find(page, "from Topics where displayorder>=0 " + condition + " order by " + orderby + " "
+		page = topicDAO.findPage(page, "from Topics where displayorder>=0 " + condition + " order by " + orderby + " "
 				+ sortstr);
 		if (page != null) {
 
@@ -990,7 +990,7 @@ public class TopicManager {
 	/**
 	 * 更新主题为已被管理
 	 * @param topiclist 主题id列表
-	 * @param operationid 管理操作id
+	 * @param moderated 管理操作id
 	 * @return  成功返回1，否则返回0
 	 */
 	public int updateTopicModerated(String topiclist, int moderated) {

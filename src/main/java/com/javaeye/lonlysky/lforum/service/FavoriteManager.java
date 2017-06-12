@@ -1,20 +1,19 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.util.List;
-
+import com.javaeye.lonlysky.lforum.comm.utils.Utils;
+import com.javaeye.lonlysky.lforum.entity.forum.Favorites;
+import com.javaeye.lonlysky.lforum.entity.forum.Topics;
+import com.javaeye.lonlysky.lforum.entity.forum.Users;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.Page;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.Page;
+import org.springside.modules.orm.hibernate.HibernateDao;
 
-import com.javaeye.lonlysky.lforum.comm.utils.Utils;
-import com.javaeye.lonlysky.lforum.entity.forum.Favorites;
-import com.javaeye.lonlysky.lforum.entity.forum.Topics;
-import com.javaeye.lonlysky.lforum.entity.forum.Users;
+import java.util.List;
 
 /**
  * 收藏夹操作类
@@ -28,11 +27,11 @@ public class FavoriteManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(FavoriteManager.class);
 
-	private SimpleHibernateTemplate<Favorites, Integer> favoriteDAO;
+	private HibernateDao<Favorites, Integer> favoriteDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		favoriteDAO = new SimpleHibernateTemplate<Favorites, Integer>(sessionFactory, Favorites.class);
+		favoriteDAO = new HibernateDao<Favorites, Integer>(sessionFactory, Favorites.class);
 	}
 
 	/**
@@ -60,7 +59,7 @@ public class FavoriteManager {
 	/**
 	 * 删除指定用户的收藏信息
 	 * @param uid 用户id
-	 * @param fidlist 要删除的收藏信息id列表,以英文逗号分割
+	 * @param fitemid 要删除的收藏信息id列表,以英文逗号分割
 	 */
 	public int deleteFavorites(int uid, String[] fitemid, int type) {
 		String fidlist = "";
@@ -90,7 +89,7 @@ public class FavoriteManager {
 	public List<Favorites> getFavoritesList(int uid, int pagesize, int pageindex) {
 		Page<Favorites> page = new Page<Favorites>(pagesize);
 		page.setPageNo(pageindex);
-		page = favoriteDAO.find(page, "from Favorites where typeid=0 and users.uid=?", uid);
+		page = favoriteDAO.findPage(page, "from Favorites where typeid=0 and users.uid=?", uid);
 		return page.getResult();
 	}
 

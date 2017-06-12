@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.comm.LForumRequest;
 import com.javaeye.lonlysky.lforum.comm.utils.UBBUtils;
@@ -43,9 +43,9 @@ import com.javaeye.lonlysky.lforum.service.admin.AdminStatsManager;
 public class TopicAdminManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(TopicAdminManager.class);
-	private SimpleHibernateTemplate<Topics, Integer> topicDAO;
-	private SimpleHibernateTemplate<Posts, Integer> postDAO;
-	private SimpleHibernateTemplate<Postid, Integer> postidDAO;
+	private SimpleHibernateDao<Topics, Integer> topicDAO;
+	private SimpleHibernateDao<Posts, Integer> postDAO;
+	private SimpleHibernateDao<Postid, Integer> postidDAO;
 
 	@Autowired
 	private UserManager userManager;
@@ -79,9 +79,9 @@ public class TopicAdminManager {
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		postDAO = new SimpleHibernateTemplate<Posts, Integer>(sessionFactory, Posts.class);
-		topicDAO = new SimpleHibernateTemplate<Topics, Integer>(sessionFactory, Topics.class);
-		postidDAO = new SimpleHibernateTemplate<Postid, Integer>(sessionFactory, Postid.class);
+		postDAO = new SimpleHibernateDao<Posts, Integer>(sessionFactory, Posts.class);
+		topicDAO = new SimpleHibernateDao<Topics, Integer>(sessionFactory, Topics.class);
+		postidDAO = new SimpleHibernateDao<Postid, Integer>(sessionFactory, Postid.class);
 	}
 
 	/**

@@ -1,18 +1,17 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.text.ParseException;
-
+import com.javaeye.lonlysky.lforum.comm.utils.Utils;
+import com.javaeye.lonlysky.lforum.entity.forum.Failedlogins;
+import com.javaeye.lonlysky.lforum.exception.ServiceException;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
-import com.javaeye.lonlysky.lforum.comm.utils.Utils;
-import com.javaeye.lonlysky.lforum.entity.forum.Failedlogins;
-import com.javaeye.lonlysky.lforum.exception.ServiceException;
+import java.text.ParseException;
 
 /**
  * 登录日志操作
@@ -25,11 +24,11 @@ import com.javaeye.lonlysky.lforum.exception.ServiceException;
 public class LoginLogManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginLogManager.class);
-	private SimpleHibernateTemplate<Failedlogins, String> loginlogDAO;
+	private SimpleHibernateDao<Failedlogins, String> loginlogDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		loginlogDAO = new SimpleHibernateTemplate<Failedlogins, String>(sessionFactory, Failedlogins.class);
+		loginlogDAO = new SimpleHibernateDao<Failedlogins, String>(sessionFactory, Failedlogins.class);
 	}
 
 	/**
@@ -39,7 +38,7 @@ public class LoginLogManager {
 	 * @return 错误次数
 	 */
 	public int updateLoginLog(String ip, boolean update) {
-		Failedlogins loginLog = loginlogDAO.findUniqueByProperty("ip", ip);
+		Failedlogins loginLog = loginlogDAO.findUnique("ip", ip);
 		if (loginLog != null) {
 			int errcount = loginLog.getErrcount();
 			try {
@@ -81,7 +80,7 @@ public class LoginLogManager {
 	 * @param ip ip地址
 	 */
 	public void deleteLoginLog(String ip) {
-		Failedlogins loginLog = loginlogDAO.findUniqueByProperty("ip", ip);
+		Failedlogins loginLog = loginlogDAO.findUniqueBy("ip", ip);
 		if (loginLog != null) {
 			loginlogDAO.delete(loginLog);
 		}

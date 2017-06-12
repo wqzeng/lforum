@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.cache.LForumCache;
 import com.javaeye.lonlysky.lforum.entity.forum.Smilies;
@@ -22,11 +22,11 @@ import com.javaeye.lonlysky.lforum.entity.forum.Smilies;
 @SuppressWarnings("unchecked")
 public class SmilieManager {
 
-	private SimpleHibernateTemplate<Smilies, Integer> smileDAO;
+	private SimpleHibernateDao<Smilies, Integer> smileDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		smileDAO = new SimpleHibernateTemplate<Smilies, Integer>(sessionFactory, Smilies.class);
+		smileDAO = new SimpleHibernateDao<Smilies, Integer>(sessionFactory, Smilies.class);
 	}
 
 	/**

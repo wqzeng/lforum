@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.entity.global.Tags;
 
@@ -26,11 +26,11 @@ import com.javaeye.lonlysky.lforum.entity.global.Tags;
 public class TagManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(TagManager.class);
-	private SimpleHibernateTemplate<Tags, Integer> tagDAO;
+	private SimpleHibernateDao<Tags, Integer> tagDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		tagDAO = new SimpleHibernateTemplate<Tags, Integer>(sessionFactory, Tags.class);
+		tagDAO = new SimpleHibernateDao<Tags, Integer>(sessionFactory, Tags.class);
 	}
 
 	/**

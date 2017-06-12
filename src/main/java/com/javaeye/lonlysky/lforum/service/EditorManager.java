@@ -1,17 +1,16 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.javaeye.lonlysky.lforum.cache.LForumCache;
+import com.javaeye.lonlysky.lforum.entity.forum.Bbcodes;
+import com.javaeye.lonlysky.lforum.entity.forum.CustomEditorButtonInfo;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
-import com.javaeye.lonlysky.lforum.cache.LForumCache;
-import com.javaeye.lonlysky.lforum.entity.forum.Bbcodes;
-import com.javaeye.lonlysky.lforum.entity.forum.CustomEditorButtonInfo;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 编辑器操作类
@@ -23,11 +22,11 @@ import com.javaeye.lonlysky.lforum.entity.forum.CustomEditorButtonInfo;
 @Transactional
 public class EditorManager {
 
-	private SimpleHibernateTemplate<Bbcodes, Integer> bbcodeDAO;
+	private SimpleHibernateDao<Bbcodes, Integer> bbcodeDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		bbcodeDAO = new SimpleHibernateTemplate<Bbcodes, Integer>(sessionFactory, Bbcodes.class);
+		bbcodeDAO = new SimpleHibernateDao<Bbcodes, Integer>(sessionFactory, Bbcodes.class);
 	}
 
 	/**
@@ -36,7 +35,7 @@ public class EditorManager {
 	 * @return 自定义编辑器按钮列表
 	 */
 	public List<Bbcodes> getCustomEditButtonList() {
-		return bbcodeDAO.findByProperty("available", 1);
+		return bbcodeDAO.findBy("available", 1);
 	}
 
 	public List<CustomEditorButtonInfo> getCustomEditButtonListWithInfo() {

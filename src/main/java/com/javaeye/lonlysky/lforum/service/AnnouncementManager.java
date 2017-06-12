@@ -1,17 +1,16 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.util.List;
-
+import com.javaeye.lonlysky.lforum.cache.LForumCache;
+import com.javaeye.lonlysky.lforum.entity.forum.Announcements;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
-import com.javaeye.lonlysky.lforum.cache.LForumCache;
-import com.javaeye.lonlysky.lforum.entity.forum.Announcements;
+import java.util.List;
 
 /**
  * 论坛公告操作类
@@ -24,11 +23,11 @@ import com.javaeye.lonlysky.lforum.entity.forum.Announcements;
 public class AnnouncementManager {
 
 	private final static Logger logger = LoggerFactory.getLogger(AnnouncementManager.class);
-	private SimpleHibernateTemplate<Announcements, Integer> announcementDAO;
+	private SimpleHibernateDao<Announcements, Integer> announcementDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		announcementDAO = new SimpleHibernateTemplate<Announcements, Integer>(sessionFactory, Announcements.class);
+		announcementDAO = new SimpleHibernateDao<Announcements, Integer>(sessionFactory, Announcements.class);
 	}
 
 	/**

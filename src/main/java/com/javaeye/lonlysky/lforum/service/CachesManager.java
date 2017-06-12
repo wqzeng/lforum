@@ -1,20 +1,5 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Property;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
-
 import com.javaeye.lonlysky.lforum.cache.LForumCache;
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
 import com.javaeye.lonlysky.lforum.config.impl.ConfigLoader;
@@ -26,6 +11,20 @@ import com.javaeye.lonlysky.lforum.entity.forum.Onlinelist;
 import com.javaeye.lonlysky.lforum.entity.forum.Smilies;
 import com.javaeye.lonlysky.lforum.entity.forum.Templates;
 import com.javaeye.lonlysky.lforum.entity.forum.Topicidentify;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Property;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 缓存论坛HTML数据
@@ -37,15 +36,15 @@ import com.javaeye.lonlysky.lforum.entity.forum.Topicidentify;
 public class CachesManager {
 
 	private static final Object synObject = new Object();
-	private SimpleHibernateTemplate<Forumlinks, Integer> forumlinkDAO;
-	private SimpleHibernateTemplate<Topicidentify, Integer> topicidentifyDAO;
-	private SimpleHibernateTemplate<Medals, Integer> medalDAO;
+	private SimpleHibernateDao<Forumlinks, Integer> forumlinkDAO;
+	private SimpleHibernateDao<Topicidentify, Integer> topicidentifyDAO;
+	private SimpleHibernateDao<Medals, Integer> medalDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		forumlinkDAO = new SimpleHibernateTemplate<Forumlinks, Integer>(sessionFactory, Forumlinks.class);
-		topicidentifyDAO = new SimpleHibernateTemplate<Topicidentify, Integer>(sessionFactory, Topicidentify.class);
-		medalDAO = new SimpleHibernateTemplate<Medals, Integer>(sessionFactory, Medals.class);
+		forumlinkDAO = new SimpleHibernateDao<Forumlinks, Integer>(sessionFactory, Forumlinks.class);
+		topicidentifyDAO = new SimpleHibernateDao<Topicidentify, Integer>(sessionFactory, Topicidentify.class);
+		medalDAO = new SimpleHibernateDao<Medals, Integer>(sessionFactory, Medals.class);
 	}
 
 	@Autowired
@@ -483,7 +482,7 @@ public class CachesManager {
 			return topicidentifyList;
 		}
 		topicidentifyList = new ArrayList<Topicidentify>();
-		topicidentifyList = topicidentifyDAO.findAll();
+		topicidentifyList = topicidentifyDAO.getAll();
 		StringBuilder jsArray = new StringBuilder("<script type='text/javascript'>var topicidentify = { ");
 
 		for (Topicidentify topicidentify : topicidentifyList) {
@@ -506,7 +505,7 @@ public class CachesManager {
 		Map<String, String> medalsMap = (Map<String, String>) LForumCache.getInstance().getCache("MedalsList");
 		if (medalsMap == null) {
 			medalsMap = new HashMap<String, String>();
-			List<Medals> medalList = medalDAO.findAll();
+			List<Medals> medalList = medalDAO.getAll();
 			for (Medals medals : medalList) {
 				if (medals.getAvailable() == 1) {
 					if (!medals.getImage().trim().equals("")) {

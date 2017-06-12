@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.comm.LForumRequest;
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
@@ -35,11 +35,11 @@ public class SearchManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(SearchManager.class);
 
-	private SimpleHibernateTemplate<Searchcaches, Integer> searchcacheDAO;
+	private SimpleHibernateDao<Searchcaches, Integer> searchcacheDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		searchcacheDAO = new SimpleHibernateTemplate<Searchcaches, Integer>(sessionFactory, Searchcaches.class);
+		searchcacheDAO = new SimpleHibernateDao<Searchcaches, Integer>(sessionFactory, Searchcaches.class);
 	}
 
 	private Pattern regexForumTopics = Pattern.compile("<ForumTopics>([\\s\\S]+?)</ForumTopics>");

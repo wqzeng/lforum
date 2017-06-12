@@ -1,17 +1,16 @@
 package com.javaeye.lonlysky.lforum.service;
 
-import java.util.List;
-
+import com.javaeye.lonlysky.lforum.cache.LForumCache;
+import com.javaeye.lonlysky.lforum.entity.forum.Admingroups;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
-import com.javaeye.lonlysky.lforum.cache.LForumCache;
-import com.javaeye.lonlysky.lforum.entity.forum.Admingroups;
+import java.util.List;
 
 /**
  * 管理组业务相关操作
@@ -24,11 +23,11 @@ import com.javaeye.lonlysky.lforum.entity.forum.Admingroups;
 public class AdminGroupManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminGroupManager.class);
-	private SimpleHibernateTemplate<Admingroups, Integer> adminGroupDAO;
+	private SimpleHibernateDao<Admingroups, Integer> adminGroupDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		adminGroupDAO = new SimpleHibernateTemplate<Admingroups, Integer>(sessionFactory, Admingroups.class);
+		adminGroupDAO = new SimpleHibernateDao<Admingroups, Integer>(sessionFactory, Admingroups.class);
 	}
 
 	/**
@@ -39,7 +38,7 @@ public class AdminGroupManager {
 	public List<Admingroups> getAdminGroupList() {
 		List<Admingroups> adminGroupList = LForumCache.getInstance().getListCache("AdminGroupList", Admingroups.class);
 		if (adminGroupList == null) {
-			adminGroupList = adminGroupDAO.findAll();
+			adminGroupList = adminGroupDAO.getAll();
 			if (logger.isDebugEnabled()) {
 				logger.debug("获取管理组列表成功：" + adminGroupList.size());
 			}

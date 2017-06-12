@@ -1,15 +1,5 @@
 package com.javaeye.lonlysky.lforum.service.admin;
 
-import java.util.List;
-
-import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
-
 import com.javaeye.lonlysky.lforum.GlobalsKeys;
 import com.javaeye.lonlysky.lforum.cache.LForumCache;
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
@@ -19,6 +9,15 @@ import com.javaeye.lonlysky.lforum.entity.forum.Moderators;
 import com.javaeye.lonlysky.lforum.entity.forum.Users;
 import com.javaeye.lonlysky.lforum.service.ForumManager;
 import com.javaeye.lonlysky.lforum.service.UserManager;
+import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
+
+import java.util.List;
 
 /**
  * 后台论坛版块管理类
@@ -31,8 +30,8 @@ import com.javaeye.lonlysky.lforum.service.UserManager;
 public class AdminForumManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminForumManager.class);
-	private SimpleHibernateTemplate<Forums, Integer> forumDAO;
-	private SimpleHibernateTemplate<Moderators, Integer> moderatorDAO;
+	private SimpleHibernateDao<Forums, Integer> forumDAO;
+	private SimpleHibernateDao<Moderators, Integer> moderatorDAO;
 
 	@Autowired
 	private ForumManager forumManager;
@@ -42,8 +41,8 @@ public class AdminForumManager {
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		forumDAO = new SimpleHibernateTemplate<Forums, Integer>(sessionFactory, Forums.class);
-		moderatorDAO = new SimpleHibernateTemplate<Moderators, Integer>(sessionFactory, Moderators.class);
+		forumDAO = new SimpleHibernateDao<Forums, Integer>(sessionFactory, Forums.class);
+		moderatorDAO = new SimpleHibernateDao<Moderators, Integer>(sessionFactory, Moderators.class);
 	}
 
 	/**

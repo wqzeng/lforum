@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.entity.forum.Forums;
 import com.javaeye.lonlysky.lforum.entity.forum.Moderatormanagelog;
@@ -25,11 +25,11 @@ import com.javaeye.lonlysky.lforum.entity.forum.Users;
 public class AdminModeratorLogMag {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminModeratorLogMag.class);
-	private SimpleHibernateTemplate<Moderatormanagelog, Integer> moderatorlogDAO;
+	private SimpleHibernateDao<Moderatormanagelog, Integer> moderatorlogDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		moderatorlogDAO = new SimpleHibernateTemplate<Moderatormanagelog, Integer>(sessionFactory,
+		moderatorlogDAO = new SimpleHibernateDao<Moderatormanagelog, Integer>(sessionFactory,
 				Moderatormanagelog.class);
 	}
 

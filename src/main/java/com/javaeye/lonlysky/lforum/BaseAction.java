@@ -1,15 +1,15 @@
 package com.javaeye.lonlysky.lforum;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.ServletResponseAware;
-import org.springside.modules.web.struts2.SimpleActionSupport;
-
 import com.javaeye.lonlysky.lforum.entity.global.Config;
 import com.javaeye.lonlysky.lforum.interceptor.ConfigAware;
 import com.javaeye.lonlysky.lforum.interceptor.RequestConfigAware;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+//import org.springside.modules.web.struts2.SimpleActionSupport;
 
 /**
  * <b>客户端请求处理基类</b><br>
@@ -19,7 +19,7 @@ import com.javaeye.lonlysky.lforum.interceptor.RequestConfigAware;
  * @author 黄磊
  * 
  */
-public class BaseAction extends SimpleActionSupport implements ServletRequestAware, ServletResponseAware, ConfigAware,
+public class BaseAction  implements ServletRequestAware, ServletResponseAware, ConfigAware,
 		RequestConfigAware {
 
 	private static final long serialVersionUID = 195147227343732105L;

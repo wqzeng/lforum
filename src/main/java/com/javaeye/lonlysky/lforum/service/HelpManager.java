@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.hibernate.SimpleHibernateTemplate;
+import org.springside.modules.orm.hibernate.SimpleHibernateDao;
 
 import com.javaeye.lonlysky.lforum.comm.utils.Utils;
 import com.javaeye.lonlysky.lforum.entity.help.Help;
@@ -27,11 +27,11 @@ import com.javaeye.lonlysky.lforum.exception.ServiceException;
 public class HelpManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(HelpManager.class);
-	private SimpleHibernateTemplate<Help, Integer> helpDAO;
+	private SimpleHibernateDao<Help, Integer> helpDAO;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		helpDAO = new SimpleHibernateTemplate<Help, Integer>(sessionFactory, Help.class);
+		helpDAO = new SimpleHibernateDao<Help, Integer>(sessionFactory, Help.class);
 	}
 
 	/**
